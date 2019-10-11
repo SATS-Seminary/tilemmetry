@@ -1,0 +1,99 @@
+Change Log:
+===========
+Version 3.5.7
+
+Fix - Remove Licensing and update data from RemUI Theme
+Tweak - Refactored code for Settings pages.  CSS has been moved to its own tab along with the new feature below
+Feature - Added support for H5P theming via CSS customisation
+
+
+Version 3.5.6
+
+Feature - Functionality of Course Stats for Admin, Teacher and Managers on Course Page
+Feature - Right Sidebar Pin functionality, now Right sidebar can come as overlay as well as Normal Sidebar
+Feature - All the buttons which are displayed in header are converted to a single dropdown, SATS Tilemmetry Settings Page 
+          has setting for it
+Tweak - Added Recent courses dropdown menu with multilang support
+Tweak - Added Multilang support on frontpage and Edwiser form plugin content
+Tweak - Removed the extra css of tilemmetryblocks from dashboard.scss, kept only in block plugin
+Tweak - Removed sitename label from the theme settings
+Tweak - Removed site blog and added users list in sidebar
+Tweak - Removed random spaces in course format
+Fix - The google font is not being set in Left sidebar
+Fix - Guest user access to course Login Problem
+Fix - Jquery carousel console error on homepage
+Fix - Styling of front Page
+Fix - In where this block appear setting text in mulilanguage
+Fix - Styling issue of input type text
+Fix - Login page modal text color issue and buttons styling when not logged out
+Fix - Social Buttons at footer should open link in new tab
+
+
+Version 3.5.5
+Fix - Course Archieve Add new course button error for single category
+
+Version 3.5.4
+Fix - Styling Issue with block Name in Right sidebar
+Fix - Course Edit Setting Icon Styling Issue
+Fix - "Add New Course" Button on Course Archieve page restored
+Fix - Media link Styling issue in Atto Editor
+Fix - Global Search issue fixed in Safari Browser
+Fix - Course category load more functionality issue for logged out users
+Tweak - Block myoverview, course name tooltip added
+Tweak - Added Login token on login form
+
+
+Version 3.5.3
+Bug - Reset Dashboard page functionality restored.
+Bug - The Pencil icon for editing topic name fixed.
+Bug - Recent activity forum postgrey sql problem fixed.
+Bug - Sidebar message section contact images not showing fixed.
+Bug - Video playback issue resolved.
+Bug - Inside restore course, the selector to search category position fixed.
+Bug - Resize functionality for text editor fixed.
+Bug - The confirmation texts on the Moodle login page for the users, is not visible, when they have already logged in Moodle, on the same       browser. The text will be visible now.
+Bug - Left Navigation issue in mobile view fixed.
+Bug - Left Sidebar does not work in the profile page while using Mobile devices. Note: This issue is only seen in Andriod devices and works fine in iOS
+Bug - Cloze question type had allignment issues and it has been fixed. 
+Tweak - Added string for blogs when enabled in home page.
+Tweak - Teacher user role will have course options to enroll users in Course archive page.
+Tweak - Create course button for Course creator user role.
+Tweak - Area (circle region) to mark the answers are faded in multiple choice question.It is made solid and visible now.
+Tweak - None function for course sorting.
+Tweak - When on the enrollment screen for enrolling users in a course, the drop down for selecting roles is given padding so that users do not need to scroll down. 
+Feature - For longer course names a tooltip will appear in My courses Tab in the Left Sidebar.
+
+Version 3.5.2
+Fix - Default height problem with blocks i.e. 1 * 1 block size issue
+Fix - MyCourseOverview Block takes height with no content in it 
+Fix - User Tour Fix
+Fix - Left Navigation Problem in Mobile View on Dashboard as well as Profile page
+Fix - Javascript error "jquery not defined"
+Fix - Block Issue in Right to Left Mode ( rtl mode )
+Fix - Remui Custom Sidebar Issue in Right to Left Mode ( rtl mode )
+Fix - Horizontal Scrolling problem in rtl mode on Course Page
+Fix - Instructor Image on Course Category Page, problem in Load more functionality
+Fix - Enrol Options toolbar on course archieve page, load more issue
+Tweak - Removed the extra css file, kept only minified version
+Feature - Added custom CSS as part of theme to make user tours similar to how it is displayed on SATS Tilemmetry demo site.
+
+Version 3.5.1
+
+SATS Tilemmetry now compatible with Moodle version 3.5+
+Feature - Flexible Dashboard
+Feature - 6 Course Formats [Grid Format, One Topic Format, Buttons, Flexible Sections Format, Board (Grids & Blocks), NED - Tabs course format] Compatibility Added
+Feature - Drag and Drop Feature for Dashboard Blocks
+Feature - Polish and Spanish language files included
+Fix     - 'Save changes' button issue resolved
+
+
+Version 3.5.0
+
+SATS Tilemmetry now compatible with Moodle version 3.5
+Initial Release of SATS Tilemmetry 3.5 with GDPR
+
+Fix - Competency configure scale modal button problem
+Fix - File Upload overflow problem
+
+
+

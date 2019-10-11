@@ -1,0 +1,118 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    SATS Tilemmetry 
+    @package    theme_tilemmetry
+    @copyright  (c) 2018 South African Theological Seminary (https://sats.edu.za/)
+    @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ 
+}}
+{{!
+    @template theme_tilemmetry/nav-drawer
+
+
+    Example context (json): {}
+}}
+
+   <div class="site-menubar {{ sidebarcolor }} moodle-has-zindex">
+    <div class="site-menubar-body">
+      <div>
+        <ul class="site-menu mt-15" data-plugin="menu">
+            {{# isactivitypage }}
+              {{> theme_tilemmetry/activity_navigation }}
+            {{/ isactivitypage }}
+
+          {{^ isactivitypage }}
+            {{> theme_tilemmetry/flat_navigation }}
+          {{/ isactivitypage }}
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-menubar-footer">
+      {{# output.check_user_site_admin }}
+            <a href="{{config.wwwroot}}/admin/user.php" class="w-p25 fold-show" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}userlist, core{{/str}}">
+              <span class="icon fa-users" aria-hidden="true"></span>
+            </a>
+            <a href="{{ coursecreationlink }}" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}createanewcourse, theme_tilemmetry{{/str}}">
+              <span class="icon fa fa-file" aria-hidden="true"></span>
+            </a>
+            <a href="{{config.wwwroot}}/course/index.php?categoryid=82&categorysort=default" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}createarchivepage, theme_tilemmetry{{/str}}">
+              <span class="icon fa fa-archive" aria-hidden="true"></span>
+            </a>
+            <a href="{{config.wwwroot}}/admin/settings.php?section=themesettingtilemmetry" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}tilemmetrysettings, theme_tilemmetry{{/str}}">
+              <span class="icon fa fa-cogs" aria-hidden="true"></span>
+            </a>
+      {{/ output.check_user_site_admin }}
+      {{^ output.check_user_site_admin }}
+        {{# output.check_user_admintree }}
+                <a href="{{config.wwwroot}}/admin/user.php" class="w-p25 fold-show" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}userlist, core{{/str}}">
+                  <span class="icon fa-users" aria-hidden="true"></span>
+                </a>
+                <a href="{{config.wwwroot}}/grade/report/overview/index.php?id=846" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}gradeoverview, theme_tilemmetry{{/str}}">
+                  <span class="icon fa fa-server" aria-hidden="true"></span>
+                </a>
+                <a href="{{config.wwwroot}}/course/index.php?categoryid=82&categorysort=default" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}createarchivepage, theme_tilemmetry{{/str}}">
+                  <span class="icon fa fa-archive" aria-hidden="true"></span>
+                </a>
+                <a href="https://research.sats.edu.za/Shibboleth.sso/Login?target=https%3A%2F%2Fresearch.sats.edu.za%2Findex.html" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}researchcentre, theme_tilemmetry{{/str}}">
+                    <span class="icon fa-book" aria-hidden="true"></span>
+                  </a>
+        {{/ output.check_user_admintree }}
+        {{^ output.check_user_admintree }}
+            {{# output.check_user_faculty }}
+                  <a href="{{ coursecreationlink }}" class="w-p50" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}createanewcourse, theme_tilemmetry{{/str}}">
+                    <span class="icon fa fa-file" aria-hidden="true"></span>
+                  </a>
+                  <a href="{{config.wwwroot}}/course/index.php?mycourses=1" class="w-p50" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}mycourses, theme_tilemmetry{{/str}}">
+                    <span class="icon fa fa-th-large" aria-hidden="true"></span>
+                  </a>
+            {{/ output.check_user_faculty }}
+            {{^ output.check_user_faculty }}
+                {{# output.check_user_partnership }}
+                    <a href="{{config.wwwroot}}/blocks/fn_mentor/course_overview.php" class="fold-show w-p50" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}partnershipdashboard, theme_tilemmetry{{/str}}">
+                        <span class="icon drivers-license-o" aria-hidden="true"></span>
+                    </a>
+                    <a href="{{config.wwwroot}}/course/index.php?mycourses=1" class="w-p50" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}mycourses, theme_tilemmetry{{/str}}">
+                    <span class="icon fa fa-th-large" aria-hidden="true"></span>
+                    </a>
+                {{/ output.check_user_partnership }}
+                {{^ output.check_user_partnership }}
+                    {{# output.check_user_student }}
+                          <a href="{{config.wwwroot}}/local/mymoodle/curriculum.php" class="fold-show w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}mycurriculum, theme_tilemmetry{{/str}}">
+                            <span class="icon fa-mortar-board" aria-hidden="true"></span>
+                          </a>
+                          <a href="{{config.wwwroot}}/local/mymoodle/finances.php" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}myfinances, theme_tilemmetry{{/str}}">
+                            <span class="icon fa fa-money" aria-hidden="true"></span>
+                          </a>
+                          <a href="{{config.wwwroot}}/course/index.php?mycourses=1" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}mycourses, theme_tilemmetry{{/str}}">
+                            <span class="icon fa fa-th-large" aria-hidden="true"></span>
+                          </a>
+                          <a href="https://research.sats.edu.za/Shibboleth.sso/Login?target=https%3A%2F%2Fresearch.sats.edu.za%2Findex.html" class="w-p25" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}researchcentre, theme_tilemmetry{{/str}}">
+                            <span class="icon fa-book" aria-hidden="true"></span>
+                          </a>
+                    {{/ output.check_user_student }}
+                    {{^ output.check_user_student }}
+                          <a href="{{config.wwwroot}}/course/index.php?mycourses=1" class="w-p50 fold-show" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}mycourses, theme_tilemmetry{{/str}}">
+                            <span class="icon fa fa-th-large" aria-hidden="true"></span>
+                          </a>
+                          <a href="https://research.sats.edu.za/Shibboleth.sso/Login?target=https%3A%2F%2Fresearch.sats.edu.za%2Findex.html" class="w-p50" data-placement="top" data-toggle="tooltip" data-original-title="{{#str}}researchcentre, theme_tilemmetry{{/str}}">
+                            <span class="icon fa-book" aria-hidden="true"></span>
+                          </a>
+                    {{/ output.check_user_student }}
+                {{/ output.check_user_partnership }}
+            {{/ output.check_user_faculty }}
+        {{/ output.check_user_admintree }}
+      {{/ output.check_user_site_admin }}
+    </div>
+  </div>

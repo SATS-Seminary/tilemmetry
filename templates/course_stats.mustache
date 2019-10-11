@@ -1,0 +1,30 @@
+{{#coursestats}}
+<div class="course-stats row mx-0 p-0 my-20 ">
+	<div class="col-6 col-md-6 col-lg-3">
+		<div class="stats-card d-flex align-items-center justify-content-start px-40">
+			<p class="display-4 bold mr-10 mb-0 mb-md-10">{{ enrolledusers }}</p>
+			<p class="stats-title mb-0 mb-md-10">{{#str}}enrolledusers, theme_tilemmetry{{/str}}</p>
+		</div>
+	</div>
+	{{#completion}}
+	<div class="col-6 col-md-6 col-lg-3">
+		<div class="stats-card d-flex align-items-center justify-content-start px-40">
+			<p class="display-4 bold mr-10 mb-0 mb-md-10">{{ completed }}</p>
+			<p class="stats-title mb-0 mb-md-10">{{#str}}studentcompleted, theme_tilemmetry{{/str}}</p>
+		</div>
+	</div>
+	<div class="col-6 col-md-6 col-lg-3">
+		<div class="stats-card d-flex align-items-center justify-content-start px-40">
+			<p class="display-4 bold mr-10 mb-0 mb-md-10">{{ inprogress }}</p>
+			<p class="stats-title mb-0 mb-md-10">{{#str}}inprogress, theme_tilemmetry{{/str}}</p>
+		</div>
+	</div>
+	<div class="col-6 col-md-6 col-lg-3">
+		<div class="stats-card d-flex align-items-center justify-content-start px-40">
+			<p class="display-4 bold mr-10 mb-0 mb-md-10">{{ notstarted }}</p>
+			<p class="stats-title mb-0 mb-md-10">{{#str}}yettostart, theme_tilemmetry{{/str}}</p>
+		</div>
+	</div>
+	{{/completion}}
+</div>
+{{/coursestats}}
