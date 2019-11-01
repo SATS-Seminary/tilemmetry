@@ -110,6 +110,7 @@ class core_renderer extends tilemmetry_renderer
         $html .= html_writer::tag('div', $this->course_header(), array('id' => 'course-header'));
 
         $html .= html_writer::end_tag('header');
+        
         return $html;
     }
 
@@ -121,7 +122,7 @@ class core_renderer extends tilemmetry_renderer
             $type = \theme_tilemmetry\toolbox::get_setting('announcementtype');
             $message = \theme_tilemmetry\toolbox::get_setting('announcementtext');
 
-            $announcement .= "<div class='alert alert-{$type} dark text-center rounded-0'>";
+            $announcement .= "<div class='alert alert-{$type} dark text-center rounded-0 site-announcement m-b-0'>";
             $announcement .= $message;
             $announcement .= "</div>";
         }
@@ -373,7 +374,7 @@ class core_renderer extends tilemmetry_renderer
                     ));
                 }
 
-                $button['linkattributes']['class'] .= '  btn btn-inverse mr-5 ';
+                $button['linkattributes']['class'] .= '  btn btn-inverse mr-5';
                 $htmltemp .= html_writer::link($button['url'], $image, $button['linkattributes']);
             }
         }
@@ -394,10 +395,10 @@ class core_renderer extends tilemmetry_renderer
         // show overlay menu icon if overlay is enabled and there are menu items (in html temp)
         if($overlay) {
             if($htmltemp != '') {
-                $html .= '<span class="tilemmetry-dropdown overlay-menu my-5 ">';
+                $html .= '<span class="overlay-menu my-5">';
                 $html .= '<button type="button" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-ellipsis-v px-5" aria-hidden="true"></i></button>';
-                $html .= '<div class="dropdown-menu p-10 dropdown-menu-right ">';
+                $html .= '<div class="dropdown-menu p-10 dropdown-menu-right">';
                 $html .= $htmltemp;
                 $html .= '</div>';
                 $html .= '</span>';
@@ -712,14 +713,11 @@ class core_renderer extends tilemmetry_renderer
             $loginurl_datatoggle = 'data-toggle="dropdown"';
         }
 
-        $loginhtml = '';
-        if (strpos($CFG->release, '3.5.3') !== false || strpos($CFG->release, '3.5.2+') !== false) {
-            $logintoken = \core\session\manager::get_login_token();
-            $loginhtml = '<div class="form-group">
-                        <input type="hidden" name="logintoken" value="'.$logintoken.'">
-                        </div>';
-        }
-        
+        $logintoken = \core\session\manager::get_login_token();
+        $tokenhtml = '<div class="form-group">
+                <input type="hidden" name="logintoken" value="'.$logintoken.'">
+            </div>';
+
         // sign in popup
         $signinformhtml = '<ul class="dropdown-menu w-350 p-15" role="menu">
                     <form class="mb-0" action="'.get_login_url().'" method="post" id="login">
@@ -732,7 +730,7 @@ class core_renderer extends tilemmetry_renderer
                             <label for="password" class="sr-only">'.get_string('password').'</label>
                             <input type="password" name="password" id="password" value="" class="form-control"placeholder='.get_string('password').'>
                         </div>
-                        '.$loginhtml.'
+                        '.$tokenhtml.'
                         <div class="form-group clearfix">
                             <div class="checkbox-custom checkbox-inline checkbox-primary float-left rememberpass">
                                 <input type="checkbox" id="rememberusername" name="rememberusername" value="1" />
@@ -1003,7 +1001,7 @@ class core_renderer extends tilemmetry_renderer
         $context->arialabel = $bc->arialabel;
         $context->ariarole = !empty($bc->attributes['role']) ? $bc->attributes['role'] : 'complementary';
         $context->type = $bc->attributes['data-block'];
-        $context->title = $bc->title;
+        $context->title = strip_tags($bc->title);
         $context->content = $bc->content;
         $context->annotation = $bc->annotation;
         $context->footer = $bc->footer;
@@ -1012,7 +1010,7 @@ class core_renderer extends tilemmetry_renderer
             $context->controls = $this->block_controls($bc->controls, $id);
         }
         
-        if($context->type == 'tilemmetryblck' || $context->type == 'myoverview')
+        if($context->type == 'tilemmetryblck')
         {
             $context->istilemmetryblck = true;
         }
@@ -1130,11 +1128,8 @@ class core_renderer extends tilemmetry_renderer
         $context->loginpage_context = $this->should_display_logo();
         $context->loginsocial_context = \theme_tilemmetry\utility::get_footer_data(1);
         $context->logopos = get_config('theme_tilemmetry', 'brandlogopos');
-        if (strpos($CFG->release, '3.5.3') !== false) {
-            $context->logintoken = \core\session\manager::get_login_token();
-        }
-        
-$sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
+        $context->logintoken = \core\session\manager::get_login_token();
+        $sitetext = get_config('theme_tilemmetry', 'brandlogotext');
         if ($sitetext != '') {
             $context->sitedesc = $sitetext;
         }
@@ -1339,7 +1334,7 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
      * @param boolean $onlytopleafnodes
      * @return boolean nodesskipped - True if nodes were skipped in building the menu
      */
-    private function build_action_menu_from_navigation(
+    protected function build_action_menu_from_navigation(
         action_menu $menu,
         navigation_node $node,
         $indent = false,
@@ -1385,16 +1380,70 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
     }
 
     /**
+     * The standard HTML that should be output just before the <footer> tag.
+     * Designed to be called in theme layout.php files.
+     *
+     * @return string HTML fragment.
+     */
+    public function standard_after_main_region_html() {
+        global $CFG;
+        $output = '';
+        if ($this->page->pagelayout !== 'embedded' && !empty($CFG->additionalhtmlbottomofbody)) {
+            $output .= "\n".$CFG->additionalhtmlbottomofbody;
+        }
+
+        // merge messaging panel into right sidebar or not
+        $mergemessagingsidebar = \theme_tilemmetry\toolbox::get_setting('mergemessagingsidebar');
+
+        // Give subsystems an opportunity to inject extra html content. The callback
+        // must always return a string containing valid html.
+        foreach (\core_component::get_core_subsystems() as $name => $path) {
+            if ($path) {
+                // tilemmetry, because messages are in sidebar, so skip here
+                if($mergemessagingsidebar && $name == 'message') {
+                    continue;
+                }
+                $output .= component_callback($name, 'standard_after_main_region_html', [], '');
+            }
+        }
+
+        // Give plugins an opportunity to inject extra html content. The callback
+        // must always return a string containing valid html.
+        $pluginswithfunction = get_plugins_with_function('standard_after_main_region_html', 'lib.php');
+        foreach ($pluginswithfunction as $plugins) {
+            foreach ($plugins as $function) {
+                $output .= $function();
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Allow plugins to provide some content to be rendered in the navbar.
      * The plugin must define a PLUGIN_render_navbar_output function that returns
      * the HTML they wish to add to the navbar.
      *
      * @return string HTML for the navbar
      */
-    public function navbar_plugin_output()
-    {
-        global $CFG, $PAGE;
+    public function navbar_plugin_output() {
         $output = '';
+
+        // merge messaging panel into right sidebar or not
+        $mergemessagingsidebar = \theme_tilemmetry\toolbox::get_setting('mergemessagingsidebar');
+
+        // Give subsystems an opportunity to inject extra html content. The callback
+        // must always return a string containing valid html.
+        foreach (\core_component::get_core_subsystems() as $name => $path) {
+            
+            if ($path) {
+                // tilemmetry, because messages are in sidebar, so skip here
+                if($mergemessagingsidebar && $name == 'message') {
+                    continue;
+                }
+                $output .= component_callback($name, 'render_navbar_output', [$this], '');
+            }
+        }
 
         if ($pluginsfunction = get_plugins_with_function('render_navbar_output')) {
             foreach ($pluginsfunction as $plugintype => $plugins) {
@@ -1407,29 +1456,6 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
         return $output;
     }
 
-    /* Theme H5P Activities */
-    public function hvp_alter_styles(&$styles, $libraries, $embedType) {
-    global $CFG;
-    if (
-        (isset($libraries['H5P.InteractiveVideo']) &&
-        $libraries['H5P.InteractiveVideo']['majorVersion'] == '1') ||
-        (isset($libraries['H5P.CoursePresentation']) &&
-        $libraries['H5P.CoursePresentation']['majorVersion'] == '1') ||
-        (isset($libraries['H5P.DocumentationTool;']) &&
-        $libraries['H5P.DocumentationTool']['majorVersion'] == '1') ||
-        (isset($libraries['H5P.DragAndDrop']) &&
-        $libraries['H5P.DragAndDrop']['majorVersion'] == '1') ||
-        (isset($libraries['H5P.Questionnaire']) &&
-        $libraries['H5P.Questionnaire']['majorVersion'] == '1') ||(isset($libraries['H5P.FreeTextQuestion']) &&
-        $libraries['H5P.FreeTextQuestion']['majorVersion'] == '1')
-    ) {
-        $styles[] = (object) array(
-            'path'    => $CFG->httpswwwroot . '/theme/essential/style/h5p_styles.css',
-            'version' => '?ver=0.0.1',
-        );
-    } 
-}
-    
     /**
      * Secure login info.
      *
@@ -1443,6 +1469,8 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
     /*
      * For bottom links in sidebar
      *
+     * Will be removed later
+     * Just for convenience
      */
     public function check_user_admin_cap()
     {
@@ -1452,8 +1480,9 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
     /*
      * For bottom links in sidebar, to check if user is admin
      *
+     * Will be removed later
+     * Just for convenience
      */
-    
     public function check_user_site_admin()
     {
         global $USER;
@@ -1462,68 +1491,20 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
             return true;
         }
     }
-    
-    public function check_user_admintree ()
-    {
-        global $USER;
-        $sitecontext = context_system::instance();
-        $canviewusers = has_capability('moodle/user:editprofile', $sitecontext);
-        
-        return $canviewusers;
-    }
 
     /*
-     * For bottom links in sidebar, to check if user is site inspector
-     *
-     */
-    
-    public function check_user_faculty() {
-        global $USER;
-        
-        $sitecontext = context_system::instance();
-        $cancreate = has_capability('moodle/course:create', $sitecontext);
-    }
-    
-    /*
-     * For bottom links in sidebar, to check if user is member of faculty cohort
-     *
-     */
-    
-    public function check_user_partnership () {
-        global $USER;
-        
-        $sitecontext = context_system::instance();
-        $part_admin = has_capability('block/fn_mentor:viewblock', $sitecontext);
-        
-        return $part_admin;
-    }
-    
-    public function check_user_student() {
-        global $USER;
-        
-        if ($USER->profile['StudentNumber']){
-            $user_student = 1;
-        } else {
-            $user_student = 0;
-        }
-        
-        return $user_student;
-        
-    }
-
-    /*
-     * For bottom links in sidebar, to check blog enable / disable
+     * For bottom links in sidebar, to check if user is Course Creater
      *
      * Will be removed later
      * Just for convenience
      */
-    public function check_blog_enable()
+    public function check_user_course_creater()
     {
-        global $CFG;
+        global $COURSE;
+        $coursecontext = context_course::instance($COURSE->id);
+        $cancreatecourse = has_capability('moodle/course:create', $coursecontext);
 
-        if ($CFG->enableblogs == 1) {
-            return true;
-        }
+        return $cancreatecourse;
     }
 
     /**
@@ -1531,7 +1512,7 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
      *
      * @return string the navigation HTML.
      */
-    public function activity_navigation() {
+  public function activity_navigation() {
 
         $activitynavenable = get_config('theme_tilemmetry', 'activitynextpreviousbutton');
         if (!$activitynavenable) {
@@ -1556,6 +1537,7 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
 
         // Put the modules into an array in order by the position they are shown in the course.
         $mods = [];
+        $activitylist = [];
         foreach ($modules as $module) {
             // Only add activities the user can access, aren't in stealth mode and have a url (eg. mod_label does not).
             if (!$module->uservisible || $module->is_stealth() || empty($module->url)) {
@@ -1575,6 +1557,8 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
             }
             // Module URL.
             $linkurl = new moodle_url($module->url, array('forceview' => 1));
+            // Add module URL (as key) and name (as value) to the activity list array.
+            $activitylist[$linkurl->out(false)] = $modname;
         }
 
         $nummods = count($mods);
@@ -1603,16 +1587,16 @@ $sitetext = format_string(get_config('theme_tilemmetry', 'brandlogotext'));
             $nextmod = $mods[$modids[$position + 1]];
         }
 
-        $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod);
+        $activitynav = new \core_course\output\activity_navigation($prevmod, $nextmod, $activitylist);
         if ($activitynav->prevlink) {
-            $activitynav->prevlink->attributes['class'] = 'btn btn-primary';
+            $activitynav->prevlink->attributes['class'] = 'btn btn-inverse btn-sm';
             if ($activitynavenable == 1) {
                 $activitynav->prevlink->text = get_string('activityprev', 'theme_tilemmetry');
             }
         }
 
         if ($activitynav->nextlink) {
-            $activitynav->nextlink->attributes['class'] = 'btn btn-primary';
+            $activitynav->nextlink->attributes['class'] = 'btn btn-inverse btn-sm';
             if ($activitynavenable == 1) {
                 $activitynav->nextlink->text = get_string('activitynext', 'theme_tilemmetry');
             }

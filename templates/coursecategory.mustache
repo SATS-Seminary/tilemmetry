@@ -53,150 +53,65 @@
 }}
 {{> theme_tilemmetry/common_start }}
 
-        <div class="page-main">
-        <div class="container">
-            {{{ output.full_header }}}
+    <div class="page-main">
+    <div class="container">
+        {{{ output.full_header }}}
 
-            <div class="page-content">
-
-                <div class="row search-filters pb-5">
-                    <!-- <div class="col-12 col-md-3 col-lg-3 col-sm-12 d-inline-block pb-15" > -->
-                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 d-inline-block pb-15">
-                            {{{ categoryfilter }}}
-                        </div>
-
-                        <div class="col-12 col-md-9 col-lg-4 col-sm-12 d-inline-block pb-15">
-                            {{{ searchfilter }}}
-                        </div>
-
-                        <div class="col-12 col-md-3 col-lg-2 col-sm-12 d-inline-block pb-15 text-right hidden-sm-down">
-                            {{{ viewtoggler }}}
-                        </div>
-
-                        {{# categorydescription }}
-                        <div class="col-12 pb-15">
-                            {{{ categorydescription }}}
-                        </div>
-                        {{/ categorydescription }}
-                </div>
-
-
-
-                    {{# isloggedin }}
-                    <div class = "nav-tabs-horizontal" data-plugin="tabs">
-                                <ul class="nav nav-tabs nav-tabs-line" role="tablist">
-                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#mycoursestab" aria-controls="mycoursestab" role="tab">{{#str}} mycourses, theme_tilemmetry {{/str}}</a></li>
-                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#coursestab" aria-controls="coursestab" role="tab">{{#str}} courses, theme_tilemmetry {{/str}}</a></li>
-
-                                    <li class="dropdown nav-item" role="presentation" style="display: none;">
-                                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" aria-expanded="false">Menu </a>
-                                        <div class="dropdown-menu" role="menu">
-                                            <a class="dropdown-item" data-toggle="tab" href="#mycoursestab" aria-controls="mycoursestab" role="tab">{{#str}} mycourses, theme_tilemmetry {{/str}}</a>
-                                            <a class="dropdown-item" data-toggle="tab" href="#coursestab" aria-controls="coursestab" role="tab">{{#str}} courses, theme_tilemmetry {{/str}}</a>
-
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="tab-content pt-20">
-                                    <div class="tab-pane" id="mycoursestab" role="tabpanel">
-                                        <div id="mycategoryCourses" class="row">
-                                            {{# hasmycourses }}
-                                                {{# my_courses }}
-                                                    {{> theme_tilemmetry/my_course_card }}
-                                                {{/ my_courses }}
-                                            {{/ hasmycourses }}
-                                        </div>
-                                        {{^ hasmycourses }}
-                                            <div class="col-12">{{#str}} nocoursesavail, theme_tilemmetry {{/str}}</div>
-                                        {{/ hasmycourses }}
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <form action="" id="MyCourseArchive" method="get" class="form-inline">
-                                                    <input type="hidden" name="mycourses" id="loadMyCourses">
-                                                    <input type="hidden" name="totalmycoursecount" value="{{totalmycourses}}">
-                                                    <div class="form-group w-p100">
-                                                        <div class="input-group-btn d-block hidden-sm-down m-0-auto">
-                                                            <button id="myCourseArchivebtn" class="btn btn-primary btn-lg px-25 font-weight-500 font-size-14 h-40" type="submit">
-                                                                {{#str}}loadmore, theme_tilemmetry{{/str}}
-                                                                <img id="tilemmetrymyloaderimage" src={{ loaderimg }} width="16px" height="16px" style="display:none;" />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="tab-pane" id="coursestab" role="tabpanel">
-                    {{/ isloggedin }}
-                                        <div id="categoryCourses" class="row">
-                                            {{# hascourses }}
-                                                {{# courses }}
-                                                    {{> theme_tilemmetry/course_card }}
-                                                {{/ courses }}
-                                            {{/ hascourses }}
-
-                                        </div>
-                                        {{^ hascourses }}
-                                            <div class="col-12">{{#str}} nocoursesavail, theme_tilemmetry {{/str}}</div>
-                                        {{/ hascourses }}
-
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <form action="" id="courseArchive" method="get" class="form-inline">
-                                                    <input type="hidden" name="totalcoursecount" value="{{totalcourses}}">
-                                                    <div class="form-group w-p100">
-                                                        <div class="input-group-btn d-block hidden-sm-down m-0-auto">
-                                                            <button id="courseArchivebtn" class="btn btn-primary btn-lg px-25 font-weight-500 font-size-14 h-40" type="submit">
-                                                                {{#str}}loadmore, theme_tilemmetry{{/str}}
-                                                                <img id="tilemmetryloaderimage" src={{ loaderimg }} width="16px" height="16px" style="display:none;" />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                
-
-                {{# isloggedin }}
-                                    </div>
-                                </div>
-                    </div>
-                {{/ isloggedin }}
-                <div id="region-main-box" class="hidden">
-                    {{#hasregionmainsettingsmenu}}
-                        <div id="region-main-settings-menu" class="hidden-print {{#hasblocks}}has-blocks{{/hasblocks}}">
-                            <div> {{{ output.region_main_settings_menu }}} </div>
-                        </div>
-                    {{/hasregionmainsettingsmenu}}
-                    <section id="region-main" {{#hasblocks}}class="has-blocks"{{/hasblocks}}>
-                        {{#hasregionmainsettingsmenu}}
-                            <div class="region_main_settings_menu_proxy"></div>
-                        {{/hasregionmainsettingsmenu}}
-                        {{{ output.course_content_header }}}
-                        {{{ output.main_content }}}
-                        {{{ output.course_content_footer }}}
-                    </section>
-                </div>
+        <div class="page-content">
+            
+            <!-- Filters -->
+            <div class="row category-filters pb-20 d-none">
+                {{{allfilters}}}
             </div>
 
+            <div class="nav-tabs-horizontal courses-tabs" data-plugin="tabs">
+                <ul class="nav nav-tabs nav nav-tabs nav-tabs-line" role="tablist">
+                    {{#tabcontent}}
+                    <li class="nav-item" role="presentation">
+                        <a id="{{name}}tab" class="nav-link {{#isActive}}active show{{/isActive}}" data-toggle="tab" href="#{{name}}region" aria-controls="{{name}}region" role="tab" aria-selected="true">
+                            {{text}}
+                        </a>
+                    </li>
+                    {{/tabcontent}}
+                </ul>
+                <div class="tab-content mt-10 {{#latest_card}}latest-cards{{/latest_card}}">
+                    <div class="courses-loader-wrap w-p100 h-p100">
+                        <i class="h3 fa-spin fa fa-circle-o-notch" aria-hidden="true"></i>
+                    </div>
+                    {{#tabcontent}}
+                    <div class="tab-pane {{#isActive}}active show{{/isActive}}" id="{{name}}region" role="tabpanel">
+                        <div class="row content">
+                            
+                        </div>
+                        <div class="pagination" id="{{name}}pagination"></div>
+                    </div>
+                    {{/tabcontent}}
+                </div>
+            </div>
+            
         </div>
+        <div id="region-main-box" class="hidden">
+            {{#hasregionmainsettingsmenu}}
+                <div id="region-main-settings-menu" class="hidden-print {{#hasblocks}}has-blocks{{/hasblocks}}">
+                    <div> {{{ output.region_main_settings_menu }}} </div>
+                </div>
+            {{/hasregionmainsettingsmenu}}
+            <section id="region-main" {{#hasblocks}}class="has-blocks"{{/hasblocks}}>
+                {{#hasregionmainsettingsmenu}}
+                    <div class="region_main_settings_menu_proxy"></div>
+                {{/hasregionmainsettingsmenu}}
+                {{{ output.course_content_header }}}
+                {{{ output.main_content }}}
+                {{{ output.course_content_footer }}}
+            </section>
         </div>
-    {{> theme_tilemmetry/common_end }}
+    </div>  
+
+    </div>
+{{> theme_tilemmetry/common_end }}
 
 {{#js}}
-require(['theme_tilemmetry/loader', 'theme_tilemmetry/jquery-toolbar', 'theme_tilemmetry/coursecategory'], function (l, t, c) {
+require(['theme_tilemmetry/loader',  'theme_tilemmetry/coursecategory'], function (l, c) {
     Breakpoints();
-    // initiate course options toolbar
-    jQuery.each(jQuery('.showoptions'), function(){
-    jQuery(this).toolbar({
-        content: jQuery(this).data('toolbar'),
-        style: 'primary'
-    });
-    });
-
-    jQuery('.tool-item').on('click', function () {
-        window.location = jQuery(this).attr('href');
-    });
 });
 {{/js}}

@@ -33,7 +33,7 @@ use \theme_tilemmetry\activity_meta;
  * These functions are in a class purely for auto loading convenience.
  *
  * @package   theme_tilemmetry
- * @copyright Copyright (c) 2016 SATS. (http://www.wisdmlabs.com)
+ * @copyright Copyright (c) 2016 South African Theological Seminary. (http://www.sats.edu.za)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

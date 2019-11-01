@@ -43,6 +43,17 @@ $string['disablenextprevious'] = 'Disable';
 $string['enablenextprevious'] = 'Enable';
 $string['enablenextpreviouswithname'] = 'Enable with Activity name';
 
+// CSS customisation page settings
+$string['csssettings'] = "CSS Customisation";
+$string['customcss'] = 'Custom CSS';
+$string['customcssdesc'] = 'You may customise the CSS from the text box above. The changes will be reflected on all the pages of your site.';
+$string['rawscss'] = 'Raw SCSS';
+$string['rawscss_desc'] = 'Use this field to provide SCSS or CSS code which will be injected at the end of the style sheet.';
+$string['rawscsspre'] = 'Raw initial SCSS';
+$string['rawscsspre_desc'] = 'In this field you can provide initialising SCSS code, it will be injected before everything else. Most of the time you will use this setting to define variables.';
+$string['hvpcustomcss'] = 'H5P Custom CSS';
+$string['hvpcustomcssdesc'] = 'H5P customisations must be done here.';
+
 // course
 $string['nosummary'] = 'No Summary has been added in this setion of the Course.';
 $string['choosecategory'] = 'Choose Category';
@@ -86,11 +97,10 @@ $string['messagenotsenterror'] = 'Message not sent! Something went wrong.';
 $string['sendingmessage'] = 'Sending message...';
 $string['sendmoremessage'] = 'Send more message';
 
-// General Settings.
+// General Seetings.
 $string['generalsettings' ] = 'General Settings';
 $string['navsettings'] = 'Nav Settings';
 $string['dashboardsetting'] = 'Dashboard Settings';
-$string['homepagesettings'] = 'Home Page Settings';
 $string['colorsettings'] = 'Color Settings';
 $string['fontsettings' ] = 'Font Settings';
 $string['slidersettings'] = 'Slider Settings';
@@ -110,6 +120,7 @@ $string['fontnamebodydesc'] = 'Enter the exact name of the font to use for all o
 
 /* Dashboard Settings*/
 $string['dashboardsetting'] = 'Dashboard Settings';
+$string['olddashboard'] = 'You have old Tilemmetry Block plugin installed in your system. To avail new features and settings please update your Tilemmetry Block plugin to latest version.';
 $string['themecolor'] = 'Theme colour';
 $string['themecolordesc'] = 'What colour skin should your theme be.  This will change multiple components to produce the colour you wish across the Moodle site';
 $string['themetextcolor'] = 'Text colour';
@@ -165,7 +176,7 @@ $string['logodesc'] = 'You may add the logo to be displayed on the header. Note-
 $string['logomini'] = 'LogoMini';
 $string['logominidesc'] = 'You may add the logomini to be displayed on the header when sidebar is collapsed. Note- Preferred height is 50px. In case you wish to customise, you can do so from the custom CSS box.';
 $string['siteicon'] = 'Site icon';
-$string['siteicondesc'] = 'Don\'t have a logo? You could choose one from this <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_new">list</a>. <br /> Just enter the text after "fa-".';
+$string['siteicondesc'] = 'Don\'t have a logo? You could choose one from this <a href="https://fontawesome.com/v4.7.0/cheatsheet/" target="_new">list</a>. <br /> Just enter the text after "fa-".';
 $string['logoorsitename'] = 'Choose site logo format';
 $string['logoorsitenamedesc'] = 'You can change the site header logo as per your choice. <br />The options available are: Logo - Only the logo will be shown; <br /> Icon+sitename - An icon along with the sitename will be shown.';
 $string['onlylogo'] = 'Logo Only';
@@ -177,122 +188,22 @@ $string['favicon'] = 'Favicon';
 $string['favicondesc'] = 'Your site’s “favourite icon”. Here, you may insert the favicon for your site.';
 $string['enablehomedesc'] = 'Enable Home Desc';
 
+/*custom css*/
+$string['customcss'] = 'Custom CSS';
+$string['customcssdesc'] = 'You may customise the CSS from the text box above. The changes will be reflected on all the pages of your site.';
+
 /*google analytics*/
 $string['googleanalytics'] = 'Google Analytics Tracking ID';
 $string['googleanalyticsdesc'] = 'Please enter your Google Analytics Tracking ID to enable analytics on your website. The  tracking ID format shold be like [UA-XXXXX-Y].<br/>Please be aware that by including this setting, you will be sending data to Google Analytics and you should make sure that your users are warned about this. Our product does not store any of the data being sent to Google Analytics.';
 
-/*theme_tilemmetry_frontpage*/
-
-$string['frontpageimagecontent'] = 'Header content';
-$string['frontpageimagecontentdesc'] = ' This section relates to the top portion of your frontpage.';
-$string['frontpageimagecontentstyle'] = 'Style';
-$string['frontpageimagecontentstyledesc'] = 'You can choose between Static & Slider.';
-$string['staticcontent'] = 'Static';
-$string['slidercontent'] = 'Slider';
-$string['addtext'] = 'Add Text';
-$string['defaultaddtext'] = 'Education is a time-tested path to progress.';
-$string['addtextdesc'] = 'Here you may add the text to be displayed on the front page, preferably in HTML.';
-$string['uploadimage'] = 'Upload Image';
-$string['uploadimagedesc'] = 'You may upload image as content for slide';
-$string['video'] = 'iframe Embedded code';
-$string['videodesc'] = ' Here, you may insert the iframe Embedded code of the video that is to be embedded.';
-$string['contenttype'] = 'Select Content type';
-$string['contentdesc'] = 'You can choose between image or give video url.';
-$string['image'] = 'Image';
-$string['videourl'] = 'Video URL';
 $string['frontpageimge'] = '';
 
-$string['slidercount'] = 'No of slides';
-$string['slidercountdesc'] = '';
-$string['one'] = '1';
-$string['two'] = '2';
-$string['three'] = '3';
 $string['four'] = '4';
-$string['five'] = '5';
 $string['eight'] = '8';
 $string['twelve'] = '12';
 
-$string['slideimage'] = 'Upload images for Slider';
-$string['slideimagedesc'] = 'You may upload an image as content for this slide.';
-$string['slidertext'] = 'Add Slider text';
-$string['defaultslidertext'] = '';
-$string['slidertextdesc'] = 'You may insert the text content for this slide. Preferably in HTML.';
-$string['sliderurl'] = 'Add link to Slider button';
-$string['sliderbuttontext'] = 'Add Text button on slide';
-$string['sliderbuttontextdesc'] = 'You may add text to the button on this slide.';
-$string['sliderurldesc'] = 'You may insert the link of the page where the user will be redirected once they click on the button.';
-$string['slideinterval'] = 'Slide interval';
-$string['slideintervaldesc'] = 'You may set the transition time between the slides. In case if there is one slide, this option will have no effect.';
-$string['sliderautoplay'] = 'Set Slider Autoplay';
-$string['sliderautoplaydesc'] = 'Select ‘yes’ if you want automatic transition in your slideshow.';
-$string['true'] = 'Yes';
-$string['false'] = 'No';
-
-$string['frontpageblocks'] = 'Body Content';
-$string['frontpageblocksdesc'] = 'You may insert a heading for your site’s body';
-
-$string['enablesectionbutton'] = 'Enable buttons on Sections';
-$string['enablesectionbuttondesc'] = 'Enable the buttons on body sections.';
 $string['enablefrontpagecourseimg'] = 'Enable Images in Front Page Courses';
 $string['enablefrontpagecourseimgdesc'] = 'Enable images in Front Page Courses Available section ';
-
-/* General section descriptions */
-$string['frontpageblockiconsectiondesc'] = 'You can choose any icon from this <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_new">list</a>. Just enter the text after "fa-". ';
-$string['frontpageblockdescriptionsectiondesc'] = 'A brief description about the title.';
-$string['defaultdescriptionsection'] = 'Holisticly harness just in time technologies via corporate scenarios.';
-$string['sectionbuttontextdesc'] = 'Enter the text for button in this Section.';
-$string['sectionbuttonlinkdesc'] = 'Enter the URL link for this Section.';
-$string['frontpageblocksectiondesc'] = 'Add title to this Section.';
-
-/* block section 1 */
-$string['frontpageblocksection1'] = 'Body title for 1st Section';
-$string['frontpageblockdescriptionsection1'] = 'Body description for 1st Section';
-$string['frontpageblockiconsection1'] = 'Font-Awesome icon for 1st Section';
-$string['sectionbuttontext1'] = 'Button text for 1st Section';
-$string['sectionbuttonlink1'] = 'URL link for 1st Section';
-
-
-/* block section 2 */
-$string['frontpageblocksection2'] = 'Body title for 2nd Section';
-$string['frontpageblockdescriptionsection2'] = 'Body description for 2nd Section';
-$string['frontpageblockiconsection2'] = 'Font-Awesome icon for 2nd Section';
-$string['sectionbuttontext2'] = 'Button text for 2nd Section';
-$string['sectionbuttonlink2'] = 'URL link for 2nd Section';
-
-
-/* block section 3 */
-$string['frontpageblocksection3'] = 'Body title for 3rd Section';
-$string['frontpageblockdescriptionsection3'] = 'Body description for 3rd Section';
-$string['frontpageblockiconsection3'] = 'Font-Awesome icon for 3rd Section';
-$string['sectionbuttontext3'] = 'Button text for 3rd Section';
-$string['sectionbuttonlink3'] = 'URL link for 3rd Section';
-
-
-/* block section 4 */
-$string['frontpageblocksection4'] = 'Body title for 4th Section';
-$string['frontpageblockdescriptionsection4'] = 'Body description for 4th Section';
-$string['frontpageblockiconsection4'] = 'Font-Awesome icon for 4th Section';
-$string['sectionbuttontext4'] = 'Button text for 4th Section';
-$string['sectionbuttonlink4'] = 'URL link for 4th Section';
-
-
-// Frontpage Aboutus settings
-$string['frontpageaboutus'] = 'Frontpage About us';
-$string['frontpageaboutusdesc'] = 'This section is for front page About us';
-$string['frontpageaboutustitledesc'] = 'Add title to About Us Section';
-$string['frontpageaboutusbody'] = 'Body Description for About Us Section';
-$string['frontpageaboutusbodydesc'] = 'A brief description about this Section';
-
-$string['enablefrontpageaboutus'] = 'Enable About us section';
-$string['enablefrontpageaboutusdesc'] = 'Enable the About us section in front page.';
-$string['frontpageaboutusheading'] = 'About us Heading';
-$string['frontpageaboutusheadingdesc'] = 'Heading for the default heading text for section';
-$string['frontpageaboutustext'] = 'About us text';
-$string['frontpageaboutustextdesc'] = 'Enter about us text for frontpage.';
-$string['frontpageaboutusdefault'] = '<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam.</p>';
-$string['frontpageaboutusimage'] = 'Frontpage about us  Image';
-$string['frontpageaboutusimagedesc'] = 'Upload the image for frontpage about us section';
 
 // Social media settings
 $string['socialmedia'] = 'Social Media Settings';
@@ -311,6 +222,8 @@ $string['instagramsetting'] = 'Instagram Settings';
 $string['instagramsettingdesc'] = 'Enter your site\'s Instagram page link. For eg. https://www.instagram.com/name';
 $string['pinterestsetting'] = 'Pinterest Settings';
 $string['pinterestsettingdesc'] = 'Enter your site\'s Pinterest page link. For eg. https://www.pinterest.com/name';
+$string['quorasetting'] = 'Quora Settings';
+$string['quorasettingdesc'] = 'Enter your site\'s Quora page link. For eg. https://www.quora.com/name';
 
 // Footer Section Settings
 $string['footersetting'] = 'Footer Settings';
@@ -363,17 +276,6 @@ $string['brandlogoposdesc'] = "If enabled, Brand logo will be visible on right s
 $string['brandlogotext'] = "Site Description";
 $string['brandlogotextdesc'] = "Add text for site description which will display on login and signup page. Keep this blank if don't want to put any description.";
 // Login settings Page code end.
-
-// CSS customisation page settings
-$string['csssettings'] = "CSS Customisation";
-$string['customcss'] = 'Custom CSS';
-$string['customcssdesc'] = 'You may customise the CSS from the text box above. The changes will be reflected on all the pages of your site.';
-$string['rawscss'] = 'Raw SCSS';
-$string['rawscss_desc'] = 'Use this field to provide SCSS or CSS code which will be injected at the end of the style sheet.';
-$string['rawscsspre'] = 'Raw initial SCSS';
-$string['rawscsspre_desc'] = 'In this field you can provide initialising SCSS code, it will be injected before everything else. Most of the time you will use this setting to define variables.';
-$string['hvpcustomcss'] = 'H5P Custom CSS';
-$string['hvpcustomcssdesc'] = 'H5P customisations must be done here.';
 
 // From theme snap
 $string['title'] = 'Title';
@@ -527,7 +429,6 @@ $string['viewblog'] = 'View full Blog';
 // $string['showsection'] = 'Expand';
 // $string['hidesections'] = 'Collapse Sections';
 // $string['showsections'] = 'Expand Sections';
-// $string['addsection'] = 'Add Section';
 
 $string['overdue'] = 'Overdue';
 $string['due'] = 'Due';
@@ -536,21 +437,10 @@ $string['due'] = 'Due';
 $string['quicklinks'] = 'Quick Links';
 
 /*coruse activity navigation*/
-$string['backtocourse'] = 'Back to course';
+$string['backtocourse'] = 'Course Overview';
 $string['sectionnotitle'] = 'General';
 $string['sectiondefaulttitle'] = 'Section';
 
-// latest 3.3 to be arranged later
-$string['testimonialcount'] = 'Testimonial Count';
-$string['testimonialcountdesc'] = 'Number of testimonials to show.';
-$string['testimonialimage'] = 'Testimonial Image';
-$string['testimonialimagedesc'] = 'Person image to display with testimonial';
-$string['testimonialname'] = 'Person Name';
-$string['testimonialnamedesc'] = 'Name of person';
-$string['testimonialdesignation'] = 'Person Designation';
-$string['testimonialdesignationdesc'] = 'Person\'s designation.';
-$string['testimonialtext'] = 'Person\'s Testimonial';
-$string['testimonialtextdesc'] = 'What person says';
 $string['sectionactivities'] = 'Activities';
 $string['showless'] = 'Show Less';
 $string['showmore'] = 'Show More';
@@ -573,6 +463,7 @@ $string['signin'] = 'Sign In';
 $string['forgotpassword'] = 'Forgot Password?';
 $string['noaccount'] = 'No Account?';
 $string['applysitewide'] = 'Apply Sitewide';
+$string['applysitecolor'] = 'Apply Site Color';
 
 // User profile page js
 $string['actioncouldnotbeperformed'] = 'Action could not be performed!';
@@ -590,7 +481,7 @@ $string['createaccount'] = 'Here you can create a new account.';
 $string['signup'] = 'Sign Up';
 $string['togglesearch'] = 'Toggle Search';
 $string['togglefullscreen'] = 'Toggle fullscreen';
-$string['navbartype'] = 'Navbar Type';
+$string['navbartype'] = 'Navbar Color';
 $string['sidebarcolor'] = 'Sidebar Color';
 $string['sitecolor'] = 'Site Color';
 $string['others'] = 'Others';
@@ -605,13 +496,6 @@ $string['tilemmetrysettings'] = 'Tilemmetry Settings';
 $string['createanewcourse'] = 'Create A New Course';
 $string['createarchivepage'] = 'Course Archive Page';
 $string['siteblog'] = 'Site Blog';
-$string['gradeoverview'] = 'Grade Overview';
-$string['researchcentre'] = 'Research Centre';
-$string['informationkiosk'] = 'Information Kiosk';
-$string['mycurriculum'] = 'My Curriculum';
-$string['myfinances'] = 'My Finances';
-$string['partnershipdashboard'] = "Partnership Dashboard";
-$string['coursecatalogue'] = 'Course Catalogue';
 $string['selectcategory'] = 'Select Category';
 $string['nocoursesavail'] = 'Sorry! No courses available at the moment.';
 $string['norecentfeedback'] = 'No Recent Feedback !';
@@ -676,26 +560,6 @@ $string['typedanger'] = "Urgent announcement";
 $string['typewarning'] = "Warning announcement";
 $string['typesuccess'] = "Success announcement";
 
-// Dashboard SATS Tilemmetry Blocks 
-$string['courseprogressblock'] = 'Course Progress Block';
-$string['enrolledusersblock'] = 'Enrolled Users Block';
-$string['quizattemptsblock'] = 'Quiz Attempts Block';
-$string['courseanlyticsblock'] = 'Course Anlytics Block';
-$string['latestmembersblock'] = 'Latest Members Block';
-$string['addnotesblock'] = 'Add Notes Block';
-$string['recentfeedbackblock'] = 'Recent Feedback Block';
-$string['recentforumsblock'] = 'Recent Forums Block';
-
-$string['courseprogressblockdesc'] = 'Enable Course Progress Block ';
-$string['enrolledusersblockdesc'] = 'Enable Enrolled Users Block';
-$string['quizattemptsblockdesc'] = 'Enable Quiz Attempts Block';
-$string['courseanlyticsblockdesc'] = 'Enable Course Anlytics Block';
-$string['latestmembersblockdesc'] = 'Enable Latest Members Block';
-$string['addnotesblockdesc'] = 'Enable Add Notes Block';
-$string['recentfeedbackblockdesc'] = 'Enable Recent Feedback Block';
-$string['recentforumsblockdesc'] = 'Enable Recent Forums Block';
-
-
 // Teacher Dashboard Strings
 $string['courseprogress'] = "Course Progress";
 $string['course'] = "Course";
@@ -705,14 +569,6 @@ $string['progress'] = "Progress";
 $string['name'] = "Name";
 $string['status'] = "Status";
 $string['back'] = "Back";
-
-
-/*Front Page Setting for About Us Block*/
-$string['frontpageblockdisplay'] = 'About Us Section';
-$string['frontpageblockdisplaydesc'] = 'You can show or hide the "About Us" section, also you can show "About Us" section in grid format';
-$string['donotshowaboutus'] = 'Do Not Show';
-$string['showaboutusinrow'] = 'Show Section in a Row';
-$string['showaboutusingridblock'] = 'Show Section in Grid Block';
 
 $string['recentactivityblock'] = 'Recent Activities Block';
 $string['recentactivityblockdesc'] = 'If enabled, Recent Activities Block will be visible on Dashboard';
@@ -774,9 +630,385 @@ $string['sidebarpinned'] = 'Sidebar pinned.';
 $string['sidebarunpinned'] = 'Sidebar unpinned.';
 $string['pinsidebar'] = 'Pin sidebar';
 $string['unpinsidebar'] = 'Unpin sidebar';
+$string['mergemessagingsidebar'] = 'Merge Message Panel';
+$string['mergemessagingsidebardesc'] = 'Merge message panel into right sidebar';
 
 /** Course Stats */
-$string['enrolledusers'] = 'Enrolled <br>Users';
+$string['enrolstudents'] = 'Enrolled <br>Students';
 $string['studentcompleted'] = 'Students <br>Completed';
 $string['inprogress'] = 'In <br>Progress';
 $string['yettostart'] = 'Yet <br>to Start';
+
+$string['none'] = 'None';
+$string['fade'] = 'Fade';
+$string['slide-top'] = 'Slide Top';
+$string['slide-bottom'] = 'Slide Bottom';
+$string['slide-right'] = 'Slide Right';
+$string['slide-left'] = 'Slide Left';
+$string['slide-left-right'] = 'Alternate: Slide Left and Slide Right';
+$string['scale-up'] = 'Scale Up';
+$string['scale-down'] = 'Scale Down';
+$string['courseanimation'] = 'Course Animation';
+$string['courseanimationdesc'] = 'Enabling this will add Animation to Courses in the Course Archive Page Courses';
+$string['enablenewcoursecards'] = 'Enable New Course Cards';
+$string['enablenewcoursecardsdesc'] = 'Enabling this will show new Course Cards on Course Archive Page';
+$string['addsection'] = 'Click to Add Section';
+$string['publishfrontpage'] = 'Publish';
+$string['sectiondelete'] = 'This section will be permanently deleted in 30 seconds, undo to avoid any changes';
+$string['undo'] = 'Undo within';
+$string['frontpageheadercolor'] = 'Homepage header color';
+$string['frontpageheadercolordesc'] = 'If header is transparent then choosen color will be applied to page header.';
+$string['frontpagetransparentheader'] = 'Homepage transparent header';
+$string['frontpagetransparentheaderdesc'] = 'When slider is the first section on homepage, then header will appear as transparent.';
+$string['frontpageappearanimation'] = 'Section appear animation';
+$string['frontpageappearanimationdesc'] = 'Enable this to activate appear animation for sections.';
+$string['frontpageappearanimationstyle'] = 'Appear animation style';
+$string['frontpageappearanimationstyledesc'] = 'Choose animation style for section.';
+$string['migratorheader'] = 'Migrator';
+$string['migrate'] = 'Migrate';
+$string['migratormessge'] = '<p>Welcome to brand new design of SATS Tilemmetry\'s home page. We found that you have older homepage settings. Do you like to migrate those settings?</p><p><strong>Migrate</strong> - New blocks will be created from older settings.</br><strong>Cancel</strong>- You can create frontpage manually and this message will not appear again.</p>';
+$string['sectionupdated'] = 'Section updated successfully. Publish to apply changes.';
+$string['sectiondeleted'] = 'Section deleted successfully. Publish to apply changes.';
+
+
+// Slider Section
+$string['noofslides'] = 'Number of slides';
+$string['slideheading'] = "Slide Heading";
+$string['slideheadingplaceholder'] = 'Enter slide heading here';
+$string['slidedescription'] = "Slide Description";
+$string['slidedescriptionplaceholder'] = 'Enter slide description here';
+$string['btnlabel'] = 'Button Label';
+$string['btnlink'] = 'Button Link';
+$string['missingslide'] = 'Please upload image or video';
+$string['slideinterval'] = 'Slide interval';
+$string['slideintervalplaceholder'] = 'Positive integer number in milliseconds.';
+$string['slideintervaldesc'] = 'You may set the transition time between the slides. In case if there is one slide, this option will have no effect. If interval is invalid(empty|0|less than 0) then default interval is 5000 milliseconds.';
+
+
+// Contact Section
+$string['contactlink'] = 'Contact Link';
+$string['contactus'] = 'Contact us';
+$string['contactplaceholder'] = 'Enter Contact detail, this can be anything like email or phone';
+$string['missingcontactlink'] = 'Missing contact link';
+$string['title'] = 'Title';
+$string['titleplaceholder'] = 'Enter title here';
+$string['missingtitle'] = 'Missing title';
+$string['description'] = 'Description';
+$string['descriptionplaceholder'] = 'Enter description here';
+$string['contactlabelplaceholder'] = 'Enter Label e.g. Email, Phone, etc.';
+$string['missingdescription'] = 'Missing description';
+$string['socialview'] = 'Icons View';
+$string['quora'] = 'Quora';
+$string['google'] = 'Google';
+$string['youtube'] = 'Youtube';
+$string['twitter'] = 'Twitter';
+$string['facebook'] = 'Facebook';
+$string['linkedin'] = 'Linkedin';
+$string['pinterest'] = 'Pinterest';
+$string['instagram'] = 'Instagram';
+
+
+// General Strings
+$string['sectionpadding'] = 'Section Padding In pixel';
+$string['sectionsetting'] = 'Section Settings';
+$string['sectionbackground'] = 'Section Background Image';
+$string['bgcolor'] = 'Background Color';
+$string['bgfixed'] = 'Fixed Background';
+$string['bgopacity'] = 'Background Opacity';
+$string['nobgfixed'] = 'Not Fixed Background';
+$string['textbold'] = 'Bold';
+$string['textitalic'] = 'Italic';
+$string['titleeditor'] = 'Editor';
+$string['fontsize'] = 'Font Size';
+$string['textunderline'] = 'Underline';
+$string['color'] = 'Color';
+$string['editingison'] = 'Editing Mode On';
+$string['fullwidth'] = 'Full Width';
+$string['container'] = 'Container Fixed Width';
+$string['shadowless'] = 'Section Elements Shadow';
+$string['shadowcolor'] = 'Section Shadow Color';
+$string['shadowlessdesc'] = 'Enable this to add some shadow to section elements';
+$string['contactlabel'] = "Contact Label";
+$string['link'] = 'Link';
+$string['linklabel'] = 'Link Label';
+$string['phone'] = 'Contact No.';
+
+// Section list string
+$string['slidersection'] = "Slider Section";
+$string['aboutussection'] = "About us Section";
+$string['contactsection'] = "Contact Section";
+$string['featuresection'] = "Feature Section";
+$string['coursessection'] = "Courses Section";
+$string['teamsection'] = "Team Section";
+$string['testimonialsection'] = "Testimonial Section";
+$string['htmlsection'] = "Html Section";
+$string['separatorsection'] = "Separator Section";
+
+
+// Slider Section
+$string['textalign'] = 'Text Align';
+$string['desccolor'] = 'Description Color';
+$string['headingcolor'] = 'Heading Color';
+$string['enablenav'] = 'Navigation Arrows';
+
+$string['nonav'] = 'No Navigation Arrows';
+$string['navarrows'] = 'Default Nav Arrows';
+$string['navarrowscircle'] = 'Navigation Arrows with circular Background';
+$string['navarrowssquare'] = 'Navigation Arrows with square Background';
+
+// Team Section
+$string['meetourteam'] = 'Meet our team';
+$string['rows'] = 'Number of Rows';
+$string['members'] = 'Number of Members';
+$string['image'] = 'Select Image';
+$string['quote'] = 'Enter Quote';
+$string['teammembernameplaceholder'] = "Enter team member's name here";
+$string['teammemberquoteplaceholder'] = "Enter team member's quote here";
+
+// Feature Section
+$string['feature'] = 'Feature';
+$string['features'] = 'Number of Features';
+$string['featurenameplaceholder'] = 'Enter feature here';
+$string['missingname'] = 'Missing name';
+$string['featureiconplaceholder'] = 'Enter feature icon here';
+$string['missingicon'] = 'Missing icon';
+$string['colorhex'] = 'Hex value for color';
+
+// Courses section
+$string['all'] = 'All';
+$string['allcourses'] = 'All courses';
+$string['future'] = 'Future';
+$string['coursessectioninprogress'] = 'In progress';
+$string['past'] = 'Past';
+$string['coursecategoriesplaceholder'] = 'Search course category here';
+$string['categories'] = 'Categories';
+$string['categoryandcourses'] = 'Category and Courses';
+$string['hiddencategory'] = 'Hidden Category';
+
+// Testimonial Section
+$string['testimonials'] = 'Number of testimonials';
+$string['testimonial'] = 'Testimonial';
+$string['testimonialplaceholder'] = "Enter person's testimonial here";
+$string['missingtestimonial'] = 'Missing Testimonial';
+$string['designation'] = 'Designation';
+$string['designationplaceholder'] = "Enter person's designation here";
+$string['borderradius'] = 'Border Radius';
+$string['noradius'] = 'No Border Radius';
+$string['px'] = ' Pixel';
+$string['fullnameplaceholder'] = "Enter person's full name here";
+$string['namecolor'] = 'Author Name field Color';
+$string['namecolordesc'] = 'This color will be applied to all Fullname Text';
+$string['designationcolor'] = 'Designation Field Color';
+$string['designationcolordesc'] = 'This color will be applied to all Designation Text.';
+$string['testimonialcolor'] = 'Testimonial Field Color';
+$string['testimonialcolordesc'] = 'This color will be applied to all Testimonial Text.';
+$string['testimonialproperties'] = 'Text properties for testimonial';
+$string['testimonialpropertiesdesc'] = 'These properties will be applied to all author\'s testimonial.';
+$string['backgroundstyle'] = 'Testimonial background style';
+$string['solidcolor'] = 'Solid';
+$string['gradientcolor'] = 'Gradient';
+$string['testimonialcolor1'] = 'If background style is solid then this color will be applied for whole testimonial. If background style is gradient then this will be the first color.';
+$string['testimonialcolor2'] = 'This will be the second color for testimonial background.';
+$string['layout1'] = 'Layout 1';
+$string['layout2'] = 'Layout 2';
+
+// Edit Menu
+$string['edit'] = 'Edit';
+$string['moveup'] = 'Move Up';
+$string['movedown'] = 'Move Down';
+$string['hide'] = 'Hide';
+$string['show'] = 'Show';
+$string['delete'] = 'Delete';
+
+// HTML Section
+$string['blocks'] = 'Number of blocks';
+$string['cssstyle'] = 'CSS Styles';
+$string['cssstyleplaceholder'] = 'Enter css styles here. Live changes will reflected into the editor. Ex:
+div {
+    border: 2px dashed #ccc;
+}
+';
+$string['htmldefaultcontent'] = 'Put your content here';
+$string['applyfilter'] = 'Apply filters';
+$string['applyfilterdesc'] = 'Apply moodle filters on content before showing section.';
+
+// Separator Section
+$string['separatorstyle'] = 'Separator style';
+$string['separatorsolid'] = 'Solid';
+$string['separatordouble'] = 'Double';
+$string['separatordashed'] = 'Dashed';
+$string['separatordotted'] = 'Dotted';
+$string['separatorblur'] = 'Blur';
+$string['separatorblurend'] = 'Blur end';
+$string['separatorgradient'] = 'Gradient';
+$string['separatorwidth'] = 'Width in percentage';
+$string['separatorheight'] = 'Height';
+$string['separatorresult'] = 'Result';
+
+// About us section
+$string['aboutus'] = 'About us';
+$string['aboutusblock'] = 'About us block ';
+$string['view'] = 'View';
+$string['icon'] = 'Icon (<a href="https://fontawesome.com/v4.7.0/cheatsheet/" target="_new">Font-Awesome</a>)';
+$string['aboutusicondesc'] = 'You can choose any icon from this <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_new">list</a>. Just enter the text after "fa-".';
+$string['backgroudimage'] = 'Background Image';
+$string['block'] = 'Block';
+$string['rowview'] = "Row";
+$string['gridview'] = "Grid";
+$string['columnview'] = 'Column';
+$string['clickhere'] = 'Click Here';
+$string['btnlink'] = "Button Link";
+$string['btnlinkplaceholder'] = 'Enter button link here';
+$string['btnlabel'] = "Button Label";
+$string['btnlabelplaceholder'] = 'Enter button label here';
+$string['colorhex'] = 'Color ( Hex code )';
+$string['colorhexdesc'] = 'Click on above box to choose color';
+$string['blockbackground'] = 'Block Background';
+$string['transparent'] = 'Transparent';
+$string['image'] = 'Image';
+$string['noborder'] = 'No Border';
+$string['border'] = 'Bordered';
+$string['cardradius'] = 'Card Radius';
+
+// Frontpage old string
+
+$string['homepagesettings'] = 'Home Page Settings';
+
+$string['frontpagedesign'] = 'Frontpage Design';
+$string['frontpagedesigndesc'] = 'This section relates to the design style of frontpage.';
+$string['frontpagechooser'] = 'Choose frontpage design';
+$string['frontpagechooserdesc'] = 'Choose your frontpage design.';
+$string['frontpagedesignold'] = 'Default old design';
+$string['frontpagedesignolddesc'] = 'Default dashboard like previous.';
+$string['frontpagedesignnew'] = 'New design';
+$string['frontpagedesignnewdesc'] = 'Fresh new design with multiple sections. You can configure sections individualy on frontpage.';
+$string['newhomepagedescription'] = 'Click on \'Site Home\' from the Navigation bar to go to \'Homepage Builder\' and create your own Homepage';
+$string['frontpageloader'] = 'Upload loader image for frontpage';
+$string['frontpageloaderdesc'] = 'This replace the default loader with your image';
+
+$string['frontpageimagecontent'] = 'Header content';
+$string['frontpageimagecontentdesc'] = ' This section relates to the top portion of your frontpage.';
+$string['frontpageimagecontentstyle'] = 'Style';
+$string['frontpageimagecontentstyledesc'] = 'You can choose between Static & Slider.';
+$string['staticcontent'] = 'Static';
+$string['slidercontent'] = 'Slider';
+$string['addtext'] = 'Add Text';
+$string['defaultaddtext'] = 'Education is a time-tested path to progress.';
+$string['addtextdesc'] = 'Here you may add the text to be displayed on the front page, preferably in HTML.';
+$string['uploadimage'] = 'Upload Image';
+$string['uploadimagedesc'] = 'You may upload image as content for slide';
+$string['video'] = 'iframe Embedded code';
+$string['videodesc'] = ' Here, you may insert the iframe Embedded code of the video that is to be embedded.';
+$string['contenttype'] = 'Select Content type';
+$string['contentdesc'] = 'You can choose between image or give video url.';
+$string['imageorvideo'] = 'Image/ Video';
+$string['image'] = 'Image';
+$string['videourl'] = 'Video URL';
+
+$string['slidercount'] = 'No of slides';
+$string['slidercountdesc'] = '';
+$string['one'] = '1';
+$string['two'] = '2';
+$string['three'] = '3';
+$string['five'] = '5';
+
+$string['slideimage'] = 'Upload images for Slider';
+$string['slideimagedesc'] = 'You may upload an image as content for this slide.';
+$string['slidertext'] = 'Add Slider text';
+$string['defaultslidertext'] = '';
+$string['slidertextdesc'] = 'You may insert the text content for this slide. Preferably in HTML.';
+$string['sliderurl'] = 'Add link to Slider button';
+$string['sliderbuttontext'] = 'Add Text button on slide';
+$string['sliderbuttontextdesc'] = 'You may add text to the button on this slide.';
+$string['sliderurldesc'] = 'You may insert the link of the page where the user will be redirected once they click on the button.';
+$string['sliderautoplay'] = 'Set Slider Autoplay';
+$string['sliderautoplaydesc'] = 'Select ‘yes’ if you want automatic transition in your slideshow.';
+$string['true'] = 'Yes';
+$string['false'] = 'No';
+
+$string['frontpageblocks'] = 'Body Content';
+$string['frontpageblocksdesc'] = 'You may insert a heading for your site’s body';
+
+$string['enablesectionbutton'] = 'Enable buttons on Sections';
+$string['enablesectionbuttondesc'] = 'Enable the buttons on body sections.';
+
+
+/* General section descriptions */
+$string['frontpageblockiconsectiondesc'] = 'You can choose any icon from this <a href="https://fontawesome.com/v4.7.0/cheatsheet/" target="_new">list</a>. Just enter the text after "fa-". ';
+$string['frontpageblockdescriptionsectiondesc'] = 'A brief description about the title.';
+$string['defaultdescriptionsection'] = 'Holisticly harness just in time technologies via corporate scenarios.';
+$string['sectionbuttontextdesc'] = 'Enter the text for button in this Section.';
+$string['sectionbuttonlinkdesc'] = 'Enter the URL link for this Section.';
+$string['frontpageblocksectiondesc'] = 'Add title to this Section.';
+
+/* block section 1 */
+$string['frontpageblocksection1'] = 'Body title for 1st Section';
+$string['frontpageblockdescriptionsection1'] = 'Body description for 1st Section';
+$string['frontpageblockiconsection1'] = 'Font-Awesome icon for 1st Section';
+$string['sectionbuttontext1'] = 'Button text for 1st Section';
+$string['sectionbuttonlink1'] = 'URL link for 1st Section';
+
+
+/* block section 2 */
+$string['frontpageblocksection2'] = 'Body title for 2nd Section';
+$string['frontpageblockdescriptionsection2'] = 'Body description for 2nd Section';
+$string['frontpageblockiconsection2'] = 'Font-Awesome icon for 2nd Section';
+$string['sectionbuttontext2'] = 'Button text for 2nd Section';
+$string['sectionbuttonlink2'] = 'URL link for 2nd Section';
+
+
+/* block section 3 */
+$string['frontpageblocksection3'] = 'Body title for 3rd Section';
+$string['frontpageblockdescriptionsection3'] = 'Body description for 3rd Section';
+$string['frontpageblockiconsection3'] = 'Font-Awesome icon for 3rd Section';
+$string['sectionbuttontext3'] = 'Button text for 3rd Section';
+$string['sectionbuttonlink3'] = 'URL link for 3rd Section';
+
+
+/* block section 4 */
+$string['frontpageblocksection4'] = 'Body title for 4th Section';
+$string['frontpageblockdescriptionsection4'] = 'Body description for 4th Section';
+$string['frontpageblockiconsection4'] = 'Font-Awesome icon for 4th Section';
+$string['sectionbuttontext4'] = 'Button text for 4th Section';
+$string['sectionbuttonlink4'] = 'URL link for 4th Section';
+
+// Capability String
+$string['tilemmetry:editfrontpage'] = 'Edit Frontpage';
+
+// Frontpage Aboutus settings
+$string['frontpageaboutus'] = 'Frontpage About us';
+$string['frontpageaboutusdesc'] = 'This section is for front page About us';
+$string['frontpageaboutustitledesc'] = 'Add title to About Us Section';
+$string['frontpageaboutusbody'] = 'Body Description for About Us Section';
+$string['frontpageaboutusbodydesc'] = 'A brief description about this Section';
+
+$string['enablefrontpageaboutus'] = 'Enable About us section';
+$string['enablefrontpageaboutusdesc'] = 'Enable the About us section in front page.';
+$string['frontpageaboutusheading'] = 'About us Heading';
+$string['frontpageaboutusheadingdesc'] = 'Heading for the default heading text for section';
+$string['frontpageaboutustext'] = 'About us text';
+$string['frontpageaboutustextdesc'] = 'Enter about us text for frontpage.';
+$string['frontpageaboutusdefault'] = '<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam.</p>';
+$string['frontpageaboutusimage'] = 'Frontpage about us  Image';
+$string['frontpageaboutusimagedesc'] = 'Upload the image for frontpage about us section';
+
+// latest 3.3 to be arranged later
+$string['testimonialcount'] = 'Testimonial Count';
+$string['testimonialcountdesc'] = 'Number of testimonials to show.';
+$string['testimonialimage'] = 'Testimonial Image';
+$string['testimonialimagedesc'] = 'Person image to display with testimonial';
+$string['testimonialname'] = 'Person Name';
+$string['testimonialnamedesc'] = 'Name of person';
+$string['testimonialdesignation'] = 'Person Designation';
+$string['testimonialdesignationdesc'] = 'Person\'s designation.';
+$string['testimonialtext'] = 'Person\'s Testimonial';
+$string['testimonialtextdesc'] = 'What person says';
+
+/*Front Page Setting for About Us Block*/
+$string['frontpageblockdisplay'] = 'About Us Section';
+$string['frontpageblockdisplaydesc'] = 'You can show or hide the "About Us" section, also you can show "About Us" section in grid format';
+$string['donotshowaboutus'] = 'Do Not Show';
+$string['showaboutusinrow'] = 'Show Section in a Row';
+$string['showaboutusingridblock'] = 'Show Section in Grid Block';
+

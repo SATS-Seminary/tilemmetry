@@ -176,11 +176,9 @@
             <label for="password" class="sr-only">{{#str}} password {{/str}}</label>
             <input type="password" name="password" id="password" value="" class="form-control"placeholder={{#quote}}{{#str}}password{{/str}}{{/quote}}>
         </div>
-        {{#logintoken}}
         <div class="form-group">
            <input type="hidden" name="logintoken" value="{{logintoken}}">
         </div>
-        {{/logintoken}}
         
         <div class="form-group clearfix">
             {{#rememberusername}}
@@ -207,9 +205,7 @@
             <form action="{{loginurl}}" method="post" id="guestlogin" class="m-0 w-p100">
                 <input type="hidden" name="username" value="guest" />
                 <input type="hidden" name="password" value="guest" />
-		{{#logintoken}}                
-		<input type="hidden" name="logintoken" value="{{logintoken}}">
-		{{/logintoken}}
+                <input type="hidden" name="logintoken" value="{{logintoken}}">
                 <button class="btn btn-default btn-block" type="submit">{{#str}}loginguest{{/str}}</button>
             </form>
         </div>

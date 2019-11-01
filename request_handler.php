@@ -41,7 +41,7 @@ if (preg_match($actionpattern, $action)) {
 // This code is to run or include file at developer end
 // It is because we use symlink for theme from local_gitrepo
 if (!@include_once(__DIR__.'/../../config.php')) {
-    include_once('/var/www/html/moodle/v35/config.php');
+    include_once('/var/www/tilemmetry.local/html/v37/config.php');
 }
 
 $systemcontext = context_system::instance();
@@ -57,6 +57,13 @@ if (!in_array($action, $nologinactions)) {
         require_login($course, false, $cm, false, true);
     } else {
         require_login();
+        // Check for the session key and validate using confirm_sesskey() function.
+        // Return true/1 if session key is validate successfully.
+        $sesskey = required_param('sesskey', PARAM_TEXT);
+        $confirmsesskey = confirm_sesskey($sesskey);
+        if (!isset($confirmsesskey) && $confirmsesskey != 1) {
+            die();
+        }
     }
 }
 

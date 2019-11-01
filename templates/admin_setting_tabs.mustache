@@ -83,7 +83,7 @@
             jQuery.ajax({
                 type: "GET",
                 async: true,
-                url: M.cfg.wwwroot + '/theme/tilemmetry/request_handler.php?action=send_tilemmetryfeedback_ajax&email=' + email + '&rating=' + rating + '&fullname=' + fullname + '&feedback=' + feedback,
+                url: M.cfg.wwwroot + '/theme/tilemmetry/request_handler.php?action=send_tilemmetryfeedback_ajax&email=' + email + '&rating=' + rating + '&fullname=' + fullname + '&feedback=' + feedback + '&sesskey=' + M.cfg.sesskey,
                 success: function(response) {
                     jQuery('.feedbacki').toggleClass('d-none');
                     if (response == null || response['sent'] == 0) {

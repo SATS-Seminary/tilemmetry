@@ -15,28 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * SATS Tilemmetry 
+ * SATS Tilemmetry
  * @package    theme_tilemmetry
  * @copyright  (c) 2018 South African Theological Seminary (https://sats.edu.za/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 namespace theme_tilemmetry;
+
+defined('MOODLE_INTERNAL') || die();
+
 
 use user_picture;
 use moodle_url;
 use blog_listing;
 use context_system;
-use course_in_list;
+use core_course_list_element;
 use context_course;
 use core_completion\progress;
 use stdClass;
 use html_writer;
+use core_course_category;
+use paging_bar;
 
-include_once($CFG->dirroot.'/mod/forum/lib.php');
+
+require_once($CFG->dirroot.'/mod/forum/lib.php');
 require_once($CFG->dirroot.'/calendar/lib.php');
-require_once($CFG->libdir. '/coursecatlib.php');
+// require_once($CFG->libdir. '/coursecatlib.php');
 require_once("$CFG->libdir/externallib.php");
 require_once($CFG->dirroot . "/message/lib.php");
 require_once($CFG->libdir. '/gradelib.php');
@@ -50,7 +54,7 @@ require_once($CFG->dirroot.'/message/lib.php');
  * Added to a class for the convenience of auto loading.
  *
  * @package   theme_tilemmetry
- * @copyright SATS
+ * @copyright South African Theological Seminary
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class utility
@@ -58,8 +62,7 @@ class utility
     public static $childCategories = array();
 
     // get user profile pic link
-    public static function get_user_picture($userobject = null, $imgsize = 100)
-    {
+    public static function get_user_picture($userobject = null, $imgsize = 100) {
         global $USER, $PAGE;
         if (!$userobject) {
             $userobject = $USER;
@@ -71,8 +74,7 @@ class utility
     }
 
     // get user forum posts count
-    public static function get_user_forum_post_count($userobject = null)
-    {
+    public static function get_user_forum_post_count($userobject = null) {
         global $USER;
         if (!$userobject) {
             $userobject = $USER;
@@ -86,8 +88,7 @@ class utility
     }
 
     // get user blog count
-    public static function get_user_blog_post_count($userobject = null)
-    {
+    public static function get_user_blog_post_count($userobject = null) {
         global $USER, $DB, $CFG;
         if (!$userobject) {
             $userobject = $USER;
@@ -114,21 +115,19 @@ class utility
     }
 
     // get user blog count
-    public static function get_user_contacts_count($userobject = null)
-    {
+    public static function get_user_contacts_count($userobject = null) {
         global $USER, $DB, $CFG;
         if (!$userobject) {
             $userobject = $USER;
         }
 
-        $userblogcount = count($DB->get_records('message_contacts', array('userid'=>$userobject->id)));
+        $userblogcount = count($DB->get_records('message_contacts', array('userid' => $userobject->id)));
 
         return $userblogcount;
     }
 
     // is user admin or manager
-    public static function check_user_admin_cap($userobject = null)
-    {
+    public static function check_user_admin_cap($userobject = null) {
         global $USER;
         $has_capability = false;
 
@@ -156,19 +155,54 @@ class utility
      * Set all the child categories of parent category
      * @param $category parent category id
      */
-    public static function getChildrenCategories($category)
-    {
+    public static function get_children_category($category) {
         global $DB;
-        $childCategories = $DB->get_records_sql('SELECT * FROM {course_categories} WHERE parent = ?', array($category));
+        $childcategories = $DB->get_records_sql('SELECT * FROM {course_categories} WHERE parent = ?', array($category));
         if (!empty($childCategories)) {
             foreach ($childCategories as $child) {
-                array_push(self::$childCategories, $child->id);
-                self::getChildrenCategories($child->id);
+                array_push(self::$childCategories, $child);
+                self::get_children_category($child->id);
             }
-        } else {
-            return $category;
         }
+        return self::$childCategories;
     }
+
+    public static function get_allowed_categories($categoryid, $userid = null) {
+        global $DB, $USER;
+
+        if ($userid == null) {
+            $userid = $USER->id;
+        }
+
+        $allowedcat = array();
+        $options = array();
+        if ($categoryid !== null && $categoryid !== 'all' && is_numeric($categoryid)) {
+            $options['id'] = $categoryid;
+        }
+
+        $categories = $DB->get_records('course_categories', $options);
+
+        if ($categoryid !== null && $categoryid !== 'all' && is_numeric($categoryid)) {
+            foreach ($categories as $key => $category) {
+                $categorycontext = \context_coursecat::instance($category->id);
+                if ($category->visible || has_capability('moodle/category:viewhiddencategories', $categorycontext, $userid)) {
+                    array_push($allowedcat, $category->id);
+                    $categories = self::get_children_category($category->id);
+                }
+                break;
+            }
+        }
+
+        foreach ($categories as $category) {
+            $categorycontext = \context_coursecat::instance($category->id);
+
+            if ($category->visible || has_capability('moodle/category:viewhiddencategories', $categorycontext, $userid)) {
+                array_push($allowedcat, $category->id);
+            }
+        }
+        return $allowedcat;
+    }
+
 
     /**
      * Return user's courses or all the courses
@@ -184,7 +218,7 @@ class utility
      * @param int $showhidden include hidden courses in results.
      * @return array of course.
      */
-    public static function get_courses(
+    public static function get_courses( 
         $totalcount = false,
         $search = null,
         $category = null,
@@ -199,7 +233,7 @@ class utility
         $where = '';
         $sql_params = array(1);
         $sortorder = '';
-        require_once($CFG->libdir. '/coursecatlib.php');
+        // require_once($CFG->libdir. '/coursecatlib.php');
         require_once($CFG->dirroot.'/course/renderer.php');
 
         if (!empty($search)) {
@@ -208,16 +242,20 @@ class utility
             $sql_params[] = "%$search%";
         }
 
-        if (!empty($category)) {
-            self::getChildrenCategories($category);
-            array_push(self::$childCategories, $category);
-            if (!empty(self::$childCategories)) {
-                $str = implode(", ", self::$childCategories);
-                $where .= " AND category IN ($str)";
-            } else {
-                $where .= " AND category ='$category' ";
+        $categories = self::get_allowed_categories($category);
+
+
+        // If no categories found return 0 Count or Empty array.
+        if (empty($categories)) {
+            if ($totalcount) {
+                return 0;
             }
+            return $coursesarray;
         }
+
+        $str = implode(", ", $categories);
+        $where .= " AND category IN ($str)";
+
 
         if ($mycourses) {
             $coursesenrol = enrol_get_users_courses($USER->id);
@@ -250,33 +288,27 @@ class utility
                     'c.visible',
                     'c.sortorder'
                     );
+
+        // Get system course context
+        $coursecontext = context_course::instance(1);
+        // $systemcontext = context_system::instance();
+        if (!has_capability('moodle/course:viewhiddencourses', $coursecontext, $USER->id) || !isloggedin()) {
+            $where .= " AND visible = 1";
+        }
+
         // return count of total courses by getting limited data
         // if required
         if ($totalcount) {
-            if (!self::check_user_admin_cap($USER)) {
-                $where .= " AND visible = 1";
-            }
-
             return count($DB->get_records_sql("SELECT c.id FROM {course} c where id != ? $where $sortorder", $sql_params));
         } else {
-            if (!isloggedin()) {
-                $where .= " AND visible = 1";
-            }
             $courses = $DB->get_records_sql("SELECT ".implode($fields, ',')." FROM {course} c where id != ? $where $sortorder", $sql_params, $limitfrom, $limitto);
         }
 
         // prepare courses array
         $chelper = new \coursecat_helper();
         foreach ($courses as $k => $course) {
-            $course_in_list = new course_in_list($course);
+            $core_course_list_element = new core_course_list_element($course);
             $context = context_course::instance($course->id);
-
-            // for hidden courses, require visibility check
-            if (isset($course->visible) && $course->visible <= 0) {
-                if (!has_capability('moodle/course:viewhiddencourses', $context)) {
-                    continue;
-                }
-            }
 
             if ($course->category == 0) {
                 continue;
@@ -301,14 +333,13 @@ class utility
             $coursesarray[$count]["editcourse"] = $CFG->wwwroot."/course/edit.php?id=".$course->id;
             $coursesarray[$count]["grader"] = $CFG->wwwroot."/grade/report/grader/index.php?id=".$course->id;
             $coursesarray[$count]["activity"] = $CFG->wwwroot."/report/outline/index.php?id=".$course->id;
-            $coursesummary = strip_tags($chelper->get_course_formatted_summary(
-                $course_in_list,
-                array('overflowdiv' => false, 'noclean' => false, 'para' => false)
-            ));
-            $summarystring = strlen($coursesummary) > 100 ? substr($coursesummary, 0, 100)."..." : $coursesummary;
+            $coursesummary = strip_tags($core_course_list_element->summary);
+            $coursesummary = preg_replace('/\n+/', '', $coursesummary);
+            $summarystring = strlen($coursesummary) > 80 ? mb_substr($coursesummary, 0, 80) . "..." : $coursesummary;
             $coursesarray[$count]["coursesummary"] = $summarystring;
+            $coursesarray[$count]["epochstartdate"] = $course->startdate;
             $coursesarray[$count]["coursestartdate"] = date('d M, Y', $course->startdate);
-
+            $coursesarray[$count]["epochenddate"] = $course->enddate;
             if(!$mycourses) {
                 $coursecontext = context_course::instance($course->id);
                 if (has_capability('moodle/course:update', $coursecontext)) {
@@ -326,7 +357,7 @@ class utility
             }
 
             // course instructors
-            $instructors = $course_in_list->get_course_contacts();
+            $instructors = $core_course_list_element->get_course_contacts();
             foreach ($instructors as $key => $instructor) {
                 $coursesarray[$count]["instructors"][] = array(
                                                         'name' => $instructor['username'],
@@ -337,7 +368,7 @@ class utility
             }
 
             // course image
-            foreach ($course_in_list->get_course_overviewfiles() as $file) {
+            foreach ($core_course_list_element->get_course_overviewfiles() as $file) {
                 $isimage = $file->is_valid_image();
                 $courseimage = file_encode_url(
                     "$CFG->wwwroot/pluginfile.php",
@@ -393,66 +424,48 @@ class utility
         return $coursesarray;
     }
 
-    // used in corusecategory layout
-    // render category selector
-    public static function get_course_category_selector($category = '', $categorysort = '', $search = '', $mycourses = '', $pageurl)
-    {
-        $default   = '';
-        $site_asc  = '';
-        $site_desc = '';
+    // Course Category Selector
+    public static function get_course_category_filters() {
+        global $PAGE;
 
-        if ($categorysort === 'SORT_ASC') {
-            $site_asc  = 'selected';
-        } elseif ($categorysort === 'SORT_DESC') {
-            $site_desc = 'selected';
-        } else {
-            $default = 'selected';
+        $categories = \core_course_category::make_categories_list();
+
+        // Category Filter
+        $html = '<div class="my-10 col-lg-3 col-md-6 col-sm-12"><select id="categoryfilter" class="selectpicker w-p100" data-live-search="true" data-style="custom-select form-control bg-white">';
+        $html .= "<option value='all'>".get_string('allcategories', 'theme_tilemmetry')."</option>";
+        foreach ($categories as $key => $value) {
+            $html .= "<option value='{$key}'>{$value}</option>";
         }
+        $html .= "</select></div>";
 
-        $categories = \coursecat::make_categories_list();
-        $categoryhtml = "<form method='get' action='{$pageurl}'>";
+        // Sort Filter
+        $html .= '<div class="my-10  col-lg-3 col-md-6 col-sm-12"><select id="sortfilter" class="selectpicker w-p100"  data-style="custom-select form-control bg-white">';
+        $html .= "<option value='default'>".get_string('sortdefault', 'theme_tilemmetry')."</option>";
+        $html .= "<option value='ASC'>".get_string('sortascending', 'theme_tilemmetry')."</option>";
+        $html .= "<option value='DESC'>".get_string('sortdescending', 'theme_tilemmetry')."</option>";    
+        $html .= "</select></div>";
 
-        if ($mycourses != '') {
-            $categoryhtml .= "<input type='hidden' name='mycourses' value='{$mycourses}'>";
-        } else {
-            $categoryhtml .= "<input type='hidden' name='mycourses' value='0'>";
+        // Search Filter
+        $html .= '<div class="my-10  col-lg-4 col-md-9 col-sm-12">'.$PAGE->get_renderer('core', 'course')->course_search_form('', '', '', 0).'</div>';
+
+        // View Toggler Buttons
+        $togglerhidden = '';
+        if (\theme_tilemmetry\toolbox::get_setting('enablenewcoursecards')) {
+            $togglerhidden = ' hidden';
         }
-
-        if ($search != '') {
-            $categoryhtml .= "<input type='hidden' name='search' value='{$search}'>";
-        }
-        $categoryhtml .= "<div class='row'>";
-        $categoryhtml .= "<div  class='form-group col-md-6'>";
-        $categoryhtml .= "<label for='categoryselect' class='d-none'>".get_string('category', 'theme_tilemmetry')."</label> <select onchange='this.form.submit()' class='custom-select' id='categoryselect' name='categoryid' id='category'>
-                <option value=''>".get_string('allcategories', 'theme_tilemmetry')."</option>";
-
-        foreach ($categories as $key => $coursecategory) {
-            if ($category == $key) {
-                $categoryhtml .= "<option selected value='{$key}'>{$coursecategory}</option>";
-            } else {
-                $categoryhtml .= "<option value='{$key}'>{$coursecategory}</option>";
-            }
-        }
-        $categoryhtml .= "</select>";
-        $categoryhtml .= "</div>";
-        $categoryhtml .= "<div  class='form-group col-md-6'>";
-        $categoryhtml .= "<select onchange='this.form.submit()' id='categoryselect' class='h-40 custom-select' name='categorysort' id='categorysort'>";
-        $categoryhtml .= "<option ".$default." value='default'>".get_string('sortdefault', 'theme_tilemmetry')."</option>";
-        $categoryhtml .= "<option ".$site_asc." value='SORT_ASC'>".get_string('sortascending', 'theme_tilemmetry')."</option>";
-        $categoryhtml .= "<option ".$site_desc." value='SORT_DESC'>".get_string('sortdescending', 'theme_tilemmetry')."</option>";
-        $categoryhtml .= "</select></div></div></form>";
-
-        return $categoryhtml;
+        $html .= '<div class="my-10  col-lg-2 col-md-3 hidden-sm-down viewtoggler'.$togglerhidden.'">'.\theme_tilemmetry\utility::get_courses_view_toggler().'</div>';
+        return $html;
     }
+   
+   
 
     // get category description by catgory id
-    public static function get_category_description($category)
-    {
+    public static function get_category_description($category) {
         global $CFG;
         if (!empty($category)) {
-            require_once($CFG->dirroot.'/course/renderer.php');
+            //require_once($CFG->dirroot.'/course/renderer.php');
             $chelper = new \coursecat_helper();
-            $coursecat = \coursecat::get($category);
+            $coursecat = \core_course_category::get($category);
             if ($description = $chelper->get_category_formatted_description($coursecat)) {
                 return $description;
             }
@@ -462,8 +475,7 @@ class utility
     }
 
     // get user courses along with their course progress
-    public static function get_users_courses_with_progress($userobject)
-    {
+    public static function get_users_courses_with_progress($userobject) {
         global $USER, $OUTPUT, $CFG;
 
         if (!$userobject) {
@@ -478,8 +490,8 @@ class utility
             $course->fullname = strip_tags($chelper->get_course_formatted_name($course));
             // get course list instance
             if ($course instanceof stdClass) {
-                require_once($CFG->libdir. '/coursecatlib.php');
-                $courseobj = new \course_in_list($course);
+                // require_once($CFG->libdir. '/coursecatlib.php');
+                $courseobj = new \core_course_list_element($course);
             }
 
             $completion = new \completion_info($course);
@@ -538,8 +550,7 @@ class utility
      * @param int $categoryid
      * @return array
      */
-    public static function get_courses_by_category($categoryid)
-    {
+    public static function get_courses_by_category($categoryid) {
         global $DB;
         $query = "SELECT id, fullname, shortname from {course} where category = " . $categoryid;
         $courselist = $DB->get_records_sql($query);
@@ -581,8 +592,7 @@ class utility
     }
 
     // get user profile pic link
-    public static function get_user_image_link($userid, $imgsize)
-    {
+    public static function get_user_image_link($userid, $imgsize) {
         global $USER;
         if (!$userid) {
             $userid = $USER->id;
@@ -595,8 +605,7 @@ class utility
     }
 
     // Get the recently added users
-    public static function get_recent_user()
-    {
+    public static function get_recent_user() {
         global  $DB;
         $userdata = array();
         $limitfrom = 0;
@@ -622,8 +631,7 @@ class utility
     }
 
     // for quiz_stats block on dashboard
-    public static function get_quiz_participation_data($courseid, $limit = 8)
-    {
+    public static function get_quiz_participation_data($courseid, $limit = 8) {
         global $DB;
         $sqlq = ("SELECT COUNT(DISTINCT u.id)
             FROM {course} c
@@ -668,15 +676,14 @@ class utility
     /*
      * get course summary image
      */
-    public static function get_course_image($course_in_list, $islist = false)
-    {
+    public static function get_course_image($core_course_list_element, $islist = false) {
         global $CFG, $OUTPUT;
         if (!$islist) {
-            $course_in_list = new course_in_list($course_in_list);
+            $core_course_list_element = new core_course_list_element($core_course_list_element);
         }
 
         // course image
-        foreach ($course_in_list->get_course_overviewfiles() as $file) {
+        foreach ($core_course_list_element->get_course_overviewfiles() as $file) {
             $isimage = $file->is_valid_image();
             $courseimage = file_encode_url(
                 "$CFG->wwwroot/pluginfile.php",
@@ -701,8 +708,7 @@ class utility
      * @param $fname, $lname, $emailid, $description, $city, $country
      * @return boolean, weather result are updated or not.
      */
-    public static function save_user_profile_info($fname, $lname, /* $emailid, */ $description, $city, $country)
-    {
+    public static function save_user_profile_info($fname, $lname, /* $emailid, */ $description, $city, $country) {
         global $USER, $DB;
         $user = $DB->get_record('user', array('id' => $USER->id));
         $user->firstname = $fname;
@@ -733,8 +739,7 @@ class utility
      * @return array $blog returns array of blog data.
      */
 
-    public static function get_recent_blogs($start = 0, $blogcount = 10)
-    {
+    public static function get_recent_blogs($start = 0, $blogcount = 10) {
         global $CFG;
 
         require_once($CFG->dirroot.'/blog/locallib.php');
@@ -761,8 +766,7 @@ class utility
      *
      * @return array of sliding data
      */
-    public static function get_slider_data()
-    {
+    public static function get_slider_data() {
         global $PAGE, $OUTPUT;
 
         $sliderdata = array();
@@ -832,8 +836,7 @@ class utility
      *
      * @return array of testimonial data
      */
-    public static function get_testimonial_data()
-    {
+    public static function get_testimonial_data() {
         global $PAGE, $OUTPUT;
 
         // return if acout us is disabled
@@ -891,8 +894,7 @@ class utility
      *
      * @return array of footer sections data
      */
-    public static function get_footer_data($social = false)
-    {
+    public static function get_footer_data($social = false) {
         $footer = array();
         $colcount = 0;
         for ($i=0; $i < 4; $i++) {
@@ -904,7 +906,8 @@ class utility
                     'gplus'    => \theme_tilemmetry\toolbox::get_setting('gplussetting'),
                     'youtube'  => \theme_tilemmetry\toolbox::get_setting('youtubesetting'),
                     'instagram'=> \theme_tilemmetry\toolbox::get_setting('instagramsetting'),
-                    'pinterest'=> \theme_tilemmetry\toolbox::get_setting('pinterestsetting')
+                    'pinterest'=> \theme_tilemmetry\toolbox::get_setting('pinterestsetting'),
+                    'quora'=> \theme_tilemmetry\toolbox::get_setting('quorasetting')
                 );
                 $footer['social'] = array_filter($footer['social']); // remove empty elements
                 if (!empty($footer['social'])) {
@@ -932,7 +935,6 @@ class utility
         if (!$social) {
             $footer['bottomtext'] = \theme_tilemmetry\toolbox::get_setting('footerbottomtext');
             $footer['bottomlink'] = \theme_tilemmetry\toolbox::get_setting('footerbottomlink');
-
             // to handle number of columns in footer row
             //$colcount = count($footer['social']) + count($footer['sections']);
             $classes = 'col-12 ';
@@ -955,8 +957,7 @@ class utility
      *
      * @return array of upcoming events
      */
-    public static function get_events()
-    {
+    public static function get_events() {
         global $CFG,$PAGE;
 
         require_once($CFG->dirroot.'/calendar/lib.php');
@@ -974,8 +975,7 @@ class utility
      * @return external_function_parameters
      * @since 3.2
      */
-    public static function data_for_messagearea_messages_parameters()
-    {
+    public static function data_for_messagearea_messages_parameters() {
         return new external_function_parameters(
             array(
                 'currentuserid' => new external_value(PARAM_INT, 'The current user\'s id'),
@@ -1005,8 +1005,7 @@ class utility
      * @throws moodle_exception
      * @since 3.2
      */
-    public static function data_for_messagearea_messages($currentuserid, $otheruserid, $limitfrom = 0, $limitnum = 0, $newest = false, $timefrom = 0)
-    {
+    public static function data_for_messagearea_messages($currentuserid, $otheruserid, $limitfrom = 0, $limitnum = 0, $newest = false, $timefrom = 0) {
         global $CFG, $PAGE, $USER;
 
         // Check if messaging is enabled.
@@ -1075,8 +1074,7 @@ class utility
     }
 
     // get activity navigation
-    public static function get_activity_list()
-    {
+    public static function get_activity_list() {
         global $COURSE, $PAGE;
 
         // return if no cm id
@@ -1106,7 +1104,7 @@ class utility
 
             $sections[$count]['name'] = $section_name;
             $sections[$count]['open'] = $open_section;
-            $sections[$count]['count'] = $count;
+            $sections[$count]['count'] = $count + 1;
 
             // activities
             foreach ($sections_data[$mod] as $activity_id) {
@@ -1150,7 +1148,6 @@ class utility
                         'title'  => $courserenderer->course_section_cm_name_title($activity, array()),
                         'classes' => $classes
                     );
-
                 }
             }
             $count++;
@@ -1159,8 +1156,7 @@ class utility
         return $sections;
     }
 
-    public static function quickmessage($contactid, $message)
-    {
+    public static function quickmessage($contactid, $message) {
         global $USER, $DB;
         $otheruserid = $contactid;
         $otheruserobj = $DB->get_record('user', array('id' => $otheruserid));
@@ -1183,8 +1179,7 @@ class utility
      *
      * @return string
      */
-    public static function limit_sql($from, $num)
-    {
+    public static function limit_sql($from, $num) {
         global $DB;
         switch ($DB->get_dbfamily()) {
             case 'mysql':
@@ -1208,8 +1203,7 @@ class utility
      * Temporarily swaps global USER variable.
      * @param bool|stdClass|int $userorid
      */
-    public static function swap_global_user($userorid = false)
-    {
+    public static function swap_global_user($userorid = false) {
         global $USER;
         static $origuser = [];
         $user = self::get_user($userorid);
@@ -1227,8 +1221,7 @@ class utility
      * @param int $userid.
      * @return object user
      */
-    public static function get_user($userorid = false)
-    {
+    public static function get_user($userorid = false) {
         global $USER, $DB;
 
         if ($userorid === false) {
@@ -1257,8 +1250,7 @@ class utility
      * @return array
      * @throws \coding_exception
      */
-    public static function recent_forum_activity($userorid = false, $limit = 10, $since = null)
-    {
+    public static function recent_forum_activity($userorid = false, $limit = 10, $since = null) {
         global $CFG, $DB;
 
         if (file_exists($CFG->dirroot.'/mod/hsuforum')) {
@@ -1480,14 +1472,12 @@ class utility
      * @return string
      * @throws \coding_exception
      */
-    public static function graded()
-    {
+    public static function graded() {
         $grades = self::events_graded();
         return $grades;
     }
 
-    public static function grading()
-    {
+    public static function grading() {
         global $USER, $PAGE;
 
         $grading = self::all_ungraded($USER->id);
@@ -1501,8 +1491,7 @@ class utility
      * @param null|int $showfrom - timestamp to show grades from. Note if not set defaults to 1 month ago.
      * @return mixed
      */
-    public static function events_graded()
-    {
+    public static function events_graded() {
         global $DB, $USER;
 
         $params = [];
@@ -1545,8 +1534,7 @@ class utility
      * @param int $userid
      * @return array
      */
-    public static function all_ungraded($userid)
-    {
+    public static function all_ungraded($userid) {
         $courseids = self::gradeable_courseids($userid);
 
         if (empty($courseids)) {
@@ -1577,8 +1565,7 @@ class utility
      * @return array
      * @throws \coding_exception
      */
-    public static function gradeable_courseids($userid)
-    {
+    public static function gradeable_courseids($userid) {
         $courses = enrol_get_all_users_courses($userid);
         $courseids = [];
         $capability = 'gradereport/grader:view';
@@ -1598,8 +1585,7 @@ class utility
      *
      * @return int
      */
-    public static function sort_graded($left, $right)
-    {
+    public static function sort_graded($left, $right) {
         if (empty($left->closetime)) {
             $lefttime = $left->opentime;
         } else {
@@ -1628,8 +1614,7 @@ class utility
     }
 
     // function to get the remote data from url
-    public static function url_get_contents($url)
-    {
+    public static function url_get_contents($url)  {
         if (function_exists('curl_exec')) {
             $conn = curl_init($url);
             curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, true);
@@ -1649,9 +1634,9 @@ class utility
         return $url_get_contents_data;
     }
 
+
     // Function to get the data of analytics graph
-    public static function get_analytics_for_courses($courseid)
-    {
+    public static function get_analytics_for_courses($courseid) {
         global $USER;
         if ($courseid == 0) {
             return array();
@@ -1757,8 +1742,7 @@ class utility
     }
 
     // Function to generate create a course link
-    public static function getCreateCourseLink()
-    {
+    public static function getCreateCourseLink() {
         global $DB, $CFG;
         $categories = $DB->get_records_sql("SELECT * from {course_categories}");
         $createcourselink = "";
@@ -1769,8 +1753,7 @@ class utility
         return $createcourselink;
     }
 
-    public static function get_courses_view_toggler()
-    {
+    public static function get_courses_view_toggler() {
         global $CFG;
 
         $view = get_user_preferences('course_view_state');
@@ -1780,11 +1763,11 @@ class utility
         }
 
         if ($view == 'grid') {
-            $grid = html_writer::start_tag('a', array('class' => 'grid_btn btn active togglebtn', 'title' => 'Grid view'));
-            $list = html_writer::start_tag('a', array( 'class' => 'list_btn btn togglebtn', 'title' => 'List view'));
+            $grid = html_writer::start_tag('a', array('class' => 'grid_btn btn active togglebtn', 'title' => 'Grid view', 'data-view' => 'grid'));
+            $list = html_writer::start_tag('a', array( 'class' => 'list_btn btn togglebtn', 'title' => 'List view', 'data-view' => 'list'));
         } else {
-            $grid = html_writer::start_tag('a', array('class' => 'grid_btn btn  togglebtn', 'title' => 'Grid view'));
-            $list = html_writer::start_tag('a', array( 'class' => 'list_btn btn  togglebtn active', 'title' => 'List view'));
+            $grid = html_writer::start_tag('a', array('class' => 'grid_btn btn  togglebtn', 'title' => 'Grid view', 'data-view' => 'grid'));
+            $list = html_writer::start_tag('a', array( 'class' => 'list_btn btn  togglebtn active', 'title' => 'List view', 'data-view' => 'list'));
         }
         $content = '<div class="d-flex float-right">';
         $content .= $grid;
@@ -1798,8 +1781,8 @@ class utility
         return $content;
     }
 
-    public static function array_msort($array, $cols)
-    {
+
+    public static function array_msort($array, $cols) {
         $colarr = array();
         foreach ($cols as $col => $order) {
             $colarr[$col] = array();
@@ -1833,8 +1816,7 @@ class utility
     }
 
     // This will return the courses progress of multiple arrays
-    public static function get_courses_progress($courseids)
-    {
+    public static function get_courses_progress($courseids) {
         $progress = array();
         foreach ($courseids as $key => $value) {
             $progress[] = self::get_course_progress($value);
@@ -1847,8 +1829,7 @@ class utility
     // $courseid = is the course id
     // returns stdClass object which consists of id, fullname, shortname, category, format,
     // startdata, enddate, timecreated, percentage, number of enrolled students.
-    public static function get_course_progress($courseid)
-    {
+    public static function get_course_progress($courseid) {
         global $DB, $USER;
         $percentage = 0;
         $course_progress = new stdClass();
@@ -1884,8 +1865,7 @@ class utility
     }
 
     // Send message to user
-    public static function send_message_to_user($studentid, $student_message)
-    {
+    public static function send_message_to_user($studentid, $student_message)  {
         global $USER, $DB, $SITE;
 
         $admin_user = $DB->get_record('user', array('id' => $USER->id), '*', MUST_EXIST);
@@ -1913,8 +1893,7 @@ class utility
     }
 
     // This will return the course progress table in html form
-    public static function get_student_progress_view($courseid)
-    {
+    public static function get_student_progress_view($courseid) {
         ob_start();
 
         $out    = '';
@@ -2010,8 +1989,7 @@ class utility
         return ob_get_clean();
     }
 
-    public static function get_last_course_access_time($courseid, $studentid)
-    {
+    public static function get_last_course_access_time($courseid, $studentid) {
         global $DB;
         $lastaccess =  new stdClass();
 
@@ -2030,8 +2008,7 @@ class utility
     }
 
     // Get recent courses accessed by user
-    public static function get_recent_accessed_courses($limit)
-    {
+    public static function get_recent_accessed_courses($limit) {
         global $USER, $DB, $CFG;
         if ($DB->get_dbfamily() == 'mssql') {
             $sql = 'SELECT TOP '.$limit.' ul.courseid, c.fullname
@@ -2060,12 +2037,12 @@ class utility
     public static function get_course_stats($course) {
         $stats = array();
         $coursecontext = \context_course::instance($course->id);
-        $enrolledusers = get_enrolled_users($coursecontext);
+        // 'moodle/course:isincompletionreports' - this capability is allowed to only students
+        $enrolledusers = get_enrolled_users($coursecontext, 'moodle/course:isincompletionreports');
         $stats['enrolledusers'] = count($enrolledusers);
 
         $completion = new \completion_info($course);
         if ($completion->is_enabled()) {
-            $stats['completion'] = true;
             $inprogress = 0;
             $completed = 0;
             $notstarted = 0;
@@ -2089,5 +2066,148 @@ class utility
             $stats['notstarted'] = $notstarted;
         }
         return $stats;
+    }
+
+    public static function get_course_cards_content($wdmdata, $date = 'all') {
+        global $CFG, $OUTPUT;
+        $courseperpage = \theme_tilemmetry\toolbox::get_setting('courseperpage');
+        $categorysort = $wdmdata->sort;
+        $search       = $wdmdata->search;
+        $category     = $wdmdata->category;
+        $mycourses    = $wdmdata->tab;
+        $page         = ($mycourses) ? $wdmdata->page->mycourses : $wdmdata->page->courses;
+        $startfrom    = $courseperpage * $page;
+        $limitto      = $courseperpage;
+        $allowfull = true;
+        // Resultant Array
+        $result = array();
+
+        if ($page == -1) {
+            $startfrom = 0;
+            $limitto = 0;
+        }
+
+        // This condition is for coursecategory page only, that is why on frontpage it is not necessary
+        // so returning limiteddata
+        if (isset($wdmdata->limiteddata)) {
+            $allowfull = false;
+        }
+
+        // Pagination Context creation
+        if ($wdmdata->pagination) {
+            // first paremeter true means get_courses function will return count of the result and if false, returns actual data
+            $totalcourses  = self::get_courses(true, $search, $category, $startfrom, $limitto, $mycourses, $categorysort);
+
+            $pagingbar  = new paging_bar($totalcourses, $page, $courseperpage, 'javascript:void(0);', 'page');
+            $result['pagination'] = $OUTPUT->render($pagingbar);
+        }
+
+        // Fetch the courses
+        $courses = self::get_courses(false, $search, $category, $startfrom, $limitto, $mycourses, $categorysort);
+
+        // Courses Data
+        $coursecontext = array();
+        foreach ($courses as $key => $course) {
+            if ($date != 'all') {
+                // Get the current time value
+                $time = new \DateTime("now", \core_date::get_user_timezone_object());
+                $time->add(new \DateInterval("P1D"));
+
+                $timestamp = $time->getTimestamp();
+
+                // Check if inprogress and not passed the course end date
+                if ($date == 'inprogress' && $timestamp < $course['epochenddate']) {
+                    continue;
+                }
+
+                // Check if future and not passed course start date
+                if ($date == 'future' && $timestamp > $course['epochstartdate']) {
+                    continue;
+                }
+
+                // Check if past and not passed end date
+                if ($date == 'past' && $timestamp < $course['epochenddate']) {
+                    continue;
+                }
+            }
+            $coursedata = array();
+            $coursedata['id'] = $course['courseid'];
+            $coursedata['grader']    = $course['grader'];
+            $coursedata['shortname'] = format_text($course['shortname']);
+            $coursedata['courseurl'] = $course['courseurl'];
+            $coursedata['coursename']  = format_text($course['coursename']);
+            $coursedata['enrollusers'] = $course['enrollusers'];
+            $coursedata['editcourse']  = $course['editcourse'];
+            $coursedata['categoryname'] = format_text($course['categoryname']);
+
+            // This condition to handle the string url or moodle_url object problem
+            if (is_object($course['courseimage'])) {
+                $coursedata['courseimage'] = $course['courseimage']->__toString();
+            } else {
+                $coursedata['courseimage'] = $course['courseimage'];
+            }
+            $coursedata['coursesummary'] = $course['coursesummary'];
+            if (isset($course['coursestartdate'])) {
+                $coursedata['startdate']['day'] = substr($course['coursestartdate'], 0, 2);
+                $coursedata['startdate']['month'] = substr($course['coursestartdate'], 3, 3);
+                $coursedata['startdate']['year'] = substr($course['coursestartdate'], 8, 4);
+            }
+            // Course card - Footer context is different for mycourses and all courses tab
+            if ($mycourses) {
+                // Context creation for mycourses
+                $coursedata['mycourses'] = true;
+                if (isset($course['coursecompleted'])) {
+                    $coursedata["coursecompleted"] = $course['coursecompleted'];
+                }
+                if (isset($course['courseinprogress'])) {
+                    $coursedata["courseinprogress"] = $course['courseinprogress'];
+                    $coursedata["percentage"] = $course['percentage'];
+                }
+                if (isset($course['coursetostart'])) {
+                    $coursedata["coursetostart"] = $course['coursetostart'];
+                }
+            } else {
+                // Context creation for all courses
+                if (isset($course['usercanmanage']) && $allowfull) {
+                    $coursedata["usercanmanage"] = $course['usercanmanage'];
+                }
+
+                if (isset($course['enrollmenticons']) && $allowfull) {
+                    $coursedata["enrollmenticons"] = $course['enrollmenticons'];
+                }
+            }
+
+            if (isset($course['instructors']) && $allowfull) {
+                $instructors = array();
+                foreach ($course['instructors'] as $key2 => $instructor) {
+                    $instructordetail['name'] = $instructor['name'];
+                    $instructordetail['url'] = $instructor['url'];
+                    $instructordetail['picture'] = $instructor['picture']->__toString();
+                    $instructors[] = $instructordetail;
+                }
+                $coursedata['instructors'] = $instructors;
+            }
+
+            if ($allowfull) {
+                $coursedata['widthclasses'] = 'col-lg-3 col-sm-12 col-md-6';
+            } else {
+                $coursedata['widthclasses'] = 'col-12 h-p100 ';
+            }
+
+            // Animation Setting courseanimation
+            $coursedata['animation'] = \theme_tilemmetry\toolbox::get_setting('courseanimation');
+            if (!\theme_tilemmetry\toolbox::get_setting('enablenewcoursecards')) {
+                $coursedata['old_card'] = true;
+            }
+            $coursecontext[] = $coursedata;
+        }
+        $result['courses'] = $coursecontext;
+        $result['view'] = get_user_preferences('course_view_state');
+
+        if (\theme_tilemmetry\toolbox::get_setting('enablenewcoursecards')) {
+            $result['latest_card'] = true;
+        }
+
+        return $result;
     }
 }

@@ -64,11 +64,15 @@
         }
     }
 }}
-<div class="row page-content px-30 py-10">
-    <div class="col-6 justify-content-start text-left">
+<div class="activity-navigation row d-flex">
+    <!-- class order-lg-1 for first element not necessary, it will always be first by order-1 -->
+    <div class="col-6 col-lg-4 pull-left text-left py-5 order-1 order-lg-1">
         {{#prevlink}}{{> core/action_link }}{{/prevlink}}
     </div>
-    <div class="col-6 justify-content-end text-right">
+    <div class="col-12 col-lg-4 mdl-align text-left py-5 order-3 order-lg-2">
+        {{#activitylist}}{{> core/url_select }}{{/activitylist}}
+    </div>
+    <div class="col-6 col-lg-4 pull-right text-right py-5 order-2 order-lg-3">
         {{#nextlink}}{{> core/action_link }}{{/nextlink}}
     </div>
 </div>

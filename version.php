@@ -23,8 +23,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2019031100;
-$plugin->requires  = 2018051700;
+$plugin->version   = 2019062001;
+$plugin->requires  = 2018120300;
 $plugin->maturity  = MATURITY_STABLE; // This version's maturity level.
-$plugin->release   = '3.5.7';
+$plugin->release   = '3.7.2';
 $plugin->component = 'theme_tilemmetry';

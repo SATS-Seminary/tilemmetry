@@ -23,6 +23,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/behat/lib.php');
+require_once($CFG->dirroot . '/message/lib.php'); // for messaging section in sidebar
 
 user_preference_allow_ajax_update('menubar_state', PARAM_ALPHA);
 user_preference_allow_ajax_update('pin_aside', PARAM_ALPHA);
@@ -32,10 +33,29 @@ user_preference_allow_ajax_update("tilemmetry_layout_top", PARAM_TEXT);
 user_preference_allow_ajax_update("tilemmetry_layout_left", PARAM_TEXT);
 user_preference_allow_ajax_update("tilemmetry_layout_right", PARAM_TEXT);
 
-global $USER;
+global $USER, $PAGE;
+
+$PAGE->requires->strings_for_js(['sidebarpinned', 'sidebarunpinned'], 'theme_tilemmetry');
+
 $isfolded = 0;
+// merge messaging panel into right sidebar or not
+$mergemessagingsidebar = \theme_tilemmetry\toolbox::get_setting('mergemessagingsidebar');
+$messagedrawer = '';
+$messagetoggle = '';
+if($mergemessagingsidebar) {
+    $messagedrawer = core_message_standard_after_main_region_html(); // message drawer html
+    $messagetoggle = core_message_render_navbar_output($OUTPUT); // message drawer toggle, in sidebar tabs
+}
+$unread_request_count = 0;
+if ($messagetoggle) {
+    $unreadcount = \core_message\api::count_unread_conversations($USER);
+    $requestcount = \core_message\api::get_received_contact_requests_count($USER->id);
+    $unread_request_count = $unreadcount + $requestcount;
+}
+
 $blockshtml = $OUTPUT->blocks('side-pre', array(), 'aside');
 $hasblocks  = strpos($blockshtml, 'data-block=') !== false;
+$hasmessaging  = empty($messagedrawer) !== true;
 $usercanmanage = \theme_tilemmetry\utility::check_user_admin_cap();
 $init_rightsidebar = false; // true only conditionally
 
@@ -61,13 +81,19 @@ if (isloggedin()) {
 // if no blocks in sidebar, it will always be overlay (no pin option)
 if(!$hasblocks) {
     $pin_aside = '';
+
+    // hack - make messagetoggle tab button in right sidebar active, if no blocks tab, so 2nd tab show active
+    // we have to do this because this variable contains full <li> structure of tab
+    if($messagetoggle) {
+        $messagetoggle = str_replace('class="nav-link popover-region-toggle"', 'class="nav-link popover-region-toggle active show"',$messagetoggle);
+    }
 }
 
 $extraclasses = [];
 $extraclasses [] = 'site-menubar-'.$menubar_state.' site-menubar-fold-alt site-menubar-keep '. $pin_aside;
 
 // classes to show right sidebar only if one of the below is true
-if ($hasblocks || $usercanmanage) {
+if ($hasblocks || $usercanmanage || $hasmessaging) {
     $extraclasses [] = 'page-aside-fixed page-aside-right';
     $init_rightsidebar = true;
 }
@@ -81,6 +107,9 @@ $regionmainsettingsmenu = $OUTPUT->region_main_settings_menu();
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
+    'messagedrawer' => $messagedrawer,
+    'messagetoggle' => $messagetoggle,
+    'unread_request_count' => $unread_request_count,
     'pin_aside' => $pin_aside,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
@@ -108,7 +137,9 @@ $templatecontext['is_siteadmin'] = is_siteadmin();
 $templatecontext['user_is_editing'] = $this->page->user_is_editing();
 $templatecontext['usercanmanage'] = \theme_tilemmetry\utility::check_user_admin_cap();
 
-$templatecontext['flatnavigation'] = flatnav_icon_support($PAGE->flatnav);
+$nav = $PAGE->flatnav;
+$templatecontext['flatnavigation'] = flatnav_icon_support($nav);
+$templatecontext['firstcollectionlabel'] = $nav->get_collectionlabel();
 $templatecontext['coursecreationlink'] = \theme_tilemmetry\utility::getCreateCourseLink();
 if ($hasblocks) {
     $templatecontext['hasblock'] = true;

@@ -23,25 +23,37 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-//user_preference_allow_ajax_update('menubar_state', PARAM_ALPHA);
-user_preference_allow_ajax_update('aside_right_state', PARAM_ALPHA);
+user_preference_allow_ajax_update('pin_aside', PARAM_ALPHA);
+global $USER, $PAGE;
 
-// check if sidebar is fold or unfold & aside right state
-if (isloggedin()) {
-    //$menubar_state = get_user_preferences('menubar_state', 'unfold');
-    $aside_right_state = get_user_preferences('aside_right_state', '');
-} else {
-   //$menubar_state = 'fold';
-    $aside_right_state = '';
-}
+$PAGE->requires->strings_for_js(['sidebarpinned', 'sidebarunpinned'], 'theme_tilemmetry');
 
 $blockshtml = $OUTPUT->blocks('side-pre', array(), 'aside');
 $hasblocks  = strpos($blockshtml, 'data-block=') !== false;
+$usercanmanage = \theme_tilemmetry\utility::check_user_admin_cap();
+
+// check aside right state
+if (isloggedin()) {
+    $pin_aside = get_user_preferences('pin_aside', '');
+    
+    $activities = array("book", "quiz");
+    if (isset($PAGE->cm->id) && in_array($PAGE->cm->modname, $activities)) {
+        $pin_aside = 'pinaside';
+    }
+} else {
+   $pin_aside = '';
+}
+
+// if no blocks in sidebar, it will always be overlay (no pin option)
+if(!$hasblocks) {
+    $pin_aside = '';
+}
 
 $extraclasses = [];
-$extraclasses [] = $aside_right_state;
+$extraclasses [] = $pin_aside;
 
-if($hasblocks) {
+// classes to show right sidebar only if one of the below is true
+if ($hasblocks) {
     $extraclasses [] = 'page-aside-fixed page-aside-right';
 }
 
@@ -49,10 +61,15 @@ $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
+    'pin_aside' => $pin_aside,
     'bodyattributes' => $bodyattributes,
     'sidepreblocks' => $blockshtml,
     'hasblocks' => $hasblocks,
-    'footerdata' => \theme_tilemmetry\utility::get_footer_data()
+    'footerdata' => \theme_tilemmetry\utility::get_footer_data(),
+    'sesskey'       => $USER->sesskey,
+    'navbarinverse' => \theme_tilemmetry\toolbox::get_setting('navbarinverse'),
+    'sidebarcolor' => \theme_tilemmetry\toolbox::get_setting('sidebarcolor'),
+    \theme_tilemmetry\toolbox::get_setting('sitecolor', 'primary') => 'true',
 ];
 
 // for all partials

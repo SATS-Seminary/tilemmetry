@@ -20,7 +20,7 @@
  * @copyright  (c) 2018 South African Theological Seminary (https://sats.edu.za/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+ 
 // Footer Settings Page
         $page = new admin_settingpage('theme_tilemmetry_footersetting', get_string('footersetting', 'theme_tilemmetry'));
 
@@ -83,6 +83,14 @@
         $name = 'theme_tilemmetry/pinterestsetting';
         $title = get_string('pinterestsetting', 'theme_tilemmetry');
         $description = get_string('pinterestsettingdesc', 'theme_tilemmetry');
+        $default = '';
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $page->add($setting);
+
+    // quora
+        $name = 'theme_tilemmetry/quorasetting';
+        $title = get_string('quorasetting', 'theme_tilemmetry');
+        $description = get_string('quorasettingdesc', 'theme_tilemmetry');
         $default = '';
         $setting = new admin_setting_configtext($name, $title, $description, $default);
         $page->add($setting);
@@ -182,7 +190,6 @@
         $setting = new admin_setting_configtext($name, $title, $description, $default);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
-
 
     // Must add the page after definiting all the settings!
         $settings->add($page);

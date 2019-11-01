@@ -44,6 +44,10 @@ foreach ($countries as $key => $value) {
 }
 
 $templatecontext['usercanmanage'] = \theme_tilemmetry\utility::check_user_admin_cap($userobject);
+$systemcontext = \context_system::instance();
+if ( has_capability('moodle/user:editownprofile', $systemcontext) ) {
+    $templatecontext["haseditpermission"] = true;
+}
 $templatecontext['notcurrentuser'] = ($userobject->id != $USER->id)?true:false;
 $templatecontext['countries'] = $tempArray;
 

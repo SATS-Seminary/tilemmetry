@@ -25,15 +25,19 @@ defined('MOODLE_INTERNAL') || die();
 require_once('common.php');
 
 global $COURSE, $USER;
+$completion = new \completion_info($COURSE);
 
 $templatecontext['issinglecoursepage'] = true;
-$templatecontext['coursestats'] = \theme_tilemmetry\utility::get_course_stats($COURSE);
 $templatecontext['iscoursestatsshow'] = \theme_tilemmetry\toolbox::get_setting('enablecoursestats');
 
-$roles = get_user_roles(context_course::instance($COURSE->id), $USER->id);
-$key = array_search('student', array_column($roles, 'shortname'));
-if ($key === false || is_siteadmin()) {
-	$templatecontext['notstudent'] = true;
+$course = get_course($COURSE->id);
+if ($templatecontext['iscoursestatsshow'] && strpos($bodyattributes, 'path-course') !== false) {
+    $templatecontext['completion'] = $completion->is_enabled();
+    $coursecontext = context_course::instance($COURSE->id);
+
+    if (has_capability('moodle/course:ignoreavailabilityrestrictions', $coursecontext)) {
+        $templatecontext['notstudent'] = true;
+    }
 }
 echo $OUTPUT->render_from_template('theme_tilemmetry/course', $templatecontext);
 

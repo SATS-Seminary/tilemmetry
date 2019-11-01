@@ -11,11 +11,11 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-    SATS Tilemmetry 
+    SATS Tilemmetry
     @package    theme_tilemmetry
     @copyright  (c) 2018 South African Theological Seminary (https://sats.edu.za/)
     @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- 
+
 }}
 {{{ output.doctype }}}
 <html {{{ output.htmlattributes }}}>
@@ -30,27 +30,53 @@
 
 <body {{{ bodyattributes }}} data-isfolded="{{ isfolded }}">
 
-    <div class="sidebar-pinned position-absolute alert alert-info bg-blue-100 mt-10" style="display: none; z-index: 1500;left: 50%;margin-left: -100px;" role="alert">
-        {{#str}}sidebarpinned, theme_tilemmetry{{/str}}
+    <div class="tilemmetry-notice position-fixed mt-10" style="display: none; z-index: 1500;left: 50%;transform: translateX(-50%);" role="alert">
     </div>
-    <div class="sidebar-unpinned position-absolute alert alert-info bg-blue-100 mt-10" style="display: none; z-index: 1500;left: 50%;margin-left: -100px;" role="alert">
-        {{#str}}sidebarunpinned, theme_tilemmetry{{/str}}
-    </div>
-    
+
     {{{ output.standard_top_of_body_html }}}
 
     {{> theme_tilemmetry/header }}
     {{> theme_tilemmetry/sidebar }}
 
     <div class="page">
-        <div id="gotop" class="to-top {{#hasblock}}hasblock{{/hasblock}}">
-            <i  class="fa fa-chevron-up"></i>
+        <div class="floating-buttons page-settings" data-html2canvas-ignore>
+            <button id="gotop" type="button" class=" btn btn-floating btn-primary {{#hasblock}}hasblock{{/hasblock}} d-none align-items-center justify-content-center" data-toggle="tooltip" data-original-title="Go Top" data-placement="left" data-trigger="hover">
+                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+            </button>
+            {{#caneditfrontpage}}
+                {{#userisediting}}
+                    <button type="button" class="hidden-sm-down btn btn-floating bg-blue-300 d-flex align-items-center justify-content-center btns-animate animate-2 settings" data-toggle="tooltip" data-original-title="Settings" data-placement="left" data-trigger="hover">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="hidden-sm-down btn btn-floating bg-purple-300 d-flex align-items-center justify-content-center btns-animate animate-2 publish " data-toggle="tooltip" data-original-title="Publish" data-placement="left" data-trigger="hover">
+                        <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="hidden-sm-down preview-section btn btn-floating btn-primary d-flex align-items-center justify-content-center btns-animate animate-1" data-toggle="tooltip" data-original-title="{{#str}} preview {{/str}}" data-placement="left" data-trigger="hover">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="hidden-sm-down add-section btn btn-floating bg-green-300 d-flex align-items-center justify-content-center btns-animate animate-1" data-toggle="tooltip" data-original-title="Add Sections" data-placement="left" data-trigger="hover">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class=" editing-action btn btn-floating bg-orange-300 d-flex align-items-center justify-content-center" data-toggle="tooltip" data-original-title="Turn Editing Off" data-placement="left"  data-edit="{{customizepagevalue}}" data-trigger="hover">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                {{/userisediting}}
+                {{^userisediting}}
+                    <button type="button" class="hidden-sm-down editing-action btn btn-floating bg-orange-300 d-flex align-items-center justify-content-center" data-toggle="tooltip" data-original-title="Turn Editing On" data-placement="left"  data-edit="{{customizepagevalue}}" data-trigger="hover">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                {{/userisediting}}
+            {{/caneditfrontpage}}
         </div>
         {{{ output.render_site_announcement }}}
-         
+
          <!-- blocks aside -->
         {{#init_rightsidebar}}
-            <div class="page-aside {{#pin_aside}} opencustom {{/pin_aside}} moodle-has-index" >
+            <div class="page-aside {{#pin_aside}} opencustom {{/pin_aside}} moodle-has-index" data-html2canvas-ignore>
                 <div class="page-aside-switch d-lg-none">
                     <i class="wb-chevron-left" aria-hidden="true">
                         {{#unread_request_count}}
@@ -66,9 +92,11 @@
                         {{/unread_request_count}}
                     </i>
                     {{#hasblocks}}
+                    {{^disablesidebarpinning}}
                         <div class="page-aside-pin">
                             <i class="fa fa-thumb-tack"  title="{{#pin_aside}}{{#str}}unpinsidebar, theme_tilemmetry{{/str}}{{/pin_aside}}{{^pin_aside}}{{#str}}pinsidebar, theme_tilemmetry{{/str}}{{/pin_aside}}" aria-hidden="true"></i>
                         </div>
+                    {{/disablesidebarpinning}}
                     {{/hasblocks}}
                 </div>
                 <div class="page-aside-inner page-aside-scroll">
@@ -107,7 +135,7 @@
                                         {{{messagedrawer}}}
                                     </div>
                                 {{/messagedrawer}}
-                                
+
                                 {{#usercanmanage}}
                                 <div class="tab-pane fade  {{^hasblocks}}{{^messagedrawer}}active show{{/messagedrawer}}{{/hasblocks}}" id="sidebar-settings">
                                     <div class="site-skintools">
@@ -115,7 +143,7 @@
                                         <h5 class="site-skintools-title">{{#str}}navbartype, theme_tilemmetry{{/str}}</h5>
                                         <div id="skintoolsNavbar">
                                             <div class="checkbox-custom checkbox-inverse">
-                                            <input id="skintoolsNavbar-inverse" name="navbartype" type="checkbox" value="navbar-inverse" {{# navbarinverse }} checked {{/ navbarinverse }}><label for="skintoolsNavbar-inverse">Inverse</label>
+                                            <input id="skintoolsNavbar-inverse" name="navbartype" type="checkbox" value="navbar-inverse" {{# navbarinverse }} checked {{/ navbarinverse }}><label for="skintoolsNavbar-inverse">{{#str}} applysitecolor, theme_tilemmetry {{/str}}</label>
                                             </div>
                                         </div>
 

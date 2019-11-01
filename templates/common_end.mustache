@@ -18,6 +18,7 @@
  
 }}
 </div>
+{{{ output.standard_after_main_region_html }}}
     <!-- End Page -->
 
     {{> theme_tilemmetry/footer }}
@@ -79,10 +80,10 @@
                                 }
                             }
                             var data = "<div id='definition_layer' style='position:fixed; cursor:pointer;left:"+x+";top:"+y+";z-index:9999;'>";
-                            data += '<div class="popover popover-bottom w-400"><div class="popover-arrow"></div><h3 class="popover-title">'+search;
-                            data += '</h3><div class="popover-content"><p>' + meaning + '</p></div></div>';
+                            data += '<div class="popover bs-popover-bottom w-400"><div class="arrow"></div><h3 class="popover-header">'+search;
+                            data += '</h3><div class="popover-body"><p>' + meaning + '</p></div></div>';
                             data += '</div>';
-                            jQuery("body").append(data);    
+                            jQuery("body").append(data);  
                             
                         }
                     },

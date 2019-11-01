@@ -32,20 +32,6 @@ defined('MOODLE_INTERNAL') || die();
 
 class format_topics_renderer extends \format_topics_renderer {
 
-    // /**
-    //  * Constructor method, calls the parent constructor
-    //  *
-    //  * @param moodle_page $page
-    //  * @param string $target one of rendering target constants
-    //  */
-    // public function __construct(moodle_page $page, $target) {
-    //     parent::__construct($page, $target);
-
-    //     // Since format_topics_renderer::section_edit_controls() only displays the 'Set current section' control when editing mode is on
-    //     // we need to be sure that the link 'Turn editing mode on' is available for a user who does not have any other managing capability.
-    //     $page->set_other_editing_capability('moodle/course:setcurrentsection');
-    // }
-
     /**
      * Generate the section title, wraps it in a link to the section page if page is to be displayed on a separate page
      *
@@ -88,7 +74,7 @@ class format_topics_renderer extends \format_topics_renderer {
         }
 
         $o.= html_writer::start_tag('li', array('id' => 'section-'.$section->section,
-            'class' => 'section main clearfix'.$sectionstyle, 'role'=>'region',
+            'class' => 'section main rounded clearfix'.$sectionstyle, 'role'=>'region',
             'aria-label'=> get_section_name($course, $section)));
 
         // Create a span that contains the section title to be used to create the keyboard section move menu.
@@ -114,7 +100,7 @@ class format_topics_renderer extends \format_topics_renderer {
         $cm_list = $this->courserenderer->course_section_cm_list($course, $section, 0);
         $temp  = '<span class="wdm-sectionname">'.$this->section_title($section, $section->course).'</span>';
         if (!empty($cm_list)) {
-           $temp  = '<span class="wdm-sectionname row"><div class="col-11">'.$this->section_title($section, $section->course).'</div><i class="fa-angle-up col-1 text-center"></i></span>';
+           $temp  = '<span class="wdm-sectionname row"><div class="col-11">'.$this->section_title($section, $section->course).'</div><i class="fa-angle-up toggle-section position-absolute"></i></span>';
         }
         $o .= $this->output->heading($temp, 4, 'sectionname' . $classes);
         $o .= $this->section_availability($section);

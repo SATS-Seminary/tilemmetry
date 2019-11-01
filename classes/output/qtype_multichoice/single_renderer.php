@@ -79,7 +79,7 @@ class single_renderer extends \qtype_multichoice_single_renderer {
                         $question->make_html_inline($question->format_text(
                                 $ans->answer, $ans->answerformat,
                                 $qa, 'question', 'answer', $ansid)),
-                    array('for' => $inputattributes['id'], 'class' => 'd-block ml-20 mr-25'));
+                    array('for' => $inputattributes['id'], 'class' => 'd-inline-block ml-20 mr-25'));
 
             // Param $options->suppresschoicefeedback is a hack specific to the
             // oumultiresponse question type. It would be good to refactor to

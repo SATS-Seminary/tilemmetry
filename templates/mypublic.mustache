@@ -117,9 +117,11 @@
                                 <li class="nav-item" role="presentation"><a class="active nav-link" data-toggle="tab" href="#aboutme" aria-controls="aboutme" role="tab">{{# notcurrentuser }} {{ firstname }}{{/ notcurrentuser}} {{^ notcurrentuser }}{{# str }} aboutme, theme_tilemmetry {{/ str }}{{/ notcurrentuser}}</a></li>
                                 {{/ aboutme }}
                                 <li class="nav-item" role="presentation"><a class="nav-link {{^ aboutme }}active{{/ aboutme }}" data-toggle="tab" href="#usercourses" aria-controls="usercourses" role="tab">{{# str }} courses, theme_tilemmetry {{/ str }}</a></li>
+                                {{#haseditpermission}}
                                 {{^ notcurrentuser }}
                                     <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#editprofile" aria-controls="editprofile" role="tab">{{# str }} editprofile, theme_tilemmetry {{/ str }}</a></li>
                                 {{/ notcurrentuser }}
+                                {{/haseditpermission}}
                                 <li class="nav-item ml-auto" role="presentation"><a class="nav-link" data-toggle="tab" href="#userprefs" aria-controls="userprefs" role="tab"><i class="icon fa fa-cog"></i></a></li>
                             </ul>
                             
@@ -224,7 +226,7 @@
                                                 {{# enablecompletion }}
                                                     <div class="float-right tilemmetry-course-progress w-full pie-progress pie-progress-sm"
                                                         data-plugin="pieProgress"
-                                                        data-barcolor="#62a8ea"
+                                                        data-barcolor="#11c26d"
                                                         data-size="100"
                                                         data-barsize="6"
                                                         data-goal="100"
@@ -269,6 +271,7 @@
                                 </div>
 
                                 <!-- edit profile tab content -->
+                                {{#haseditpermission}}
                                 {{^ notcurrentuser }}
                                     <div class="tab-pane animation-slide-left" id="editprofile" role="tabpanel">
                                         <div class="panel-body">
@@ -324,6 +327,7 @@
                                         </div>
                                     </div>
                                 {{/ notcurrentuser }}
+                                {{/haseditpermission}}
                             </div>
                         </div>
                     </div>

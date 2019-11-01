@@ -20,14 +20,13 @@
  * @copyright  (c) 2018 South African Theological Seminary (https://sats.edu.za/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 defined('MOODLE_INTERNAL') || die();
 
 
 if (isset($_POST['applysitewidecolor'])) {
     tilemmetry_clear_cache();
 }
-
 
 /**
  * CSS Processor
@@ -71,72 +70,25 @@ function theme_tilemmetry_process_css($css, $theme)
     // custom color sitewide
     $colorhex = \theme_tilemmetry\toolbox::get_setting('sitecolorhex');
     if (empty($colorhex)) {
-        $colorhex = '#62a8ea';
+        $colorhex = '#3e8ef7';
     } else {
         $colorhex = '#'.$colorhex;
     }
 
     $colorobj = new \theme_tilemmetry\Color($colorhex);
-    if ($colorhex !== '#62a8ea') {
-        $css = str_replace('#62a8ea', $colorhex, $css);
-        $css = str_replace('#89bceb', '#'.$colorobj->darken(3), $css);
+    if ($colorhex !== '#3e8ef7') {
+        $css = str_replace('#3e8ef7', $colorhex, $css);// main color
+        $css = str_replace('#007bff', $colorhex, $css);
+        $css = str_replace('#589ffc', '#'.$colorobj->darken(3), $css); // on hover
         $css = str_replace('#4397e6', '#'.$colorobj->darken(5), $css);
-        $css = str_replace('#e8f1f8', '#'.$colorobj->lighten(32), $css);
+        $css = str_replace('#d9e9ff', '#'.$colorobj->lighten(32), $css);
+        $css = str_replace('#247cf0', '#'.$colorobj->darken(5), $css); // on active
         $css = str_replace('rgba(53, 131, 202, .07)', '#'.$colorobj->lighten(32), $css);
         $css = str_replace('rgba(53, 131, 202, .04)', '#'.$colorobj->lighten(34), $css);
     }
 
     return $css;
 }
-
-
-/**
- * Serves the H5P Custom CSS.
- *
- * @param type $filename The filename.
- */
-
-function theme_tilemmetry_serve_hvp_css($filename) {
-    global $CFG;
-    require_once($CFG->dirroot.'/lib/configonlylib.php'); // For min_enable_zlib_compression().
-
-    $content = \theme_tilemmetry\toolbox::get_setting('hvpcustomcss');
-    $md5content = md5($content);
-    $md5stored = get_config('theme_tilemmetry', 'hvpccssmd5');
-    if ((empty($md5stored)) || ($md5stored != $md5content)) {
-        // Content changed, so the last modified time needs to change.
-        set_config('hvpccssmd5', $md5content, 'theme_tilemmetry');
-        $lastmodified = time();
-        set_config('hvpccsslm', $lastmodified, 'theme_tilemmetry');
-    } else {
-        $lastmodified = get_config('theme_tilemmetry', 'hvpccsslm');
-        if (empty($lastmodified)) {
-            $lastmodified = time();
-        }
-    }
-
-    // Sixty days only - the revision may get incremented quite often.
-    $lifetime = 60 * 60 * 24 * 60;
-
-    header('HTTP/1.1 200 OK');
-
-    header('Etag: "'.$md5content.'"');
-    header('Content-Disposition: inline; filename="'.$filename.'"');
-    header('Last-Modified: '.gmdate('D, d M Y H:i:s', $lastmodified).' GMT');
-    header('Expires: '.gmdate('D, d M Y H:i:s', time() + $lifetime).' GMT');
-    header('Pragma: ');
-    header('Cache-Control: public, max-age='.$lifetime);
-    header('Accept-Ranges: none');
-    header('Content-Type: text/css; charset=utf-8');
-    if (!min_enable_zlib_compression()) {
-        header('Content-Length: '.strlen($content));
-    }
-
-    echo $content;
-
-    die;
-}
-
 
 // clear theme cache on click 'apply sitewide color'
 function tilemmetry_clear_cache()
@@ -161,7 +113,7 @@ function flatnav_icon_support($flatnav)
                 $flatnav_new[$key]->tilemmetryicon = 'fa-dashboard';
                 break;
             case 'home':
-                $flatnav_new[$key]->tilemmetryicon = 'fa-university';
+                $flatnav_new[$key]->tilemmetryicon = 'fa-home';
                 if ($home_count == 1) {
                     $flatnav_new[$key]->tilemmetryicon = 'fa-dashboard';
                 }
@@ -172,7 +124,7 @@ function flatnav_icon_support($flatnav)
                 break;
             case 'mycourses':
                 $mycoursekey = $key;    // Store a key value to check if mycourses available
-                $flatnav_new[$key]->tilemmetryicon = 'fa-graduation-cap';
+                $flatnav_new[$key]->tilemmetryicon = 'fa-archive';
                 $flatnav_new[$key]->action    = $CFG->wwwroot . "/course/index.php?mycourses=1";
                 if ($PAGE->pagelayout == 'coursecategory' && optional_param('mycourses', null, PARAM_TEXT)) {
                     $flatnav_new[$key]->isactive = true;
@@ -188,16 +140,16 @@ function flatnav_icon_support($flatnav)
                 $flatnav_new[$key]->tilemmetryicon = 'fa-plus-circle ';
                 break;
             case 'badgesview':
-                $flatnav_new[$key]->tilemmetryicon = 'fa-trophy';
+                $flatnav_new[$key]->tilemmetryicon = 'fa-bookmark';
                 break;
             case 'participants':
                 $flatnav_new[$key]->tilemmetryicon = 'fa-users';
                 break;
             case 'grades':
-                $flatnav_new[$key]->tilemmetryicon = 'fa-table';
+                $flatnav_new[$key]->tilemmetryicon = 'fa-star';
                 break;
             case 'coursehome':
-                $flatnav_new[$key]->tilemmetryicon = 'fa-home';
+                $flatnav_new[$key]->tilemmetryicon = 'fa-archive';
                 break;
             default:
                 // Check Whether the link has course id number
@@ -273,12 +225,99 @@ function theme_tilemmetry_pluginfile($course, $cm, $context, $filearea, $args, $
             return $theme->setting_file_serve('staticimage', $args, $forcedownload, $options);
         } elseif ($filearea === 'layoutimage') {
             return $theme->setting_file_serve('layoutimage', $args, $forcedownload, $options);
-        } else if ($filearea === 'hvp') {
-            theme_tilemmetry_serve_hvp_css($args[1]);
+        } elseif ($filearea === 'frontpageloader') {
+            return $theme->setting_file_serve('frontpageloader', $args, $forcedownload, $options);
         } else {
-            send_file_not_found();
+            $itemid = (int)array_shift($args);
+            $relativepath = implode('/', $args);
+            $fullpath = "/{$context->id}/theme_tilemmetry/$filearea/$itemid/$relativepath";
+            $fs = get_file_storage();
+            if (!($file = $fs->get_file_by_hash(sha1($fullpath)))) {
+                send_file_not_found();
+                return false;
+            }
+            // Download MUST be forced - security.
+            send_stored_file($file, 0, 0, $forcedownload, $options);
         }
     } else {
         send_file_not_found();
     }
+}
+
+
+function theme_tilemmetry_output_fragment_frontpage_section_form($args) {
+    global $CFG;
+
+    $args = (object) $args;
+    $mform = new theme_tilemmetry\frontpage\sections\main_form(null, $args);
+
+    ob_start();
+    $mform->display();
+    $o = ob_get_contents();
+    ob_end_clean();
+
+    return $o;
+}
+
+/**
+ * This function will generate frontpage settings form and return it's html view
+ * @param  array $args Argument passed with fragment call
+ * @return string      Frontpage settings form's html output
+ */
+function theme_tilemmetry_output_fragment_frontpage_settings_form($args) {
+    global $CFG;
+
+    $configdata = [];
+    $configdata['frontpageloader'] = get_config('theme_tilemmetry', 'frontpageloader');
+    $configdata['frontpagetransparentheader'] = get_config('theme_tilemmetry', 'frontpagetransparentheader');
+    $configdata['frontpageheadercolor'] = get_config('theme_tilemmetry', 'frontpageheadercolor');
+    $configdata['frontpageappearanimation'] = get_config('theme_tilemmetry', 'frontpageappearanimation');
+    $configdata['frontpageappearanimationstyle'] = get_config('theme_tilemmetry', 'frontpageappearanimationstyle');
+    $args['configdata'] = $configdata;
+
+    $args = (object) $args;
+    $mform = new theme_tilemmetry\frontpage\settings(null, $args);
+
+    return $mform->render();
+}
+
+
+// This function will return random unused itemid
+function theme_tilemmetry_get_unused_itemid($filearea) {
+    global $DB, $USER;
+
+    if (isguestuser() or !isloggedin()) {
+        // guests and not-logged-in users can not be allowed to upload anything!!!!!!
+        print_error('noguest');
+    }
+
+    $contextid = context_system::instance()->id;
+
+    $fs = get_file_storage();
+    $itemid = rand(1, 999999999);
+    while ($files = $fs->get_area_files($contextid, 'theme_tilemmetry', $filearea, $itemid)) {
+        $itemid = rand(1, 999999999);
+    }
+
+    return $itemid;
+}
+
+function get_file_img_url($itemid, $component, $filearea) {
+    $context = \context_system::instance();
+
+    $fs = get_file_storage();
+    $files = $fs->get_area_files($context->id, $component, $filearea, $itemid);
+    foreach ($files as $file) {
+        if ($file->get_filename() != '.') {
+            return moodle_url::make_pluginfile_url(
+                $file->get_contextid(),
+                $file->get_component(),
+                $file->get_filearea(),
+                $file->get_itemid(),
+                $file->get_filepath(),
+                $file->get_filename(),
+                false)->out();
+        }
+    }
+    return "";
 }

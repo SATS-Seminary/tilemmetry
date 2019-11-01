@@ -27,116 +27,41 @@ global $CFG, $PAGE, $USER, $SITE, $COURSE;
 
 require_once('common.php');
 
-// prepare course archive context
-$hascourses = false;
-$mycourses = optional_param('mycourses', 0, PARAM_INT);
-$search    = optional_param('search', '', PARAM_RAW);
-$category  = optional_param('categoryid', 0, PARAM_INT);
-$page = optional_param('page', 0, PARAM_INT);
-$mypage = optional_param('mypage', 0, PARAM_INT);
-// $categorysort = optional_param('categorysort', 0, PARAM_ALPHANUMEXT) == 'default' ? '' : optional_param('categorysort', 0, PARAM_ALPHANUMEXT) ;
-// $categorysort = optional_param('categorysort', 'SORT_ASC', PARAM_ALPHANUMEXT) == 'default' ? 'SORT_ASC' : optional_param('categorysort', 'SORT_ASC', PARAM_ALPHANUMEXT) ;
 
-$categorysort = optional_param('categorysort', 'default', PARAM_ALPHANUMEXT);
+// Generate page url
 $pageurl = new moodle_url('/course/index.php');
 
-if (!empty($search)) {
-    $pageurl->param('search', $search);
-}
-if (!empty($category)) {
-    $pageurl->param('categoryid', $category);
-}
-//if (!empty($mycourses)) {
-//    $pageurl->param('mycourses', $mycourses);
-//}
-if (!empty($categorysort)) {
-    $pageurl->param('categorysort', $categorysort);
+$mycourses  = optional_param('mycourses', 0, PARAM_INT);
+
+// $stringman = get_string_manager();
+// $strings = $stringman->load_component_strings('theme_tilemmetry', 'en');
+// $PAGE->requires->strings_for_js(array_keys($strings), 'theme_tilemmetry');
+
+// Get the filters first
+$templatecontext['allfilters'] = \theme_tilemmetry\utility::get_course_category_filters();
+
+// Tab creation Content
+$mycoursesObj = new stdClass();
+$mycoursesObj->name = 'mycourses';
+$mycoursesObj->text = get_string('mycourses', 'theme_tilemmetry');
+if ($mycourses) {
+    $mycoursesObj->isActive = true;
 }
 
-$courseperpage =  \theme_tilemmetry\toolbox::get_setting('courseperpage');
-if (empty($courseperpage)) {
-    $courseperpage = 12;
+$coursesObj = new stdClass();
+$coursesObj->name = 'courses';
+$coursesObj->text = get_string('courses', 'theme_tilemmetry');
+if (!$mycourses) {
+    $coursesObj->isActive = true;
 }
 
-$startfrom  = $page * $courseperpage;
-$CSparam = '';
-if($categorysort !== 'default'){
-    $CSparam = explode('_', $categorysort)[1];
-}
-$courses    = \theme_tilemmetry\utility::get_courses(false, $search, $category, 0, $courseperpage, 0, $CSparam);
-$totalcourses = \theme_tilemmetry\utility::get_courses(true, $search, $category, 0, 0, 0);
-// $totalpages = ceil($totalcourses / $courseperpage);
-// $pagingbar  = new paging_bar($totalcourses, $page, $courseperpage, $PAGE->url, 'page');
-if (count($courses) > 0) {
-    $hascourses = true;
-}
+$templatecontext['tabcontent'] = array($mycoursesObj, $coursesObj);
 
-$templatecontext['hascourses'] = $hascourses;
-//$templatecontext['courses'] = $courses;
-$templatecontext['categoryfilter'] = \theme_tilemmetry\utility::get_course_category_selector($category, optional_param('categorysort', 0, PARAM_ALPHANUMEXT), $search, 0, $pageurl);
-$templatecontext['categorydescription'] = \theme_tilemmetry\utility::get_category_description($category);
-$templatecontext['searchfilter'] = $PAGE->get_renderer('core', 'course')->course_search_form($search, '', $category, 0);
-
-$templatecontext['totalcourses'] = $totalcourses;
-
-$templatecontext['courses'] = $courses;
 
 $templatecontext['mycourses'] = $mycourses;
-
-$templatecontext['viewtoggler'] = \theme_tilemmetry\utility::get_courses_view_toggler($category);
-
-// This will get the user preference for view state
-// and add classes appropriately
-$view = get_user_preferences('course_view_state');
-if (empty($view)) {
-    $view = set_user_preference('course_view_state', 'grid');
-    $view = 'grid';
+if (\theme_tilemmetry\toolbox::get_setting('enablenewcoursecards')) {
+    $templatecontext['latest_card'] = true;
 }
 
-if ($view == 'grid') {
-    $viewClasses = 'col-md-6 col-lg-3 gridview';
-    $imgStyle = 'gridStyle';
-    $listbuttons = '';
-    $listprogress = '';
-} else {
-    $viewClasses = 'col-md-12 col-lg-12 listview';
-    $imgStyle = 'listStyle';
-    $listbuttons = 'list-activity-buttons';
-    $listprogress = "list-progress";
-}
-
-$hasmycourses = false;
-// $mycourses = false;
-$isloggedin = false;
-if (isloggedin() && !isguestuser()) {
-    $isloggedin = true;
-    $startmyfrom  = $mypage * $courseperpage;
-    $my_courses    = \theme_tilemmetry\utility::get_courses(false, $search, $category, $startmyfrom, $courseperpage, 1, $CSparam);
-    $totalmycourses = \theme_tilemmetry\utility::get_courses(true, $search, $category, 0, 0, 1);
-    // $totalmypages = ceil($totalmycourses / $courseperpage);
-    $pageurl->param('mycourses', 1);
-    
-    // $mypagingbar  = new paging_bar($totalmycourses, $mypage, $courseperpage, $pageurl, 'mypage');
-    if (count($my_courses) > 0) {
-        $hasmycourses = true;
-        $templatecontext['mycourses'] = true;
-    }
-    $templatecontext['my_courses'] = $my_courses;
-    
-    $templatecontext['totalmycourses'] = $totalmycourses;
-}
-$templatecontext['hasmycourses'] = $hasmycourses;
-$templatecontext['isloggedin'] = $isloggedin;
-
-$templatecontext['viewClasses'] = $viewClasses;
-$templatecontext['imgStyle'] = $imgStyle;
-$templatecontext['listbuttons'] = $listbuttons;
-$templatecontext['listprogress'] = $listprogress;
-
-$loaderimg = $OUTPUT->image_url('loader', 'theme');
-$templatecontext['loaderimg'] = $loaderimg;
-
-
-// $templatecontext['view'] = get_user_preferences('viewCourseCategory');
 
 echo $OUTPUT->render_from_template('theme_tilemmetry/coursecategory', $templatecontext);

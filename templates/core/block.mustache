@@ -42,7 +42,7 @@ id="{{id}}" role="{{ariarole}}" data-block="{{type}}"
         {{#istilemmetryblck}}
             {{#hascontrols}}
                 {{#title}}
-                    <h4 id="instance-{{blockinstanceid}}-header" class="p-20 m-0 " title="{{{title}}}">{{{title}}}</h4>
+                    <h4 id="instance-{{blockinstanceid}}-header" class="p-20 m-0 wdm-block-title" title="{{{title}}}">{{{title}}}</h4>
                 {{/title}}
             {{/hascontrols}}
         {{/istilemmetryblck}}
@@ -53,11 +53,11 @@ id="{{id}}" role="{{ariarole}}" data-block="{{type}}"
         {{/hascontrols}}
         {{^istilemmetryblck}}
             {{#title}}
-                <h4 id="instance-{{blockinstanceid}}-header" class="p-20 m-0"  title="{{{title}}}">{{{title}}}</h4>
+                <h4 id="instance-{{blockinstanceid}}-header" class="p-20 m-0 wdm-block-title"  title="{{{title}}}">{{{title}}}</h4>
             {{/title}}
         {{/istilemmetryblck}}
     </div>
-    <div class="{{^istilemmetryblck}}panel-body pt-0{{/istilemmetryblck}} {{#dragable}}drag{{/dragable}}">
+    <div class="{{^istilemmetryblck}}panel-body px-20 pb-20 pt-0{{/istilemmetryblck}} {{#dragable}}drag{{/dragable}}">
         {{{content}}}
     </div>
     {{#footer}}

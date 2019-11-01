@@ -1,0 +1,1 @@
+define([],function(){return{SECTION_ADDED:"theme_tilemmetry-frontpage-section-added",SECTION_UPDATED:"theme_tilemmetry-frontpage-section-updated"}});

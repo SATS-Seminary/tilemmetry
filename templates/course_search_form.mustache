@@ -24,14 +24,11 @@
         {{#category}}
             <input type="hidden" name="categoryid" value="{{category}}">
         {{/category}}
-        <div class="input-search w-p100 d-flex  ">
-            <i class="input-search-icon fa fa-search" aria-hidden="true"></i>
-
-            <input id="{{inputid}}" name="search" type="text" placeholder="{{#str}}searchcourses{{/str}}"   value="{{value}}" class="form-control h-40 w-p100">
-
-            <div class="input-group-btn d-inline-block hidden-sm-down">
-                <button class="btn btn-primary btn-lg px-25 font-weight-500 font-size-14 h-40" type="submit">{{#str}}go{{/str}}</button>
-            </div>
+        <div class="input-group w-p100 d-flex  ">
+            <input id="{{inputid}}" type="text" class="form-control" name="search" placeholder="{{#str}}searchcourses{{/str}}" value="{{value}}">
+            <span class="input-group-append">
+            <button type="submit" class="btn btn-primary"><i class="icon wb-search" style="margin:-5px 3px -2px;" aria-hidden="true"></i></button>
+            </span>
         </div>
     </div>
 </form>

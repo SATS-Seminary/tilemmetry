@@ -21,9 +21,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// General Settings Page
+// General settings
     $page = new admin_settingpage('theme_tilemmetry_general', get_string('generalsettings', 'theme_tilemmetry'));
 
+    //$page->add(new admin_setting_heading('theme_tilemmetry_general', get_string('generalsettings', 'theme_tilemmetry'));
     $page->add(new admin_setting_heading(
         'theme_tilemmetry_general',
         get_string('generalsettings', 'theme_tilemmetry'),
@@ -84,6 +85,15 @@
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
+    // Setting to merge messaging section in right sidebar
+    $name = 'theme_tilemmetry/mergemessagingsidebar';
+    $title = get_string('mergemessagingsidebar', 'theme_tilemmetry');
+    $description = get_string('mergemessagingsidebardesc', 'theme_tilemmetry');
+    $default = true;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
     // Course per page to shown
     $name = 'theme_tilemmetry/courseperpage';
     $title = get_string('courseperpage', 'theme_tilemmetry');
@@ -99,6 +109,39 @@
             4 => get_string('four', 'theme_tilemmetry')
         )
     );
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+
+    // Course animation to be shown on Archieve page
+    $name = 'theme_tilemmetry/courseanimation';
+    $title = get_string('courseanimation', 'theme_tilemmetry');
+    $description = get_string('courseanimationdesc', 'theme_tilemmetry');
+    $setting = new admin_setting_configselect(
+        $name,
+        $title,
+        $description,
+        'none',
+        array(
+            'none' => get_string('none', 'theme_tilemmetry'),
+            'fade' => get_string('fade', 'theme_tilemmetry'),
+            'slide-top'     => get_string('slide-top', 'theme_tilemmetry'),
+            'slide-bottom'  => get_string('slide-bottom', 'theme_tilemmetry'),
+            'slide-right'   => get_string('slide-right', 'theme_tilemmetry'),
+            'scale-up'      => get_string('scale-up', 'theme_tilemmetry'),
+            'scale-down'    => get_string('scale-down', 'theme_tilemmetry'),
+        )
+    );
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $page->add($setting);
+
+
+    // Setting to merge messaging section in right sidebar
+    $name = 'theme_tilemmetry/enablenewcoursecards';
+    $title = get_string('enablenewcoursecards', 'theme_tilemmetry');
+    $description = get_string('enablenewcoursecardsdesc', 'theme_tilemmetry');
+    $default = false;
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
@@ -134,7 +177,9 @@
         $name = 'theme_tilemmetry/logo';
         $title = get_string('logo', 'theme_tilemmetry');
         $description = get_string('logodesc', 'theme_tilemmetry');
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo', 0, array(
+            'subdirs' => 0, 'accepted_types' => 'web_image'
+        ));
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
 
@@ -142,10 +187,12 @@
         $name = 'theme_tilemmetry/logomini';
         $title = get_string('logomini', 'theme_tilemmetry');
         $description = get_string('logominidesc', 'theme_tilemmetry');
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'logomini');
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'logomini', 0, array(
+            'subdirs' => 0, 'accepted_types' => 'web_image'
+        ));
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
-    } elseif (\theme_tilemmetry\toolbox::get_setting('logoorsitename') === "iconsitename") {
+    } else if (\theme_tilemmetry\toolbox::get_setting('logoorsitename') === "iconsitename") {
         // Site icon setting.
         $name = 'theme_tilemmetry/siteicon';
         $title = get_string('siteicon', 'theme_tilemmetry');
@@ -159,7 +206,9 @@
     $name = 'theme_tilemmetry/faviconurl';
     $title = get_string('favicon', 'theme_tilemmetry');
     $description = get_string('favicondesc', 'theme_tilemmetry');
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'faviconurl');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'faviconurl', 0, array(
+        'subdirs' => 0, 'accepted_types' => 'web_image'
+    ));
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
@@ -212,6 +261,6 @@
     $setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
-   
+
     // Must add the page after defining all the settings!
     $settings->add($page);

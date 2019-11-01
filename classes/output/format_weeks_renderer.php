@@ -71,7 +71,7 @@ class format_weeks_renderer extends \format_weeks_renderer {
         }
 
         $o.= html_writer::start_tag('li', array('id' => 'section-'.$section->section,
-            'class' => 'section main clearfix'.$sectionstyle, 'role'=>'region',
+            'class' => 'section main rounded clearfix'.$sectionstyle, 'role'=>'region',
             'aria-label'=> get_section_name($course, $section)));
 
         // Create a span that contains the section title to be used to create the keyboard section move menu.
@@ -100,7 +100,7 @@ class format_weeks_renderer extends \format_weeks_renderer {
         $cm_list = $this->courserenderer->course_section_cm_list($course, $section, 0);
         $temp  = '<span class="wdm-sectionname">'.$this->section_title($section, $section->course).'</span>';
         if (!empty($cm_list)) {
-           $temp  = '<span class="wdm-sectionname row"><div class="col-11">'.$this->section_title($section, $section->course).'</div><i class="fa-angle-up col-1 text-center"></i></span>';
+           $temp  = '<span class="wdm-sectionname row"><div class="col-11">'.$this->section_title($section, $section->course).'</div><i class="fa-angle-up toggle-section position-absolute"></i></span>';
         }
 
         $o .= $this->output->heading($temp, 4, 'sectionname' . $classes);

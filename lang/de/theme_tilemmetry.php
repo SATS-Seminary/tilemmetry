@@ -27,6 +27,18 @@ $string['region-side-pre'] = 'Rechts';
 $string['fullscreen'] = 'Vollbild';
 $string['closefullscreen'] = 'Vollbild schließen';
 $string['overview'] = 'Übersicht';
+$string['presetfiles'] = 'Zusätzliche Voreinstellungsdateien für Themen';
+$string['presetfiles_desc'] = 'Voreinstellungsdateien können verwendet werden, um das Erscheinungsbild des Themas drastisch zu ändern.';
+$string['preset'] = 'Themenvoreinstellung';
+$string['preset_desc'] = 'Wählen Sie eine Voreinstellung, um das Aussehen des Themas weitgehend zu ändern.';
+$string['rawscss'] = 'Raw SCSS';
+$string['rawscss_desc'] = 'Verwenden Sie dieses Feld, um SCSS- oder CSS-Code bereitzustellen, der am Ende des Stylesheets eingefügt wird.';
+$string['rawscsspre'] = 'Rohes anfängliches SCSS';
+$string['rawscsspre_desc'] = 'In diesem Feld können Sie den initialisierenden SCSS-Code eingeben, der vor allen anderen Eingaben eingefügt wird. Meistens verwenden Sie diese Einstellung, um Variablen zu definieren.';
+$string['currentinparentheses'] = '(aktuell)';
+$string['advancedsettings'] = 'Erweiterte Einstellungen';
+$string['brandcolor'] = 'Markenfarbe';
+$string['brandcolor_desc'] = 'Die Akzentfarbe.';
 
 $string['activitynextpreviousbutton'] = 'Aktivieren Sie die Schaltfläche Nächste / Vorherige Aktivität';
 $string['activitynextpreviousbuttondesc'] = 'Die Schaltfläche Nächste / Vorherige Aktivität wird oben auf der Aktivität angezeigt, um schnell zu wechseln
@@ -47,6 +59,15 @@ $string['enroluser'] = 'Benutzer anmelden';
 $string['graderreport'] = 'Note Report';
 $string['activityeport'] = 'Aktivitätsreport';
 $string['editcourse'] = 'Kurs bearbeiten';
+// course sorting strings
+$string['categorysort'] = 'Kategorien sortieren';
+$string['sortdefault'] = 'Sortieren (keine)';
+$string['sortascending'] = 'Sortieren von A bis Z.';
+$string['sortdescending'] = 'Sortieren Sie Z nach A';
+
+// Next Previous Activity
+$string['activityprev'] = 'Vorherige Aktivität';
+$string['activitynext'] = 'Nächste Aktivität';
 
 // Dashboard Element -> overview
 $string['enabledashboardelements'] = 'Enable Dashboard Elements';
@@ -74,11 +95,12 @@ $string['sendmoremessage'] = 'Weitere Nachricht senden';
 // Allgemeine Einstellungen
 $string['generalsettings' ] = 'Allgemeine Einstellungen';
 $string['navsettings'] = 'Nav Einstellungen';
-$string['homepagesettings'] = 'Startseiten Einstellungen';
 $string['colorsettings'] = 'Farbeinstellungen';
 $string['fontsettings' ] = 'Schriftart Einstellungen';
 $string['slidersettings'] = 'Schieberegler-Einstellungen';
 $string['configtitle'] = 'SATS Tilemmetry';
+
+$string['dashboardsettingdesc'] = 'Die Dashboard-Einstellungen enthalten die Einstellungen zu den Blöcken, die hinzugefügt werden sollen';
 
 // Font Einstellungen.
 $string['fontselect'] = 'Schriftart Auswähler';
@@ -92,6 +114,7 @@ $string['fontnamebodydesc'] = 'Geben Sie den genauen Namen für die Schriftart e
 
 /* Dashboard Einstellungen*/
 $string['dashboardsetting'] = 'Dashboard Einstellungen';
+$string['olddashboard'] = 'Auf Ihrem System ist ein altes Tilemmetry-Block-Plugin installiert. Um neue Funktionen und Einstellungen zu erhalten, aktualisieren Sie bitte Ihr Tilemmetry Block-Plugin auf die neueste Version.';
 $string['themecolor'] = 'Theme Farbe';
 $string['themecolordesc'] = 'Welche Farbe soll Ihr Theme haben. Dies wird viele Komponenten ändern, um die gewünschte Farbe auf den Moodle Seiten zu erzeugen.';
 $string['themetextcolor'] = 'Text Farbe';
@@ -147,7 +170,7 @@ $string['logodesc'] = 'Sie können ein Logo hinzufügen, um es in der Kopfzeile 
 $string['logomini'] = 'LogoMini';
 $string['logominidesc'] = 'You may add the logomini to be displayed on the header when sidebar is collapsed. Note- Preferred height is 50px. In case you wish to customise, you can do so from the custom CSS box.';
 $string['siteicon'] = 'Website-Symbol';
-$string['siteicondesc'] = 'Haben Sie kein Logo? Sie können eines aus dieser Liste auswählen <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_new">hier</a>. Geben Sie nur das ein, was nach dem "fa-" kommt. ';
+$string['siteicondesc'] = 'Haben Sie kein Logo? Sie können eines aus dieser Liste auswählen <a href="https://fontawesome.com/v4.7.0/cheatsheet/" target="_new">hier</a>. Geben Sie nur das ein, was nach dem "fa-" kommt. ';
 $string['logoorsitename'] = 'Das Logo Format auswählen';
 $string['logoorsitenamedesc'] = 'Sie können das Aussehen des Seiten Kopfzeile-Logos ändern. Die verfügbare Möglichkeiten sind: Logo- Nur das Logo wird gezeigt; Icon+Sitename - Ein Icon zusammen mit einem Seitennamen wird gezeigt.';
 $string['onlylogo'] = 'Nur Logo';
@@ -167,127 +190,14 @@ $string['customcssdesc'] = 'Sie können das CSS aus der Text Box anpassen. Diese
 $string['googleanalytics'] = 'Google Analytics Tracking ID';
 $string['googleanalyticsdesc'] = 'Bitte geben Sie Ihre  Google Analytics Tracking ID ein, um Analyticsauf Ihre Website zu aktivieren . Der  tracking ID Format sollte so sein  [UA-XXXXX-Y].<br />Bitte beachten Sie, dass Sie mit dieser Einstellung Daten an Google Analytics senden und sicherstellen sollten, dass Ihre Nutzer darüber informiert werden. In unserem Produkt werden keine Daten gespeichert, die an Google Analytics gesendet werden.';
 
-/*theme_remUI_startseite*/
-
-$string['frontpageimagecontent'] = 'Inhalt von Kopfzeile';
-$string['frontpageimagecontentdesc'] = ' Dieses Teil bezieht sich auf den obene Abschnitt Ihrer Startseite';
-$string['frontpageimagecontentstyle'] = 'Stil';
-$string['frontpageimagecontentstyledesc'] = 'Sie können aus statischen Inhalten und Slider Inhalten auswählen.';
-$string['staticcontent'] = 'Statische Inhalte';
-$string['slidercontent'] = 'Slider Inhalte';
-$string['addtext'] = 'Text hinzufügen';
-$string['defaultaddtext'] = 'Bildung ist einen lange erprobt Weg zum Erfolg.';
-$string['addtextdesc'] = 'Hier können Sie den Text hinzufügen, der auf der Startseite gezeigt werden soll, möglichst in HTML.';
-$string['uploadimage'] = 'Bild hochladen';
-$string['uploadimagedesc'] = 'Hier können Sie Ihr eigenes Bild hochladen ';
-$string['video'] = 'iframe Embedded code';
-$string['videodesc'] = 'Hier können Sie den iframe Embedded Code des Videos einsetzen, der integriert werden soll.';
-$string['contenttype'] = 'Art des Inhalts auswählen';
-$string['contentdesc'] = 'Sie können aus dem Bild oder Video url auswählen.';
-$string['image'] = 'Bild';
-$string['videourl'] = 'Video URL';
 $string['frontpageimge'] = '';
 
-$string['slidercount'] = 'Anzahl von Folien ';
-$string['slidercountdesc'] = '';
-$string['one'] = '1';
-$string['two'] = '2';
-$string['three'] = '3';
 $string['four'] = '4';
-$string['five'] = '5';
 $string['eight'] = '8';
 $string['twelve'] = '12';
 
-$string['slideimage'] = 'Bilder für Slider hochladen';
-$string['slideimagedesc'] = 'Sie können hier ein Bild als Inhalt für den Slider hochladen.';
-$string['slidertext'] = 'Slider Text hinzufügen';
-$string['defaultslidertext'] = '<h2><span>Bildung ist einen lange erprobt Weg zum Erfolg</span><br>YOU ENTER TO LEARN, LEAVE TO ACHIEVE</h2><p>Education ignites a purpose within us and beckons us on a path of enlightenment. It allows for a progressive mind to flourish that builds a self-sustaining society.</p>';
-$string['slidertextdesc'] = 'Sie können den Text Inhalt von Ihrem Slider einsetzen, möglichst im HTML.';
-$string['sliderurl'] = 'Slider Text Button Link';
-$string['sliderbuttontext'] = 'Text Button von Slider hinzufügen ';
-$string['sliderbuttontextdesc'] = 'Sie können eine Text Button auf Ihr Slider einsetzen.';
-$string['sliderurldesc'] = 'Sie können den Link der Seite einsetzen, wo der Benutzer nur einmal umgeleitet werden, nachdem er/sie auf die Text Button klickt.';
-$string['slideinterval'] = 'Slide Interval';
-$string['slideintervaldesc'] = 'Sie können die Übergangszeit zwischen den Folien einstellen. Falls es nur eine Folie gibt, wird diese Option gar keinen Einfluss darauf haben. ';
-$string['sliderautoplay'] = 'Slider Autoplay Einstellen';
-$string['sliderautoplaydesc'] = 'Ja auswählen, wenn Sie einen automatischen Übergang in Ihrer Slideshow haben möchten.';
-$string['true'] = 'Ja';
-$string['false'] = 'Nein';
-
-$string['frontpageblocks'] = 'Body Inhalt';
-$string['frontpageblocksdesc'] = 'Sie können eine Überschrift für Ihren Webseiten-Inhalt einsetzen';
-
-$string['enablesectionbutton'] = 'Buttons in diesem Abschnitt aktivieren ';
-$string['enablesectionbuttondesc'] = 'Buttons auf dem Body Abschnitt aktivieren.';
 $string['enablefrontpagecourseimg'] = 'Enable Images in Front Page Courses';
 $string['enablefrontpagecourseimgdesc'] = 'Enable images in Front Page Courses Available section ';
-
-/* General section descriptions */
-$string['frontpageblockiconsectiondesc'] = 'Sie können irgendein Icon auswählen <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_new">list</a>. Geben Sie den Text erst nach "fa-". ';
-$string['frontpageblockdescriptionsectiondesc'] = 'Eine kurze Beschreibung über den Titel';
-$string['defaultdescriptionsection'] = 'Holistisch nutzen die Technologie rechtzeitig durch Unternehmenfällen';
-$string['sectionbuttontextdesc'] = 'Geben Sie den Text für den Button in diesem Teil .';
-$string['sectionbuttonlinkdesc'] = 'Geben Sie die URL für diesen Teil.';
-$string['frontpageblocksectiondesc'] = 'Titel zu diesem Teil hinzufügen .';
-
-/*block Teil 1*/
-$string['frontpageblocksection1'] = 'Body Titel für den erste Teil';
-$string['frontpageblockdescriptionsection1'] = 'Body Beschreibung für den erste Teil';
-$string['frontpageblockiconsection1'] = 'Font-Awesome iocn Teil 1';
-$string['sectionbuttontext1'] = 'Button Text für Teil1';
-$string['sectionbuttonlink1'] = 'URL Link Teil1';
-
-
-/*block Teil 2*/
-$string['frontpageblocksection2'] = 'Body Titel für den zweite Teil';
-$string['frontpageblockdescriptionsection2'] = 'Body Beschreibung für den zweite Teil';
-$string['frontpageblockiconsection2'] = 'Font-Awesome iocn Teil  2';
-$string['sectionbuttontext2'] = 'Button Text für Teil2';
-$string['sectionbuttonlink2'] = 'URL Link Teil2';
-
-
-/*block Teil 3*/
-$string['frontpageblocksection3'] = 'Body Titel für dritte Teil';
-$string['frontpageblockdescriptionsection3'] = 'Body Beschreibung für das dritte Teil';
-$string['frontpageblockiconsection3'] = 'Font-Awesome iocn Teil  3';
-$string['sectionbuttontext3'] = 'Button Text für Teil3';
-$string['sectionbuttonlink3'] = 'URL Link Teil3';
-
-
-/*block Teil 4*/
-$string['frontpageblocksection4'] = 'Body Titel für den vierte Teil';
-$string['frontpageblockdescriptionsection4'] = 'Body Beschreibung für den vierte Teil';
-$string['frontpageblockiconsection4'] = 'Font-Awesome iocn Teil  4';
-$string['sectionbuttontext4'] = 'Button Text für Teil4';
-$string['sectionbuttonlink4'] = 'URL Link für Teil4';
-
-// Frontpage Aboutus settings
-$string['frontpageaboutus'] = 'Titelseite Über uns';
-$string['frontpageaboutusdesc'] = 'Dieser Teil ist für die Starteseite Über uns';
-$string['frontpageaboutustitledesc'] = 'Titel hinzufügen zu Über uns Sektion';
-$string['frontpageaboutusbody'] = 'Body Beschreibung für Über uns Abschnitt';
-$string['frontpageaboutusbodydesc'] = 'Eine kurze Beschreibung dieses Abschnitts';
-
-// Startseite Überuns Einstellungen
-$string['frontpageaboutus'] = 'Startseite Über Uns ';
-$string['frontpageaboutusdesc'] = 'Dieser Teil ist für die Starteseite Über uns';
-
-$string['enablefrontpageaboutus'] = 'Über uns Teil aktivieren';
-$string['enablefrontpageaboutusdesc'] = 'Den Über uns Teil auf die Startseite aktivieren.';
-$string['frontpageaboutusheading'] = 'Über uns Überschrift';
-$string['frontpageaboutusheadingdesc'] = 'Überschrift für default heading Text für diesen Teil ';
-$string['frontpageaboutustext'] = 'Über uns Text';
-$string['frontpageaboutustextdesc'] = 'Geben Sie den über uns Text für die Startseite ein.';
-$string['frontpageaboutusdefault'] = '<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.Lorem ipsum dolor sit amet,
-                  consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
-                  adipisicing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>';
-$string['frontpageaboutusimage'] = 'Startseite über uns Bild';
-$string['frontpageaboutusimagedesc'] = 'Das Bild für Startseite über uns Teil hochladen';
 
 // Social media settings
 $string['socialmedia'] = 'Social Media Einstellungen';
@@ -306,6 +216,8 @@ $string['instagramsetting'] = 'Instagram Einstellungen';
 $string['instagramsettingdesc'] = 'Geben Sie Ihren Instagram Link ein. Zum Beispiel. https://www.instagram.com/name';
 $string['pinterestsetting'] = 'Pinterest Einstellungen';
 $string['pinterestsettingdesc'] = 'Geben Sie Ihren Pinterest Link ein. Zum Beispiel. https://www.pinterest.com/name';
+$string['quorasetting'] = 'Quora Einstellungen';
+$string['quorasettingdesc'] = 'Geben Sie Ihren Quora Link ein. Zum Beispiel. https://www.quora.com/name';
 
 
 // Fußzeile Teil Einstellungen
@@ -466,6 +378,7 @@ $string['viewallusers'] = 'Alle Benutzer sehen';
 
 // Neulich aktive Forums
 $string['recentlyactiveforums'] = 'Zuletzt aktive Forums ';
+$string['norecentlyactiveforums'] = 'Keine kürzlich aktiven Foren!';
 
 // Neueste Aufgaben
 $string['assignmentstobegraded'] = 'Aufgaben zum benoten ';
@@ -537,21 +450,10 @@ $string['due'] = 'fällig';
 $string['quicklinks'] = 'Schnelle Links';
 
 /*coruse activity navigation*/
-$string['backtocourse'] = 'Zurück zum Kurs';
+$string['backtocourse'] = 'Kursüberblick';
 $string['sectionnotitle'] = 'Allgemein';
 $string['sectiondefaulttitle'] = 'Abschnitt';
 
-// latest 3.3 to be arranged later
-$string['testimonialcount'] = 'Testimonial Anzahl';
-$string['testimonialcountdesc'] = 'Anzahl von Testimonials, die angezeigt werden müssen.';
-$string['testimonialimage'] = 'Testimonial Bild';
-$string['testimonialimagedesc'] = 'Bild des Benutzers, um mit dem Testimonial anzuzeigen';
-$string['testimonialname'] = 'Benutzername';
-$string['testimonialnamedesc'] = 'Benutzername';
-$string['testimonialdesignation'] = 'Designation des Benutzers';
-$string['testimonialdesignationdesc'] = 'Designation des Benutzers.';
-$string['testimonialtext'] = 'Testimonial des Benutzers';
-$string['testimonialtextdesc'] = 'Was der Benutzer sagt';
 $string['sectionactivities'] = 'Aktivitäten';
 $string['showless'] = 'Weniger zeigen';
 $string['showmore'] = 'Mehr zeigen';
@@ -574,6 +476,7 @@ $string['signin'] = 'Sich anmelden';
 $string['forgotpassword'] = 'Passwort vergessen?';
 $string['noaccount'] = 'Kein Konto?';
 $string['applysitewide'] = 'Für umfassende Website anwenden';
+$string['applysitecolor'] = 'Site-Farbe anwenden';
 
 // User profile page js
 $string['actioncouldnotbeperformed'] = 'Aktion konnte nicht ausgeführt werden!';
@@ -591,7 +494,7 @@ $string['createaccount'] = 'Hier können Sie ein neues Konto erstellen.';
 $string['signup'] = 'Sich registrieren';
 $string['togglesearch'] = 'Suche umschalten';
 $string['togglefullscreen'] = 'Vollbild umschalten';
-$string['navbartype'] = 'Art von der Navigationsleiste';
+$string['navbartype'] = 'Farbe der Navigationsleiste';
 $string['sidebarcolor'] = 'Farbe der Seitenleiste';
 $string['sitecolor'] = 'Farbe der Website';
 $string['others'] = 'Andere';
@@ -624,6 +527,10 @@ $string['providefeedback'] = 'Bitte geben Sie Ihren Feedback von Tilemmetry ein'
 $string['sendfeedback'] = 'Feedback schicken';
 $string['recentnews'] = 'Neueste Nachricht';
 
+/* Grey Box Image Home Page */
+$string['frontpageblockimage'] = 'Bild hochladen';
+$string['frontpageblockimagedesc'] = 'Sie können dazu ein Bild als Inhalt hochladen.';
+
 /* Meine Kursseite */
 $string['resume'] = 'Fortsetzen';
 $string['start'] = 'Beginnen';
@@ -640,10 +547,10 @@ $string['overdue'] = "Overdue";
 $string['upcoming'] = "Bevorstehende";
 $string['expired'] = 'Abgelaufen';
 $string['selectcourse'] = "Wählen Sie einen Kurs aus";
-$string['courseanlytics']="Kursanalyse";
-$string['highestgrade']="HÖCHSTE KLASSE";
-$string['lowestgrade']="NIEDRIGSTE KLASSE";
-$string['averagegrade']="DURCHSCHNITTLICH KLASSE";
+$string['courseanlytics'] = "Kursanalyse";
+$string['highestgrade'] = "HÖCHSTE KLASSE";
+$string['lowestgrade'] = "NIEDRIGSTE KLASSE";
+$string['averagegrade'] = "DURCHSCHNITTLICH KLASSE";
 $string['viewcourse'] = "KURS ANSEHEN";
 $string['mycourses'] = "Meine Kurse";
 $string['tasks'] = "Aufgaben zum Abschluss";
@@ -668,7 +575,7 @@ $string['typewarning'] = "Ankündigung von Warnung";
 $string['typesuccess'] = "Ankündigung von Erfolg";
 
 
-// Dashboard SATS Tilemmetry Blocks 
+// Dashboard SATS Tilemmetry Blocks
 $string['courseprogressblock'] = 'Kurs Fortschritts Block';
 $string['enrolledusersblock'] = 'Registrierte Benutzer Block';
 $string['quizattemptsblock'] = 'Quiz Versuche Block';
@@ -681,7 +588,7 @@ $string['recentforumsblock'] = 'Neueste Forums Block';
 $string['courseprogressblockdesc'] = 'Aktivieren Kurs Fortschritts Block';
 $string['enrolledusersblockdesc'] = 'Aktivieren Registrierte Benutzer Block';
 $string['quizattemptsblockdesc'] = 'Aktivieren Quiz Versuche Block';
-$string['courseanlyticsblockdesc'] =  'Aktivieren Kursanalyse Block';
+$string['courseanlyticsblockdesc'] = 'Aktivieren Kursanalyse Block';
 $string['latestmembersblockdesc'] = 'Aktivieren Neueste Mitglieder Block';
 $string['addnotesblockdesc'] = 'Aktivieren Notizen Hinzufügen Block';
 $string['recentfeedbackblockdesc'] = 'Aktivieren Neueste Feedback Block';
@@ -697,13 +604,6 @@ $string['name'] = "Name";
 $string['status'] = "Status";
 $string['back'] = "Zurück";
 
-
-/*Front Page Setting for About Us Block*/
-$string['frontpageblockdisplay'] = 'Über uns Abschnitt';
-$string['frontpageblockdisplaydesc'] = 'Sie können den Bereich "Über uns" ein- oder ausblenden, Sie können ihn auch im gitterformat anzeigen';
-$string['donotshowaboutus'] = 'Nicht zeigen';
-$string['showaboutusinrow'] = 'Abschnitt in einer Reihe anzeigen';
-$string['showaboutusingridblock'] = 'Abschnitt im Grid-Block anzeigen';
 
 $string['recentactivityblock'] = 'Kürzliche Aktivitäten Block';
 $string['recentactivityblockdesc'] = 'Wenn diese Option aktiviert ist, wird der Block "Kürzliche Aktivitäten
@@ -729,11 +629,11 @@ $string['coursedescimagedesc'] = 'Wenn diese Option aktiviert ist, wird das Hint
 // </p>
 
 // </div>" data-html="true" tabindex="0" data-trigger="focus" data-original-title="" title="">
-//   <i class="icon fa fa-question-circle text-info fa-fw " aria-hidden="true" title="Help with Choice" aria-label="Help with Choice"></i>
+// <i class="icon fa fa-question-circle text-info fa-fw " aria-hidden="true" title="Help with Choice" aria-label="Help with Choice"></i>
 // </a>';
 // $string['googleanalyticshelp'] = '<a class="btn btn-link p-a-0" role="button" data-container="body" data-toggle="popover" data-placement="left" data-content="<div class=&quot;no-overflow&quot;><p>Please be aware that by including this setting, you will be sending data to Google Analytics and you should make sure that your users are warned about this. Our product does not store any of the data being sent to Google Analytics.</p>
 // </div> " data-html="true" tabindex="0" data-trigger="focus" data-original-title="" title="">
-//   <i class="icon fa fa-question-circle text-info fa-fw " aria-hidden="true" title="Help with Display description on course page" aria-label="Help with Display description on course page"></i>
+// <i class="icon fa fa-question-circle text-info fa-fw " aria-hidden="true" title="Help with Display description on course page" aria-label="Help with Display description on course page"></i>
 // </a>';
 // $string['privacy:metadata:core_files'] = 'Stores Slider images and images for different sections for the home page. Also, a background image uploaded by the admin for the login page is stored by the theme.';
 
@@ -766,9 +666,386 @@ $string['sidebarpinned'] = 'Sidebar pinned.';
 $string['sidebarunpinned'] = 'Sidebar unpinned.';
 $string['pinsidebar'] = 'Pin sidebar';
 $string['unpinsidebar'] = 'Unpin sidebar';
+$string['mergemessagingsidebar'] = 'Meldiergremium zusammenfassen';
+$string['mergemessagingsidebardesc'] = 'Verschmelzung Message in die rechte Seitenleiste';
 
-/** Course Stats */
-$string['enrolledusers'] = 'Registrierte <br>Benutzer';
+// Course Stats
+$string['enrolstudents'] = 'Registrierte <br>Studenten';
 $string['studentcompleted'] = 'Studenten <br>Abgeschlossen';
 $string['inprogress'] = 'In <br>Bearbeitung';
 $string['yettostart'] = 'Noch <br>zu beginnen';
+
+$string['none'] = 'Keiner';
+$string['fade'] = 'Verblassen';
+$string['slide-top'] = 'Schieben Sie nach oben';
+$string['slide-bottom'] = 'Schieben Sie nach unten';
+$string['slide-right'] = 'Nach rechts schieben';
+$string['slide-left'] = 'Schieben Sie nach links';
+$string['slide-left-right'] = 'Alternative: Nach links und Nach rechts schieben';
+$string['scale-up'] = 'Vergrößern';
+$string['scale-down'] = 'Herunterskalieren';
+$string['courseanimation'] = 'Kursanimation';
+$string['courseanimationdesc'] = 'Wenn Sie dies aktivieren, wird den Kursen auf der Kursarchivseite eine Animation hinzugefügt';
+$string['enablenewcoursecards'] = 'Neue Kurskarten aktivieren';
+$string['enablenewcoursecardsdesc'] = 'Wenn Sie dies aktivieren, werden auf der Kursarchivseite neue Kurskarten angezeigt';
+$string['publishfrontpage'] = 'Veröffentlichen';
+$string['sectiondelete'] = 'Dieser Abschnitt wird in 30 Sekunden endgültig gelöscht, um Änderungen zu vermeiden';
+$string['undo'] = 'Innerhalb rückgängig machen';
+$string['frontpageheadercolor'] = 'Homepage-Header-Farbe';
+$string['frontpageheadercolordesc'] = 'Wenn der Header transparent ist, wird die ausgewählte Farbe auf den Seitenkopf angewendet.';
+$string['frontpagetransparentheader'] = 'Homepage transparente Überschrift';
+$string['frontpagetransparentheaderdesc'] = 'Wenn der Schieberegler der erste Abschnitt auf der Startseite ist, wird die Kopfzeile als transparent angezeigt.';
+$string['frontpageappearanimation'] = 'Abschnitt erscheinen animation';
+$string['frontpageappearanimationdesc'] = 'Aktivieren Sie diese Option, um die Anzeige von Animationen für Abschnitte zu aktivieren.';
+$string['frontpageappearanimationstyle'] = 'Animationsstil anzeigen';
+$string['frontpageappearanimationstyledesc'] = 'Wählen Sie den Animationsstil für den Abschnitt.';
+$string['migratorheader'] = 'Migrator';
+$string['migrate'] = 'Wandern';
+$string['migratormessge'] = '<p> Willkommen beim brandneuen Design von SATS Tilemmetrys Homepage. Wir haben festgestellt, dass Sie ältere Homepage-Einstellungen haben. Möchten Sie diese Einstellungen migrieren? </ P> <p> <strong> Migrieren </ strong> - Aus älteren Einstellungen werden neue Blöcke erstellt. </ Br> <strong> Abbrechen </ strong> - Sie können eine Startseite erstellen manuell und diese Meldung wird nicht erneut angezeigt. </ p>';
+$string['sectionupdated'] = 'Abschnitt erfolgreich aktualisiert. Veröffentlichen, um Änderungen anzuwenden.';
+$string['sectiondeleted'] = 'Abschnitt erfolgreich gelöscht. Veröffentlichen, um Änderungen anzuwenden.';
+
+// Slider Section
+$string['noofslides'] = 'Anzahl der Folien';
+$string['slideheading'] = "Slide Heading";
+$string['slideheadingplaceholder'] = 'Geben Sie hier die Folienüberschrift ein';
+$string['slidedescription'] = "Slide Description";
+$string['slidedescriptionplaceholder'] = 'Geben Sie hier die Folienbeschreibung ein';
+$string['btnlabel'] = 'Tastenbeschriftung';
+$string['btnlink'] = 'Button Link';
+$string['missingslide'] = 'Bitte lade ein Bild oder Video hoch';
+$string['slideintervalplaceholder'] = 'Positive Ganzzahl in Millisekunden.';
+
+// Contact Section
+$string['contactlink'] = 'Kontakt-Link';
+$string['contactus'] = 'Kontaktiere uns';
+$string['contactplaceholder'] = 'Geben Sie Ihre Kontaktdaten ein. Dies kann eine E-Mail oder ein Telefon sein';
+$string['missingcontactlink'] = 'Fehlender Kontaktlink';
+$string['titleplaceholder'] = 'Titel hier eingeben';
+$string['missingtitle'] = 'Fehlender Titel';
+$string['descriptionplaceholder'] = 'Geben Sie hier eine Beschreibung ein';
+$string['contactlabelplaceholder'] = 'Label eingeben, z. E-Mail, Telefon usw.';
+$string['missingdescription'] = 'Fehlende Beschreibung';
+$string['socialview'] = 'Icons anzeigen';
+$string['quora'] = 'Quora';
+$string['google'] = 'Google';
+$string['youtube'] = 'Youtube';
+$string['twitter'] = 'Twitter';
+$string['facebook'] = 'Facebook';
+$string['linkedin'] = 'Linkedin';
+$string['pinterest'] = 'Pinterest';
+$string['instagram'] = 'Instagram';
+
+
+// General Strings
+$string['sectionpadding'] = 'Abschnittsauffüllung In Pixel';
+$string['sectionsetting'] = 'Abschnitt Einstellungen';
+$string['sectionbackground'] = 'Abschnitt Hintergrundbild';
+$string['bgcolor'] = 'Hintergrundfarbe';
+$string['bgfixed'] = 'Feststehender Hintergrund';
+$string['bgopacity'] = 'Hintergrundopazität';
+$string['nobgfixed'] = 'Kein fester Hintergrund';
+$string['textbold'] = 'Fett gedruckt';
+$string['textitalic'] = 'Kursiv';
+$string['titleeditor'] = 'Editor';
+$string['fontsize'] = 'Schriftgröße';
+$string['textunderline'] = 'Unterstreichen';
+$string['color'] = 'Farbe';
+$string['editingison'] = 'Bearbeitungsmodus Ein';
+$string['fullwidth'] = 'Gesamtbreite';
+$string['container'] = 'Feste Breite des Containers';
+$string['shadowless'] = 'Abschnitt Elemente Schatten';
+$string['shadowcolor'] = 'Schattenfarbe des Abschnitts';
+$string['shadowlessdesc'] = 'Aktivieren Sie diese Option, um den Abschnittselementen Schatten hinzuzufügen';
+$string['contactlabel'] = "Contact Label";
+$string['link'] = 'Verknüpfung';
+$string['linklabel'] = 'Verknüpfungsbezeichnung';
+$string['phone'] = 'Kontakt Nr.';
+
+// Section list string
+$string['slidersection'] = "Slider-Bereich";
+$string['aboutussection'] = "Über uns Sektion";
+$string['contactsection'] = "Kontaktbereich";
+$string['featuresection'] = "Feature-Bereich";
+$string['coursessection'] = "Kursbereich";
+$string['teamsection'] = "Team-Bereich";
+$string['testimonialsection'] = "Testimonial Section";
+$string['htmlsection'] = "HTML-Abschnitt";
+$string['separatorsection'] = "Separator Section";
+
+
+// Slider Section
+$string['textalign'] = 'Textausrichtung';
+$string['desccolor'] = 'Beschreibung Farbe';
+$string['headingcolor'] = 'Überschriftenfarbe';
+$string['enablenav'] = 'Navigationspfeile';
+
+$string['nonav'] = 'Keine Navigationspfeile';
+$string['navarrows'] = 'Standard-Navigationspfeile';
+$string['navarrowscircle'] = 'Navigationspfeile mit kreisförmigen Hintergrund';
+$string['navarrowssquare'] = 'Navigationspfeile mit quadratischem Hintergrund';
+
+// Team Section
+$string['meetourteam'] = 'Triff unser Team';
+$string['rows'] = 'Reihenanzahl';
+$string['members'] = 'Anzahl der Mitglieder';
+$string['quote'] = 'Zitat eingeben';
+$string['teammembernameplaceholder'] = "Geben Sie hier den Namen des Teammitglieds ein";
+$string['teammemberquoteplaceholder'] = "Geben Sie hier das Angebot des Teammitglieds ein";
+
+// Feature Section
+$string['feature'] = 'Merkmal';
+$string['features'] = 'Anzahl der Funktionen';
+$string['featurenameplaceholder'] = 'Feature hier eingeben';
+$string['missingname'] = 'Fehlender Name';
+$string['featureiconplaceholder'] = 'Geben Sie hier das Funktionssymbol ein';
+$string['missingicon'] = 'Fehlendes Symbol';
+$string['colorhex'] = 'Hexwert für Farbe';
+
+// Courses section
+$string['all'] = 'Alles';
+$string['allcourses'] = 'Alle Kurse';
+$string['future'] = 'Zukunft';
+$string['coursessectioninprogress'] = 'In Bearbeitung';
+$string['past'] = 'Vergangenheit';
+$string['coursecategoriesplaceholder'] = 'Hier Kurskategorie suchen';
+$string['categories'] = 'Kategorien';
+$string['categoryandcourses'] = 'Kategorie und Kurse';
+$string['hiddencategory'] = 'Versteckte Kategorie';
+
+// Testimonial Section
+$string['testimonials'] = 'Anzahl der Testimonials';
+$string['testimonial'] = 'Zeugnis';
+$string['testimonialplaceholder'] = "Geben Sie hier das Zeugnis der Person ein";
+$string['missingtestimonial'] = 'Fehlender Testimonial';
+$string['designation'] = 'Bezeichnung';
+$string['designationplaceholder'] = "Geben Sie hier die Bezeichnung der Person ein";
+$string['borderradius'] = 'Grenzradius';
+$string['noradius'] = 'Kein Randradius';
+$string['px'] = '  Pixel';
+$string['fullnameplaceholder'] = "Geben Sie hier den vollständigen Namen der Person ein";
+$string['namecolor'] = 'Feld Autorenname Farbe';
+$string['namecolordesc'] = 'Diese Farbe wird auf allen Vollnamentext angewendet';
+$string['designationcolor'] = 'Bezeichnung Feldfarbe';
+$string['designationcolordesc'] = 'Diese Farbe wird auf alle Bezeichnungstexte angewendet.';
+$string['testimonialcolor'] = 'Testimonial Feldfarbe';
+$string['testimonialcolordesc'] = 'Diese Farbe wird auf alle Testimonial-Texte angewendet.';
+$string['testimonialproperties'] = 'Texteigenschaften für Testimonial';
+$string['testimonialpropertiesdesc'] = 'Diese Eigenschaften werden auf alle Testimonials des Autors angewendet.';
+$string['backgroundstyle'] = 'Testimonial Hintergrundstil';
+$string['solidcolor'] = 'Solide';
+$string['gradientcolor'] = 'Gradient';
+$string['testimonialcolor1'] = 'Wenn der Hintergrundstil solide ist, wird diese Farbe für den gesamten Testimonial angewendet. Wenn der Hintergrundstil ein Farbverlauf ist, ist dies die erste Farbe.';
+$string['testimonialcolor2'] = 'Dies ist die zweite Farbe für den Hintergrund des Testimonials.';
+$string['layout1'] = 'Layout 1';
+$string['layout2'] = 'Layout 2';
+
+// Edit Menu
+$string['edit'] = 'Bearbeiten';
+$string['moveup'] = 'Nach oben bewegen';
+$string['movedown'] = 'Sich abwärts bewegen';
+$string['hide'] = 'verbergen';
+$string['show'] = 'Show';
+$string['delete'] = 'Löschen';
+
+// HTML Section
+$string['blocks'] = 'Anzahl der Blöcke';
+$string['cssstyle'] = 'CSS-Stile';
+$string['cssstyleplaceholder'] = 'Geben Sie hier CSS-Stile ein. Live-Änderungen werden im Editor angezeigt. Ex:
+div {
+    border: 2px dashed #ccc;
+}
+';
+$string['htmldefaultcontent'] = 'Fügen Sie hier Ihren Inhalt ein';
+$string['applyfilter'] = 'Filter anwenden';
+$string['applyfilterdesc'] = 'Wenden Sie Moodle-Filter auf den Inhalt an, bevor Sie den Abschnitt anzeigen.';
+
+// Separator Section
+$string['separatorstyle'] = 'Separator-Stil';
+$string['separatorsolid'] = 'Solide';
+$string['separatordouble'] = 'Doppelt';
+$string['separatordashed'] = 'Gestrichelt';
+$string['separatordotted'] = 'Gepunktet';
+$string['separatorblur'] = 'Verwischen';
+$string['separatorblurend'] = 'Ende verwischen';
+$string['separatorgradient'] = 'Gradient';
+$string['separatorwidth'] = 'Breite in Prozent';
+$string['separatorheight'] = 'Höhe';
+$string['separatorresult'] = 'Ergebnis';
+
+// About us section
+$string['aboutus'] = 'Über uns';
+$string['aboutusblock'] = 'Über uns sperren';
+$string['view'] = 'Aussicht';
+$string['icon'] = 'Symbol (<a href="https://fontawesome.com/v4.7.0/cheatsheet/" target="_new">Font-Awesome</a>)';
+$string['aboutusicondesc'] = 'Sie können ein beliebiges Symbol auswählen <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_new">list</a>. Geben Sie einfach den Text danach ein "fa-".';
+$string['backgroudimage'] = 'Hintergrundbild';
+$string['rowview'] = "Reihe";
+$string['gridview'] = "Gitter";
+$string['columnview'] = 'Säule';
+$string['clickhere'] = 'Klick hier';
+$string['btnlink'] = "Button Link";
+$string['btnlinkplaceholder'] = 'Geben Sie hier den Link für die Schaltfläche ein';
+$string['btnlabel'] = "Tastenbeschriftung";
+$string['btnlabelplaceholder'] = 'Geben Sie hier die Tastenbezeichnung ein';
+$string['colorhex'] = 'Farbe (Hex-Code)';
+$string['colorhexdesc'] = 'Klicken Sie auf das obige Kästchen, um eine Farbe auszuwählen';
+$string['blockbackground'] = 'Hintergrund blockieren';
+$string['transparent'] = 'Transparent';
+$string['noborder'] = 'Keine Grenze';
+$string['border'] = 'Eingefasst';
+$string['cardradius'] = 'Kartenradius';
+
+
+// Frontpage old string
+$string['homepagesettings'] = 'Startseiten Einstellungen';
+
+$string['frontpagedesign'] = 'Frontpage Design';
+$string['frontpagedesigndesc'] = 'Dieser Abschnitt bezieht sich auf den Designstil der Startseite.';
+$string['frontpagechooser'] = 'Wählen Sie das Frontpage-Design';
+$string['frontpagechooserdesc'] = 'Wählen Sie Ihr Frontpage-Design.';
+$string['frontpagedesignold'] = 'Standard altes Design';
+$string['frontpagedesignolddesc'] = 'Standard-Dashboard wie zuvor.';
+$string['frontpagedesignnew'] = 'Neues Design';
+$string['frontpagedesignnewdesc'] = 'Frisches neues Design mit mehreren Abschnitten. Sie können einzelne Abschnitte auf der Startseite konfigurieren.';
+$string['newhomepagedescription'] = 'Klicken Sie in der Navigationsleiste auf "Homepage", um zum "Homepage Builder" zu gelangen und eine eigene Homepage zu erstellen';
+$string['frontpageloader'] = 'Lade das Loader-Bild für die Startseite hoch';
+$string['frontpageloaderdesc'] = 'Dadurch wird der Standardlader durch Ihr Image ersetzt';
+
+$string['frontpageimagecontent'] = 'Inhalt von Kopfzeile';
+$string['frontpageimagecontentdesc'] = ' Dieses Teil bezieht sich auf den obene Abschnitt Ihrer Startseite';
+$string['frontpageimagecontentstyle'] = 'Stil';
+$string['imageorvideo'] = 'Bild / Video';
+$string['frontpageimagecontentstyledesc'] = 'Sie können aus statischen Inhalten und Slider Inhalten auswählen.';
+$string['staticcontent'] = 'Statische Inhalte';
+$string['slidercontent'] = 'Slider Inhalte';
+$string['addtext'] = 'Text hinzufügen';
+$string['defaultaddtext'] = 'Bildung ist einen lange erprobt Weg zum Erfolg.';
+$string['addtextdesc'] = 'Hier können Sie den Text hinzufügen, der auf der Startseite gezeigt werden soll, möglichst in HTML.';
+$string['uploadimage'] = 'Bild hochladen';
+$string['uploadimagedesc'] = 'Hier können Sie Ihr eigenes Bild hochladen ';
+$string['video'] = 'iframe Embedded code';
+$string['videodesc'] = 'Hier können Sie den iframe Embedded Code des Videos einsetzen, der integriert werden soll.';
+$string['contenttype'] = 'Art des Inhalts auswählen';
+$string['contentdesc'] = 'Sie können aus dem Bild oder Video url auswählen.';
+$string['image'] = 'Bild';
+$string['videourl'] = 'Video URL';
+$string['frontpageimge'] = '';
+
+$string['slidercount'] = 'Anzahl von Folien ';
+$string['slidercountdesc'] = '';
+$string['one'] = '1';
+$string['two'] = '2';
+$string['three'] = '3';
+$string['five'] = '5';
+
+$string['slideimage'] = 'Bilder für Slider hochladen';
+$string['slideimagedesc'] = 'Sie können hier ein Bild als Inhalt für den Slider hochladen.';
+$string['slidertext'] = 'Slider Text hinzufügen';
+$string['defaultslidertext'] = '<h2><span>Bildung ist einen lange erprobt Weg zum Erfolg</span><br>YOU ENTER TO LEARN, LEAVE TO ACHIEVE</h2><p>Education ignites a purpose within us and beckons us on a path of enlightenment. It allows for a progressive mind to flourish that builds a self-sustaining society.</p>';
+$string['slidertextdesc'] = 'Sie können den Text Inhalt von Ihrem Slider einsetzen, möglichst im HTML.';
+$string['sliderurl'] = 'Slider Text Button Link';
+$string['sliderbuttontext'] = 'Text Button von Slider hinzufügen ';
+$string['sliderbuttontextdesc'] = 'Sie können eine Text Button auf Ihr Slider einsetzen.';
+$string['sliderurldesc'] = 'Sie können den Link der Seite einsetzen, wo der Benutzer nur einmal umgeleitet werden, nachdem er/sie auf die Text Button klickt.';
+$string['slideinterval'] = 'Slide Interval';
+$string['slideintervaldesc'] = 'Sie können die Übergangszeit zwischen den Folien einstellen. Falls es nur eine Folie gibt, wird diese Option gar keinen Einfluss darauf haben. ';
+$string['sliderautoplay'] = 'Slider Autoplay Einstellen';
+$string['sliderautoplaydesc'] = 'Ja auswählen, wenn Sie einen automatischen Übergang in Ihrer Slideshow haben möchten.';
+$string['true'] = 'Ja';
+$string['false'] = 'Nein';
+
+$string['frontpageblocks'] = 'Body Inhalt';
+$string['frontpageblocksdesc'] = 'Sie können eine Überschrift für Ihren Webseiten-Inhalt einsetzen';
+
+$string['enablesectionbutton'] = 'Buttons in diesem Abschnitt aktivieren ';
+$string['enablesectionbuttondesc'] = 'Buttons auf dem Body Abschnitt aktivieren.';
+
+/* General section descriptions */
+$string['frontpageblockiconsectiondesc'] = 'Sie können irgendein Icon auswählen <a href="https://fontawesome.com/v4.7.0/cheatsheet/" target="_new">list</a>. Geben Sie den Text erst nach "fa-". ';
+$string['frontpageblockdescriptionsectiondesc'] = 'Eine kurze Beschreibung über den Titel';
+$string['defaultdescriptionsection'] = 'Holistisch nutzen die Technologie rechtzeitig durch Unternehmenfällen';
+$string['sectionbuttontextdesc'] = 'Geben Sie den Text für den Button in diesem Teil .';
+$string['sectionbuttonlinkdesc'] = 'Geben Sie die URL für diesen Teil.';
+$string['frontpageblocksectiondesc'] = 'Titel zu diesem Teil hinzufügen .';
+
+/*block Teil 1*/
+$string['frontpageblocksection1'] = 'Body Titel für den erste Teil';
+$string['frontpageblockdescriptionsection1'] = 'Body Beschreibung für den erste Teil';
+$string['frontpageblockiconsection1'] = 'Font-Awesome iocn Teil 1';
+$string['sectionbuttontext1'] = 'Button Text für Teil1';
+$string['sectionbuttonlink1'] = 'URL Link Teil1';
+
+
+/*block Teil 2*/
+$string['frontpageblocksection2'] = 'Body Titel für den zweite Teil';
+$string['frontpageblockdescriptionsection2'] = 'Body Beschreibung für den zweite Teil';
+$string['frontpageblockiconsection2'] = 'Font-Awesome iocn Teil  2';
+$string['sectionbuttontext2'] = 'Button Text für Teil2';
+$string['sectionbuttonlink2'] = 'URL Link Teil2';
+
+
+/*block Teil 3*/
+$string['frontpageblocksection3'] = 'Body Titel für dritte Teil';
+$string['frontpageblockdescriptionsection3'] = 'Body Beschreibung für das dritte Teil';
+$string['frontpageblockiconsection3'] = 'Font-Awesome iocn Teil  3';
+$string['sectionbuttontext3'] = 'Button Text für Teil3';
+$string['sectionbuttonlink3'] = 'URL Link Teil3';
+
+
+/*block Teil 4*/
+$string['frontpageblocksection4'] = 'Body Titel für den vierte Teil';
+$string['frontpageblockdescriptionsection4'] = 'Body Beschreibung für den vierte Teil';
+$string['frontpageblockiconsection4'] = 'Font-Awesome iocn Teil  4';
+$string['sectionbuttontext4'] = 'Button Text für Teil4';
+$string['sectionbuttonlink4'] = 'URL Link für Teil4';
+
+// Capability String
+$string['tilemmetry:editfrontpage'] = 'Frontpage bearbeiten';
+
+// Frontpage Aboutus settings
+$string['frontpageaboutus'] = 'Titelseite Über uns';
+$string['frontpageaboutusdesc'] = 'Dieser Teil ist für die Starteseite Über uns';
+$string['frontpageaboutustitledesc'] = 'Titel hinzufügen zu Über uns Sektion';
+$string['frontpageaboutusbody'] = 'Body Beschreibung für Über uns Abschnitt';
+$string['frontpageaboutusbodydesc'] = 'Eine kurze Beschreibung dieses Abschnitts';
+
+// Startseite Überuns Einstellungen
+$string['frontpageaboutus'] = 'Startseite Über Uns ';
+$string['frontpageaboutusdesc'] = 'Dieser Teil ist für die Starteseite Über uns';
+
+$string['enablefrontpageaboutus'] = 'Über uns Teil aktivieren';
+$string['enablefrontpageaboutusdesc'] = 'Den Über uns Teil auf die Startseite aktivieren.';
+$string['frontpageaboutusheading'] = 'Über uns Überschrift';
+$string['frontpageaboutusheadingdesc'] = 'Überschrift für default heading Text für diesen Teil ';
+$string['frontpageaboutustext'] = 'Über uns Text';
+$string['frontpageaboutustextdesc'] = 'Geben Sie den über uns Text für die Startseite ein.';
+$string['frontpageaboutusdefault'] = '<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.Lorem ipsum dolor sit amet,
+                  consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                  labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur
+                  adipisicing elit, sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>';
+$string['frontpageaboutusimage'] = 'Startseite über uns Bild';
+$string['frontpageaboutusimagedesc'] = 'Das Bild für Startseite über uns Teil hochladen';
+
+// latest 3.3 to be arranged later
+$string['testimonialcount'] = 'Testimonial Anzahl';
+$string['testimonialcountdesc'] = 'Anzahl von Testimonials, die angezeigt werden müssen.';
+$string['testimonialimage'] = 'Testimonial Bild';
+$string['testimonialimagedesc'] = 'Bild des Benutzers, um mit dem Testimonial anzuzeigen';
+$string['testimonialname'] = 'Benutzername';
+$string['testimonialnamedesc'] = 'Benutzername';
+$string['testimonialdesignation'] = 'Designation des Benutzers';
+$string['testimonialdesignationdesc'] = 'Designation des Benutzers.';
+$string['testimonialtext'] = 'Testimonial des Benutzers';
+$string['testimonialtextdesc'] = 'Was der Benutzer sagt';
+
+/*Front Page Setting for About Us Block*/
+$string['frontpageblockdisplay'] = 'Über uns Abschnitt';
+$string['frontpageblockdisplaydesc'] = 'Sie können den Bereich "Über uns" ein- oder ausblenden, Sie können ihn auch im gitterformat anzeigen';
+$string['donotshowaboutus'] = 'Nicht zeigen';
+$string['showaboutusinrow'] = 'Abschnitt in einer Reihe anzeigen';
+$string['showaboutusingridblock'] = 'Abschnitt im Grid-Block anzeigen';

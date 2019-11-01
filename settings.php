@@ -22,26 +22,68 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-    global $CFG;
 
 if ($ADMIN->fulltree) {
+    global $CFG;
     $settings = new theme_tilemmetry_admin_settingspage_tabs('themesettingtilemmetry', get_string('configtitle', 'theme_tilemmetry'));
 
-    // General settings
-    require_once($CFG->dirroot . "/theme/tilemmetry/settings/general_settings.php");
+    if (file_exists("{$CFG->dirroot}/theme/tilemmetry/settings.php")) {
+        //General Settings
+        require_once($CFG->dirroot . "/theme/tilemmetry/settings/general_settings.php");
+        
+        //Dasboard Settings
+            $pluginman = core_plugin_manager::instance();
+            if (array_key_exists("tilemmetryblck", $pluginman->get_installed_plugins('block'))) {
+                if (class_exists('block_tilemmetryblck_settings')) {
+                    \block_tilemmetryblck_settings::add_settings($settings);
+                } else {
+                    // Dashboard settings
+                    $page = new admin_settingpage('theme_tilemmetry_dashboard', get_string('dashboardsetting', 'theme_tilemmetry'));
+                    $page->add(new admin_setting_description('theme_tilemmetry_olddashboard', '', get_string('olddashboard', 'theme_tilemmetry')));
+                    $settings->add($page);
+                }
+            }
+        
+        // Homepage settings
+        require_once($CFG->dirroot . "/theme/tilemmetry/settings/homepage_settings.php");
 
-    //Dashboard
-    require_once($CFG->dirroot . "/theme/tilemmetry/settings/dashboard_settings.php");
+        // Footer settings
+        require_once($CFG->dirroot . "/theme/tilemmetry/settings/footer_settings.php");
 
-    // Homepage settings
-    require_once($CFG->dirroot . "/theme/tilemmetry/settings/homepage_settings.php");
+        // Login settings page code begin
+        require_once($CFG->dirroot . "/theme/tilemmetry/settings/login_settings.php");
 
-    // Footer settings
-    require_once($CFG->dirroot . "/theme/tilemmetry/settings/footer_settings.php");
+        // Custom CSS file.
+        require_once($CFG->dirroot . "/theme/tilemmetry/settings/css_settings.php");
+        
+    } else if (!empty($CFG->themedir) && file_exists("{$CFG->themedir}/tilemmetry/settings.php")) {
+        //General Settings
+        require_once($CFG->themedir . "/tilemmetry/settings/general_settings.php");
+        
+        //Dasboard Settings
+            $pluginman = core_plugin_manager::instance();
+            if (array_key_exists("tilemmetryblck", $pluginman->get_installed_plugins('block'))) {
+                if (class_exists('block_tilemmetryblck_settings')) {
+                    \block_tilemmetryblck_settings::add_settings($settings);
+                } else {
+                    // Dashboard settings
+                    $page = new admin_settingpage('theme_tilemmetry_dashboard', get_string('dashboardsetting', 'theme_tilemmetry'));
+                    $page->add(new admin_setting_description('theme_tilemmetry_olddashboard', '', get_string('olddashboard', 'theme_tilemmetry')));
+                    $settings->add($page);
+                }
+            }
+        
+        // Homepage settings
+        require_once($CFG->themedir . "/tilemmetry/settings/homepage_settings.php");
 
-    // Login settings page code begin
-    require_once($CFG->dirroot . "/theme/tilemmetry/settings/login_settings.php");
+        // Footer settings
+        require_once($CFG->themedir . "/tilemmetry/settings/footer_settings.php");
 
-    // Css Customisation
-    require_once($CFG->dirroot . "/theme/tilemmetry/settings/css_settings.php");
+        // Login settings page code begin
+        require_once($CFG->themedir . "/tilemmetry/settings/login_settings.php");
+
+        // Custom CSS file.
+        require_once($CFG->themedir . "/tilemmetry/settings/css_settings.php");
+    }
+
 }

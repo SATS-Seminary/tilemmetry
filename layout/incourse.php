@@ -25,8 +25,9 @@ defined('MOODLE_INTERNAL') || die();
 require_once('common.php');
 
 // prepare activity sidebar context
+global $COURSE;
 $isactivitypage = false;
-if (isset($PAGE->cm->id) && $COURSE->id != 1) {
+if (isset($PAGE->cm->id) && $COURSE->id != 1 && $COURSE->format != 'singleactivity') {
     $isactivitypage = true;
 }
 $templatecontext['isactivitypage'] = $isactivitypage;

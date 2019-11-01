@@ -1,4 +1,4 @@
-<?php
+  <?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -20,9 +20,8 @@
  * @copyright  (c) 2018 South African Theological Seminary (https://sats.edu.za/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-// Login Settings Page
-
+ 
+  // Login Settings Page
         $page = new admin_settingpage('theme_tilemmetry_login', get_string('loginsettings', 'theme_tilemmetry'));
         $page->add(new admin_setting_heading(
             'theme_tilemmetry_login',
@@ -41,7 +40,9 @@
         $name = 'theme_tilemmetry/loginsettingpic';
         $title = get_string('loginsettingpic', 'theme_tilemmetry');
         $description = get_string('loginsettingpicdesc', 'theme_tilemmetry');
-        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginsettingpic');
+        $setting = new admin_setting_configstoredfile($name, $title, $description, 'loginsettingpic', 0, array(
+            'subdirs' => 0, 'accepted_types' => 'web_image'
+        ));
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
 
@@ -72,5 +73,4 @@
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
 
-    // Must add the page after definiting all the settings!
-        $settings->add($page);
+    $settings->add($page);

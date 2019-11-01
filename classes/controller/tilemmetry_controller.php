@@ -24,6 +24,8 @@
 namespace theme_tilemmetry\controller;
 
 use theme_tilemmetry\renderables\tilemmetry_sidebar;
+use moodle_url;
+use context_course;
 
 // use theme_tilemmetry\utility;
 defined('MOODLE_INTERNAL') || die();
@@ -199,52 +201,20 @@ class tilemmetry_controller extends controller_abstract
     }
 
     // return courses based on parameters
-    public function get_courses_ajax_action()
-    {
-        global $CFG;
+    public function get_courses_ajax_action() {
         // get all parameters passed in the ajax url and pass in the function.
-        $totalcourses = optional_param('totalcourses', false, PARAM_BOOL);
-        $mycourses = optional_param('mycourses', 0, PARAM_INT);
-        $search    = optional_param('search', '', PARAM_ALPHANUMEXT);
-        $category  = optional_param('categoryid', 0, PARAM_INT);
-        $startfrom = optional_param('startfrom', 0, PARAM_INT);
-        $limitto = optional_param('limitto', 4, PARAM_INT);
-        $categorysort = optional_param('categorysort', 0, PARAM_ALPHANUMEXT);
-        $courses = \theme_tilemmetry\utility::get_courses($totalcourses, $search, $category, $startfrom, $limitto, $mycourses, $categorysort);
+        $wdmdata = json_decode(optional_param('wdmdata', '', PARAM_RAW));
+        $result = \theme_tilemmetry\utility::get_course_cards_content($wdmdata);
+        return(json_encode($result));
+    }
 
-        /*if ($categorysort == 'SORT_ASC' || $categorysort == 'SORT_DESC') {
-            $courses = \theme_tilemmetry\utility::array_msort($courses, array('coursename'=>$categorysort));
-        }*/
+    // Get Course Stats
+    public static function get_coursestats_ajax_action() {
+        global $CFG;
+        require_once($CFG->libdir . '/completionlib.php');
+        $courseid = required_param('courseid', PARAM_INT);
+        $course = get_course($courseid);
 
-        $view = get_user_preferences('course_view_state');
-        if (empty($view)) {
-            $view = set_user_preference('course_view_state', 'grid');
-            $view = 'grid';
-        }
-
-        if ($view == 'grid') {
-            $viewClasses = 'col-md-6 col-lg-3 gridview';
-            $imgStyle = 'gridStyle';
-            $listbuttons = '';
-            $listprogress = '';
-        } else {
-            $viewClasses = 'col-md-12 col-lg-12 listview';
-            $imgStyle = 'listStyle';
-            $listbuttons = 'list-activity-buttons';
-            $listprogress = "list-progress";
-        }
-        for ($course=0; $course < sizeof($courses); $course++) {
-            $courses[$course]['courseimage'] = ''.$courses[$course]['courseimage'];
-            $courses[$course]['viewClasses'] = $viewClasses;
-            $courses[$course]['imgStyle'] = $imgStyle;
-            $courses[$course]['listbuttons'] = $listbuttons;
-            $courses[$course]['listprogress'] = $listprogress;
-            $courses[$course]['mycourses'] = $mycourses;
-            foreach ($courses[$course]['instructors'] as $key => $value) {
-                $courses[$course]['instructors'][$key]['picture'] = $courses[$course]['instructors'][$key]['picture']->__toString();
-            }
-        }
-
-        return(json_encode($courses));
+        return json_encode(\theme_tilemmetry\utility::get_course_stats($course));
     }
 }

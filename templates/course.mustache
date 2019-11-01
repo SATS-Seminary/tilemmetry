@@ -91,15 +91,52 @@
 require(['theme_tilemmetry/loader'], function () {
     Breakpoints();
 
-    // show hide extra activities in general/first section
-    
-
     // show load more button conditionally
-    
     jQuery('body#page-course-view-topics .sectionname > span.wdm-sectionname > i, body#page-course-view-weeks .sectionname > span.wdm-sectionname > i').click(function(){
         jQuery(this).toggleClass('fa-angle-down');
         jQuery(this).toggleClass('fa-angle-up');
         jQuery(this).parent().parent().siblings("ul").slideToggle();
     });
+
+    {{#iscoursestatsshow}}
+        // Get course ID from URL
+        // Function to get the details from the URL
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        }
+
+        var courseid = getUrlParameter('id');
+        // AJAX call to get course stats
+        if(typeof courseid !== "undefined") {
+            jQuery.ajax({
+                type: "GET",
+                async: true,
+                url: M.cfg.wwwroot + '/theme/tilemmetry/request_handler.php?action=get_coursestats_ajax&courseid=' + courseid + '&sesskey=' + M.cfg.sesskey,
+                success: function(response) {
+                    // When course stats block is ready then render the respose value
+                    jQuery('.course-stats').ready(function() {
+                        jQuery.each(response, function(index, value) {
+                            var courseStatsDiv = '#wdm_course-stats .stats-card .course-stats-' + index;
+                            $(courseStatsDiv).text(value);
+                        })
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log("Failed to load course stats");
+                }
+            });
+        }
+    {{/iscoursestatsshow}}
 });
 {{/js}}
